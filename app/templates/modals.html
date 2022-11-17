@@ -1,0 +1,230 @@
+  <!-- Logout Modal-->
+
+
+<!-- Investment Modal -->
+
+<div class="modal fade" id="InvestmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update Investment Amount</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <form class="modal-content animate" method="POST" action="{{ url_for('update_investment', investment_id=investment.investment_id) }}" >
+              {{ form.csrf_token }}
+                <div class="form-group">
+                    {{ form.investment_amount (placeholder="Investment Amount", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    <!-- <input placeholder="Username" type="text" class="form-control mb-2 border border-primary">
+                    <input placeholder="Password" type="password" class="form-control mb-2 border border-primary"> -->
+                </div>
+                <!-- <input type="submit" name="login" hidden="true"> -->
+              <!-- <a href="/home" class="btn btn-primary rounded-pill" style="margin-left: 3	0%; width: 40%;">Log In</a> -->
+              {{ form.submit(class="btn btn-outline-info") }}
+          </form>
+
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+         
+      </div>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" id="HectaresModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update Total Hecatres Reforested</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <form class="modal-content animate" method="POST" action="{{ url_for('update_hectares', hectares_id=hectares.hectares_id) }}" >
+              {{ form2.csrf_token }}
+                <div class="form-group">
+                    {{ form2.hectares_total (placeholder="Hectares", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    <!-- <input placeholder="Username" type="text" class="form-control mb-2 border border-primary">
+                    <input placeholder="Password" type="password" class="form-control mb-2 border border-primary"> -->
+                </div>
+                <!-- <input type="submit" name="login" hidden="true"> -->
+              <!-- <a href="/home" class="btn btn-primary rounded-pill" style="margin-left: 3	0%; width: 40%;">Log In</a> -->
+              {{ form2.submit(class="btn btn-outline-info") }}
+          </form>
+
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+         
+      </div>
+  </div>
+</div>
+</div>
+
+<!--INVLC-->
+
+                
+<div class="modal fade" id="InvLC" tabindex="-1" role="dialog"
+aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add New LC</h5>
+          
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form class="form-signin" method="POST" action="{{ url_for('add_investmentlc') }}">
+                {{ forminvlc.csrf_token }}
+
+                <a>Fill  Details</a>
+               
+                <span></span>
+                <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        {{ forminvlc.investmentlc_name ( placeholder="LC No.", class="form-control
+                        mb-2 border border-primary") }}
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        {{ forminvlc.investmentlc_hectares ( placeholder="Hectares", class="form-control
+                        mb-2 border border-primary") }}
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        {{ forminvlc.investmentlc_reduced ( placeholder="Flood Reduced", class="form-control
+                        mb-2 border border-primary") }}
+                    </div>
+                    
+                    
+                </div>
+
+
+                <input type="submit" name="login-info" class="btn btn-primary btn-user btn-block">
+
+            </form>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+
+        </div>
+    </div>
+</div>
+</div>
+
+<!--Erosion-->
+<div class="modal fade" id="Erosion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update Item</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <form class="modal-content animate" method="POST" action="{{ url_for('updatees', erosion_id=erosion.erosion_id) }}" >
+              {{ form6.csrf_token }}
+                <div class="form-group">
+                    {{ form6.erosion_soil (placeholder="Soil Eroded", class="form-control mb-2 border border-primary text-center", required="true") }}
+                   
+                </div>
+
+              {{ form6.submit(class="btn btn-outline-info") }}
+          </form>
+
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+         
+      </div>
+  </div>
+</div>
+
+
+</div>
+
+<!--Dry Season-->
+{% for i in dryseason %}
+<div class="modal fade" id="DrySeason" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <form class="modal-content animate" method="POST" action="{{ url_for('updatedsf', dryseason_id=i.dryseason_id) }}" >
+              {{ form5.csrf_token }}
+                <div class="form-group">
+                    {{ form5.dryseason_hectares (placeholder="Hectares", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    {{ form5.dryseason_discharge (placeholder="Discharge", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    
+                </div>
+
+              {{ form5.submit(class="btn btn-outline-info") }}
+          </form>
+
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+         
+      </div>
+  </div>
+</div>
+</div>
+{% endfor %}
+
+<!--INVLC Actions-->
+<div class="modal fade" id="InvestmentCost" tabindex="-1" role="dialog"
+aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add New LC</h5>
+          
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form class="form-signin" method="POST" action="{{ url_for('investmentcost') }}">
+                {{ formic.csrf_token }}
+
+                <a>Fill  Details</a>
+                <a class="fas fa-info-circle" href="#" role="button" data-target="InvestmentCost" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                </a>
+                <span></span>
+                <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        {{ formic.investmentcost_cost( placeholder="Investment Cost", class="form-control
+                        mb-2 border border-primary") }}
+                    </div>
+  
+                </div>
+
+
+                <input type="submit" name="login-info" class="btn btn-primary btn-user btn-block">
+
+            </form>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+
+        </div>
+    </div>
+</div>
+</div>

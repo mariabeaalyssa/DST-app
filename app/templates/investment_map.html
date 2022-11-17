@@ -1,0 +1,109 @@
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.24/esri/themes/light/main.css"
+    />
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+      }
+    </style>
+
+    <script src="https://js.arcgis.com/4.24/"></script>
+
+    <script>
+      require([
+        "esri/config",
+        "esri/views/SceneView",
+        "esri/widgets/LayerList",
+        "esri/widgets/Legend",
+        "esri/WebMap"
+      ], (esriConfig,SceneView, LayerList, Legend, WebMap) => {
+        esriConfig.apiKey = "AAPKf793e8626e4745f3b6ac2d9ee72063badZRO5Xycxb9gPP3jy1gSsrb0y580fmNvR14G-1vePOaFVP9IxO93ALdFGi93bM1z";
+        const scene = new WebMap({
+          portalItem: {
+            // autocasts as new PortalItem()
+            id: "f7857d45a0ea48e69378f5a9f1e7f982"
+          }
+        });
+
+        const view = new SceneView({
+          container: "viewDiv",
+          map: scene
+        });
+
+        view.when(() => {
+          const layerList = new LayerList({
+            view: view
+          });
+
+          // Add widget to the top right corner of the view
+          view.ui.add(layerList, "top-right");
+        
+          const featureLayer = scene.layers.getItemAt(0);
+
+          const legend = new Legend({
+            view: view,
+            layerInfos: [
+              {
+                layer: featureLayer,
+                title: "Land Cover"
+              }
+            ]
+          });
+
+          // Add widget to the bottom right corner of the view
+          view.ui.add(legend, "bottom-right");
+        });
+      });
+
+  function displayItems() {
+  const portal = new Portal();
+  // Setting authMode to immediate signs the user in once loaded
+  portal.authMode = "immediate";
+  // Once loaded, user is signed in
+  portal.load().then(() => {
+    // Create query parameters for the portal search
+    const queryParams = new PortalQueryParams({
+      query: "owner:" + portal.user.username,
+      sortField: "numViews",
+      sortOrder: "desc",
+      num: 20
+    });
+
+    userIdElement.innerHTML = portal.user.username;
+    anonPanelElement.style.display = "none";
+    personalPanelElement.style.display = "block";
+
+    // Query the items based on the queryParams created from portal above
+    portal.queryItems(queryParams).then(createGallery);
+  });
+}
+    </script>
+    
+
+
+         
+          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary"></h6>
+
+                    <a href="https://geze8fvjywraocwo.maps.arcgis.com/home/content.html" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i></i> Update Shapefile
+                    </a>
+        </div>
+          <div id="viewDiv"></div>
+          <!-- End of Topbar -->
+
+          <!-- Begin Page Content -->
+          
+  <!-- /.container-fluid -->
+
+
+</body> 
+

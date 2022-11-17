@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Decision Support Tool - Land Cover Scenario</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="{{ url_for('.static', filename='vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{{ url_for('.static', filename='css/sb-admin-2.min.css')}}" rel="stylesheet" type="text/css">
+
+    <link href="{{ url_for('.static', filename='vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+  
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+   
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.24/esri/themes/light/main.css"
+    />
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+      }
+    </style>
+
+    <script src="https://js.arcgis.com/4.24/"></script>
+
+    <script>
+      require([
+        "esri/config",
+        "esri/views/SceneView",
+        "esri/widgets/LayerList",
+        "esri/widgets/Legend",
+        "esri/WebMap"
+      ], (esriConfig,SceneView, LayerList, Legend, WebMap) => {
+        esriConfig.apiKey = "AAPKf793e8626e4745f3b6ac2d9ee72063badZRO5Xycxb9gPP3jy1gSsrb0y580fmNvR14G-1vePOaFVP9IxO93ALdFGi93bM1z";
+        const scene = new WebMap({
+          portalItem: {
+            // autocasts as new PortalItem()
+            id: "15089ddf10cc4a619b238b77228b1f5e"
+          }
+        });
+
+        const view = new SceneView({
+          container: "viewDiv",
+          map: scene
+        });
+
+        view.when(() => {
+        const layerList = new LayerList({
+          view: view
+        });
+
+        view.ui.add(layerList, "top-right");
+
+        const featureLayer = scene.layers.getItemAt(0);
+
+        const legend = new Legend({
+          view: view,
+          layerInfos: [
+            {
+              layer: featureLayer,
+              title: "Erosion Model"
+            }
+          ]
+        });
+
+        // Add widget to the bottom right corner of the view
+        view.ui.add(legend, "bottom-left");
+              
+      });
+      scene.startup();
+    });
+
+    </script>
+    
+ 
+ 
+  </head>
+
+<body id="page-top">
+  <div id="wrapper">
+    {% include 'sidebar.html' %}
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+          <!-- Topbar -->
+          <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+            <h1 class="h3 mb-0 text-gray-800">Land Cover Scenario</h1>
+              <!-- Sidebar Toggle (Topbar) -->
+              <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                  <i class="fa fa-bars"></i>
+              </button>
+
+              <!-- Topbar Navbar -->
+
+              {% include 'topbar.html' %}
+
+          </nav>
+          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary"></h6>
+            
+        </div>
+          <div id="viewDiv"></div>
+          <!-- End of Topbar -->
+
+          <!-- Begin Page Content -->
+          
+  <!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
+
+<!-- Footer -->
+
+<!-- End of Footer -->
+
+</div>
+  </div>
+</body> 
+
+
+<script src="{{ url_for('.static', filename='main.js')}}"></script>
+<script src="{{ url_for('.static', filename='main.js')}}"></script>
+
+
+
+</html>

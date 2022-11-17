@@ -1,0 +1,464 @@
+
+<header>
+    <title>Decision Support Tool - Settings </title>
+
+    <script>
+        function totalIt() {
+            var input = document.getElementsByName("product");
+            var total = 0;
+            for (var i = 0; i < input.length; i++) {
+              if (input[i].checked) {
+                total += parseFloat(input[i].value);
+              }
+            }
+            document.getElementsByName("total")[0].value = "Php" + total.toLocaleString("en-US", {style: "decimal", minimumFractionDigits: 2});
+        
+            var inputhas = document.getElementsByName("hectares");
+            var has = 0;
+            for (var i = 0; i < inputhas.length; i++) {
+            if (inputhas[i].checked) {
+                has += parseFloat(inputhas[i].value);
+            }
+            }
+            document.getElementsByName("has")[0].value = has.toLocaleString("en-US", {style: "decimal", minimumFractionDigits: 2}); + " has.";
+          
+            var inputred = document.getElementsByName("reduced");
+            var reduced = 0;
+            for (var i = 0; i < inputred.length; i++) {
+            if (inputred[i].checked) {
+                reduced += parseFloat(inputred[i].value);
+            }
+            }
+            document.getElementsByName("red")[0].value = reduced.toLocaleString("en-US", {style: "decimal", minimumFractionDigits: 2}); + " has.";
+        
+        
+        }
+
+    </script>
+     <script>
+
+        function selectAllCheckboxes(){
+          var isChecked = document.getElementById("selectAll");
+          if( isChecked.checked == true ){
+            var allFoodCheckboxes = document.getElementsByName("hectares");
+            for( var i=0; i< allFoodCheckboxes.length; i++){
+              allFoodCheckboxes[i].checked = true;
+            }
+          } else {
+            var allFoodCheckboxes = document.getElementsByName("hectares");
+            for( var i=0; i< allFoodCheckboxes.length; i++){
+              allFoodCheckboxes[i].checked = false;
+            }    
+          }
+          var isChecked = document.getElementById("selectAll");
+          if( isChecked.checked == true ){
+            var allFoodCheckboxes = document.getElementsByName("product");
+            for( var i=0; i< allFoodCheckboxes.length; i++){
+              allFoodCheckboxes[i].checked = true;
+            }
+          } else {
+            var allFoodCheckboxes = document.getElementsByName("product");
+            for( var i=0; i< allFoodCheckboxes.length; i++){
+              allFoodCheckboxes[i].checked = false;
+            }    
+          }
+          var isChecked = document.getElementById("selectAll");
+          if( isChecked.checked == true ){
+            var allFoodCheckboxes = document.getElementsByName("reduced");
+            for( var i=0; i< allFoodCheckboxes.length; i++){
+              allFoodCheckboxes[i].checked = true;
+            }
+          } else {
+            var allFoodCheckboxes = document.getElementsByName("reduced");
+            for( var i=0; i< allFoodCheckboxes.length; i++){
+              allFoodCheckboxes[i].checked = false;
+            }    
+          }
+        };
+        </script>
+</header>
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    {% include 'sidebar.html' %}
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <h1 class="h3 mb-0 text-gray-800">Settings</h1>
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <!-- Topbar Navbar -->
+                {% include 'topbar.html' %}
+
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Shapefile Settings -->
+                   
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        
+                        <h6 class="m-0 font-weight-bold text-primary">Shapefile Settings</h6>
+                      
+                        
+                    </div>
+                    <div class="card-body">
+
+                        
+                            <h6 class="m-0 font-weight-bold text-primary"></h6>
+                    
+                             <a href="https://geze8fvjywraocwo.maps.arcgis.com/home/content.html?view=table&sortOrder=desc&sortField=modified&folder=geosed#content" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i></i> Update Shapefiles
+                            </a>
+                       
+
+                    </div>
+                
+                </div>
+                <!-- Shapefile Settings -->
+
+                <!-- Investment Model Seetings -->
+                   
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        
+                        <h6 class="m-0 font-weight-bold text-primary">Investment Model Settings</h6>
+                      
+                    </div>
+
+                    <div class="card-body">
+                    <div class="row">
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Investment</div>
+                                            
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{"Php {:,.2f}".format(investment.investment_amount) }}</div>
+                                           
+                                    </div>
+                                    {% if user.usertype == 'admin' %}
+                                    <div class="col-auto">
+                                        
+                                            <a class="fas fa-fw fa-cog" href="" data-toggle="modal" data-target="#InvestmentModal">     
+                                            </a>
+                                        
+                                    </div>
+                                  {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body" >
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2" >
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1" >
+                                            Hectares Reforested</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ "{:,.2f}".format(hectares.hectares_total)}} has.</div>
+                                    </div>
+                                    {% if user.usertype == 'admin' %}
+                                    <div class="col-auto">
+                                        <a class="fas fa-fw fa-cog" href="" data-toggle="modal" data-target="#HectaresModal">     
+                                        </a>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+    
+
+                    <a href="{{ url_for('rainforestation_cost') }}">
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Rainforestation Cost Breakdown</div>
+                                                
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ "Php {:,.2f}".format(investmentcost.investmentcost_cost) }}</div>
+                                               
+                                        </div>
+                                        {% if user.usertype == 'admin' %}
+                                        <div class="col-auto">
+                                            
+                                                <a class="fas fa-fw fa-cog" href="" data-toggle="modal" data-target="#InvestmentCost">     
+                                                </a>
+                                            
+                                        </div>
+                                      {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </a>
+
+
+                 <!---     {% include 'currency.html' %} --->
+                    </div>
+
+                    <a data-toggle="modal" data-target="#InvLC"class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                        class=""></i>  Add New Land Cover </a>
+                        
+                    </div>
+                
+                
+
+                <!--INV LC Table-->
+                <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="fireControl" width="100%" cellspacing="0">
+                        
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAll" name="selectAll" value="selectAll" onclick="selectAllCheckboxes();totalIt();">
+                                    <label for="selectAll">Select All</th>
+                                <th>Hectares</th>
+                                <th>Cost</th> 
+                                <th>Flood Reduced</th>
+                                <th>Action</th>  
+
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Total:</th>
+                                <th> <input value="0 has." readonly="readonly" type="text" name="has" /> has. </th>
+                              <th><input value="Php 0.00" readonly="readonly" type="text" name="total" />  </th>
+                              <th><input value="0.00" readonly="readonly" type="text" name="red" />  </th>
+                               
+                            </tr>
+                        </tfoot>
+                        {% for i in investmentlc %}
+                        <tbody>
+                            <tr>
+                                <td><span>{{i.investmentlc_name}}</span></td>
+                                <td><input name="hectares" value="{{i.investmentlc_hectares}}" type="checkbox" onclick="totalIt();"><span>{{i.investmentlc_hectares}} has.</span></td>
+                                
+                                <td><input name="product" value="{{i.investmentlc_hectares * investmentcost.investmentcost_cost}}" type="checkbox" onclick="totalIt();"><span>{{"Php {:,.2f}".format(investmentcost.investmentcost_cost * i.investmentlc_hectares)}}</span></td>
+                               <td><input name="reduced" value="{{i.investmentlc_reduced}}" type="checkbox" onclick="totalIt();">{{i.investmentlc_reduced}}</td>
+                                <td>
+
+                                <div class="dropdown no-arrow">
+                                    <a class="fas fa-info-circle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                     
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                        aria-labelledby="dropdownMenuLink">
+                                        <div class="dropdown-header">Options</div>
+                                        <form action="{{ url_for('deleteinvlc', investmentlc_id=i.investmentlc_id) }}" method="POST">
+                                            <input class="dropdown-item" class="btn btn-danger" type="submit" value="Delete">
+                                        </form>
+                        
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item"data-toggle="modal" data-target="#UpdateINVLC"> Update Item    
+                                        </a>
+                                    </div>
+                                </div>
+
+                               </td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+ 
+                   
+                    {% for i in investmentlc %}
+                    <div class="modal fade" id="UpdateINVLC" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Update Item: Land Cover: {{i.investmentlc_name}}</h5>
+                              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">×</span>
+                              </button>
+                          </div>
+                          <div class="modal-body">
+                              <form class="modal-content animate" method="POST" action="{{ url_for('update_investmentlc', investmentlc_id=i.investmentlc_id) }}" >
+                                  {{ forminvlc.csrf_token }}
+                                    <div class="form-group">
+                                        {{ forminvlc.investmentlc_hectares (placeholder="Hectares", class="form-control mb-2 border border-primary text-center", required="true") }}
+                                        {{ forminvlc.investmentlc_reduced (placeholder="Flood Reduced", class="form-control mb-2 border border-primary text-center", required="true") }}
+                                       
+                                    
+                                    </div>
+                    
+                                  {{ forminvlc.submit(class="btn btn-outline-info") }}
+                              </form>
+                    
+                          </div>
+                          <div class="modal-footer">
+                              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                             
+                          </div>
+                      </div>
+                    </div>
+                    </div>
+                    {% endfor %}
+            </div>
+            </div>
+        </div>
+
+        
+
+                <!-- Rainfall Scenario Settings -->
+
+
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        
+                        <h6 class="m-0 font-weight-bold text-primary">Rainfall Scenario Settings </h6>
+                      
+                        
+                    </div>
+                    <div class="card-body">
+                    
+                        <a href="https://docs.google.com/spreadsheets/d/1_PRQBchszpnG6mgHLry30HMI3fIuyr7BttSU1Px5g_A/edit?usp=sharing" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i></i> Update Rainfall Scenario Data
+                        </a>
+                    </div>
+                
+                </div>
+                <!-- End  Rainfall Scenario Settings-->
+
+                <!-- Erosion Settings -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        
+                        <h6 class="m-0 font-weight-bold text-primary">Erosion Model Settings</h6>
+                      
+                    </div>
+                    <div class="card-body">
+                    <div class="row">
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body" >
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2" >
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1" >
+                                            Soil Eroded</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{"{:,}".format(erosion.erosion_soil)}} tons/year</div>
+                                    </div>
+                                    {% if user.usertype == 'admin' %}
+                                    <div class="col-auto">
+                                        <a class="fas fa-fw fa-cog" href="" data-toggle="modal" data-target="#Erosion">     
+                                        </a>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                
+                </div>
+                <!-- End Erosion Settings -->
+                <!-- Dry Season Settings -->
+                <div class="card shadow mb-4">
+
+                    
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        
+                        <h6 class="m-0 font-weight-bold text-primary">Dry Season Flow Settings </h6>
+                      
+                        
+                    </div>
+                    <div class="card-body">
+                    
+                        <div class="card shadow mb-4">
+                            
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th><center>Age of Forest</center></th>
+                                            <th><center>Hectares Reforested</center></th>
+                                            <th><center>Amount of Dry Season Flow (discharge)</center></th>
+                                            <th><center>Action</center></th>
+                                          
+                                        </tr>
+                                    </thead> 
+                                  
+                                   {% for i in dryseason %}
+                                    <tbody>
+                                        <tr>
+                                            <td><center><b>{{i.dryseason_forestage}}</b></center></td>
+            
+                                            
+                                            <td>{{"{:,}".format(i.dryseason_hectares)}} has.</td>
+                                            <td>{{"{:,}".format(i.dryseason_discharge)}}</td>
+                                           
+                                             <td>
+                                                    <a class="fas fa-info-circle"  data-toggle="modal" data-target="#DrySeason">    
+                                                    </a>
+            
+            
+                                            </td>
+            
+                                            
+            
+                                        </tr>
+                                    </tbody>
+                                    {% endfor %}
+                                   
+                                    </table> 
+                                </div>
+                            
+                            </div>
+
+
+                    </div>
+                
+                </div>
+                <!-- End Dry Season Settings-->
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+      
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+
+{% include 'modals.html' %}
+{% endblock %}

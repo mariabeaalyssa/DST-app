@@ -1,0 +1,111 @@
+<!--Upload CSV
+
+    https://js-tutorials.com/demos/read_csv_javascript_demo/
+
+-->
+
+
+<!--Download CSV-->
+
+<script>
+    //user-defined function to download CSV file
+    function downloadCSV(csv, filename) {
+        var csvFile;
+        var downloadLink;
+       
+        //define the file type to text/csv
+        csvFile = new Blob([csv], {type: 'text/csv'});
+        downloadLink = document.createElement("a");
+        downloadLink.download = filename;
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+        downloadLink.style.display = "none";
+    
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+    }
+    
+    //user-defined function to export the data to CSV file format
+    function exportFireControlToCSV(filename) {
+       //declare a JavaScript variable of array type
+       var csv = [];
+       var rows = document.querySelectorAll("table tr");
+     
+       //merge the whole data in tabular form 
+       for(var i=0; i<rows.length; i++) {
+        var row = [], cols = rows[i].querySelectorAll("td, th");
+        for( var j=0; j<cols.length; j++)
+           row.push(cols[j].innerText);
+        csv.push(row.join(","));
+       } 
+       //call the function to download the CSV file
+       downloadCSV(csv.join("\n"), filename);
+    }
+    </script>
+
+
+
+    <!-- Area Chart -->
+
+                
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Data Gathering</h6>
+                    
+                    <div class="dropdown no-arrow">
+                      
+                            <a onclick="exportFireControlToCSV('DataGatheringInventory.csv')" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Download Report</a>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                            aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Options</div>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#firecontrolModal">Add
+                                Item</a>
+
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Update Item</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="fireControl" width="100%" cellspacing="0">
+                            
+                            <thead>
+                                <tr>
+                                    <th>
+                                       
+                                    </th>
+
+                                    <th>Total</th>
+                                    {% if user.usertype == 'admin' %}<th>Actions</th>{% endif %}
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Total</th>
+    
+                                    <th></th>
+                                    
+                                </tr>
+                            </tfoot>
+                            {% for i in datagathering %}
+                            <tbody>
+                                <tr>
+                                    <td>{{i.dg_category}}</td>
+                                   
+                                   
+                                    <td><SPAN>{{i.dg_total}}</SPAN></td>
+                                   
+                                </tr>
+                            </tbody>
+                                           
+{% endfor %}  
+                        </table>
+
+                    </div>
+                </div>
+
+
+               
+

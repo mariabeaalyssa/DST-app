@@ -1,0 +1,118 @@
+<header>
+    <title>Decision Support Tool - Dry Season Flow Model </title>
+</header>
+
+
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+<script>
+    //user-defined function to download CSV file
+    function downloadCSV(csv, filename) {
+        var csvFile;
+        var downloadLink;
+       
+        //define the file type to text/csv
+        csvFile = new Blob([csv], {type: 'text/csv'});
+        downloadLink = document.createElement("a");
+        downloadLink.download = filename;
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+        downloadLink.style.display = "none";
+    
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+    }
+    
+    //user-defined function to export the data to CSV file format
+    function exportDrySeasonToCSV(filename) {
+       //declare a JavaScript variable of array type
+       var csv = [];
+       var rows = document.querySelectorAll("table tr");
+     
+       //merge the whole data in tabular form 
+       for(var i=0; i<rows.length; i++) {
+        var row = [], cols = rows[i].querySelectorAll("td, th");
+        for( var j=0; j<cols.length; j++)
+           row.push(cols[j].innerText);
+        csv.push(row.join(","));
+       } 
+       //call the function to download the CSV file
+       downloadCSV(csv.join("\n"), filename);
+    }
+    </script>
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    {% include 'p_sidebar.html' %}
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <h1 class="h3 mb-0 text-gray-800">Rainforestation Costing</h1>
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <!-- Topbar Navbar -->
+                {% include 'p_topbar.html' %}
+
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+               
+
+              
+
+                <!-- Content Row -->
+                
+                
+                <div class="card-body">
+                    {% include 'p_inv_rainforestation.html' %}
+                  
+
+                </div>
+                
+                
+
+
+                <!-- Content Row -->
+      
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+      
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+{% endblock %}

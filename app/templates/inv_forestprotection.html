@@ -1,0 +1,221 @@
+
+
+<script>
+    //user-defined function to download CSV file
+    function downloadCSV(csv, filename) {
+        var csvFile;
+        var downloadLink;
+       
+        //define the file type to text/csv
+        csvFile = new Blob([csv], {type: 'text/csv'});
+        downloadLink = document.createElement("a");
+        downloadLink.download = filename;
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+        downloadLink.style.display = "none";
+    
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+    }
+    
+    //user-defined function to export the data to CSV file format
+    function exportFireControlToCSV(filename) {
+       //declare a JavaScript variable of array type
+       var csv = [];
+       var rows = document.querySelectorAll("table tr");
+     
+       //merge the whole data in tabular form 
+       for(var i=0; i<rows.length; i++) {
+        var row = [], cols = rows[i].querySelectorAll("td, th");
+        for( var j=0; j<cols.length; j++)
+           row.push(cols[j].innerText);
+        csv.push(row.join(","));
+       } 
+       //call the function to download the CSV file
+       downloadCSV(csv.join("\n"), filename);
+    }
+    </script>
+
+   
+                
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary"></h6>
+                    
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <!--<a onclick="exportFireControlToCSV('FireControlInventory.csv')" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Download Report</a>-->
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                            aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Options</div>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#firecontrolModal">Add
+                                Item</a>
+
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Update Item</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="fireControl" width="100%" cellspacing="0">
+                            
+                            <thead>
+                                <tr>
+                                    <th>Forest Protection</th>
+
+                                    
+                                    <th>Total</th>
+                                    {% if user.usertype == 'admin' %}<th>Actions</th>{% endif %}
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Total</th>
+
+                                    <th></th>
+                                
+                                    <th></th>
+                                    
+                                </tr>
+                            </tfoot>
+                            {% for i in forestprotection %}
+                            <tbody>
+                                <tr>
+                                    <td>{{i.fp_category}}</td>
+                                    
+                                    <td><SPAN>{{i.fp_total}}</SPAN></td>
+                                    
+                                   <td> 
+                                
+
+   
+                                    <div class="dropdown no-arrow"> 
+                                        <a class="fas fa-info-circle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Options</div>
+                                            <form action="{{url_for('deletefp', fp_id=i.fp_id) }}" method="POST">
+                                                <input class="dropdown-item" class="btn btn-danger" type="submit" value="Delete">
+                                            </form>
+                
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item"data-toggle="modal" data-target="#FCActionModal"> Update Item    
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                                <!--UPDATE FIRECONTROL MODAL-->
+<div class="modal fade" id="FCActionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update Item</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <form class="modal-content animate" method="POST" action="{{ url_for('updatefp', fp_id=i.fp_id) }}" >
+              {{ formfp.csrf_token }}
+                <div class="form-group">
+                    {{ formfp.fp_category (placeholder="Category", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    {{ formfp.fp_item (placeholder="Item Name", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    {{ formfp.fp_description (placeholder="Description", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    {{ formfp.fp_qty (placeholder="Qty", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    {{ formfp.fp_total (placeholder="Total", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    {{ formfp.fp_personnel (placeholder="Assigned Personnel", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    {{ formfp.fp_remarks (placeholder="Remarks", class="form-control mb-2 border border-primary text-center", required="true") }}
+ 
+                </div>
+
+              {{ formfp.submit(class="btn btn-outline-info") }}
+          </form>
+
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+         
+      </div>
+  </div>
+</div>
+</div>
+                                </td>
+                                </tr>
+                            </tbody>
+                                           
+{% endfor %}  
+                        </table>
+
+                    </div>
+                </div>
+
+
+               
+
+                <div class="modal fade" id="firecontrolModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Add New Item</h5>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-signin" method="POST" action="{{ url_for('add_forestprotection') }}">
+                                    {{ formfp.csrf_token }}
+
+                                    <a>Fill Item Details</a>
+                                    <span></span>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                            {{ formfp.fp_category ( placeholder="Category", class="form-control
+                                            mb-2 border border-primary") }}
+                                        </div>
+                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                            {{ formfp.fp_item ( placeholder="Item Name", class="form-control
+                                            mb-2 border border-primary") }}
+                                        </div>
+                                        <div class="col-sm-12">
+                                            {{ formfp.fp_description ( placeholder="Description",
+                                            class="form-control mb-2 border border-primary")}}
+                                        </div>
+                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                            {{ formfp.fp_qty ( placeholder="Quantity", class="form-control mb-2
+                                            border border-primary") }}
+                                        </div>
+                                        <div class="col-sm-6">
+                                            {{ formfp.fp_total ( placeholder="Total", class="form-control mb-2
+                                            border border-primary") }}
+                                        </div>
+                                        <div class="col-sm-6">
+                                            {{ formfp.fp_personnel ( placeholder="Assigned Personnel",
+                                            class="form-control mb-2 border border-primary") }}
+                                        </div>
+                                        <div class="col-sm-12">
+                                            {{ formfp.fp_remarks ( placeholder="Remarks", class="form-control
+                                            mb-2 border border-primary") }}
+                                        </div>
+                                    </div>
+
+
+                                    <input type="submit" name="login-info" class="btn btn-primary btn-user btn-block">
+
+                                </form>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+

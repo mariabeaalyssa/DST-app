@@ -374,7 +374,7 @@ def add_datagathering():
 	return render_template('settings.html', formdg=formdg)
 
 
-@server.route("/admin/item/<int:dg_id>/datagathering/delete", methods=['POST'])
+@server.route('/admin/item/<int:dg_id>/datagathering/delete', methods=['POST'])
 def deletedg(dg_id):
     deletedg = Datagathering.query.get_or_404(dg_id)
     dbase.session.delete(deletedg)
@@ -478,15 +478,35 @@ def updatedsf(dryseason_id):
 	form5 = DrySeasonForm()
 	dryseason = DrySeason.query.get_or_404(dryseason_id)
 	if form5.validate_on_submit():
+		dryseason.dryseason_forestage = form5.dryseason_forestage.data
 		dryseason.dryseason_hectares = form5.dryseason_hectares.data
 		dryseason.dryseason_discharge = form5.dryseason_discharge.data
 		dbase.session.commit()
 		flash('Your post has been updated!', 'success')
-		return redirect(url_for('dry_season', dryseason=dryseason))
+		return redirect(url_for('settings', dryseason=dryseason))
 	elif request.method == 'GET':
+		form5.dryseason_forestage.data = dryseason.dryseason_forestage
 		form5.dryseason_hectares.data = dryseason.dryseason_hectares
 		form5.dryseason_discharge.data = dryseason.dryseason_discharge
 	return redirect(url_for('settings.html', form5=form5, dryseason=dryseason))
+
+@server.route('/admin/add_dryseason', methods=['GET','POST'])
+def add_dryseason():
+	form5 = DrySeasonForm()
+	if form5.validate_on_submit():
+		new_dryseason = DrySeason(form5.dryseason_forestage.data, form5.dryseason_hectares.data, form5.dryseason_discharge.data)
+		dbase.session.add(new_dryseason)
+		dbase.session.commit()	
+		return redirect(url_for('settings',form5=form5))
+	return render_template('settings.html', form5=form5)
+
+@server.route('/admin/<int:dryseason_id>/dryseason/delete', methods=['POST'])
+def delete_dryseason(dryseason_id):
+    deletedryseason = DrySeason.query.get_or_404(dryseason_id)
+    dbase.session.delete(deletedryseason)
+    dbase.session.commit()
+    flash('Your post has been deleted!', 'success')
+    return redirect(url_for('settings'))
 
 @server.route('/about', methods=['GET','POST'])
 @login_required

@@ -121,8 +121,7 @@
               {% include 'topbar.html' %}
               
           </nav>
-          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary"></h6>
+          
             
         </div>
          
@@ -140,7 +139,7 @@
                             <div class="col mr-2" >
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1" >
                                     Soil Eroded</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{erosion.erosion_soil}} tons/year</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{"{:,}".format(erosion.erosion_soil)}} tons/year</div>
                             </div>
                            
                         </div>

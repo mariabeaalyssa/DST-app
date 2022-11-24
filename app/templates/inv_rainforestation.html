@@ -55,11 +55,11 @@
                     <h6 class="m-0 font-weight-bold text-primary">Cost Breakdown per Hectare</h6>
 
                     <div class="dropdown no-arrow">
-                        {% if user.usertype == 'admin' %}
+                       
                         <a class="dropdown-toggle fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                         </a>
-                        {% endif %}
+                       
                         <a onclick="exportFireControlToCSV('RainforestationInventory.csv')" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                             class="fas fa-download fa-sm text-white-50"></i> Download Report</a>
                        
@@ -85,14 +85,14 @@
                                     
                                    
                                     <th>Cost</th>
-                                    {% if user.usertype == 'admin' %}<th>Actions</th>{% endif %}
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>Total</th>
 
-                                    <th>{{ "Php {:,.2f}".format(investmentcost.investmentcost_cost) }}</th>  
+                                    <th>{{"Php {:,.2f}".format(rainforestation|sum(attribute='rf_total'))}}</th>  
 
                                     <th></th>
                                     
@@ -106,7 +106,7 @@
                                     <td><SPAN>{{"Php {:,.2f}".format(i.rf_total)}}</SPAN></td>
                                    
                                     
-                                    {% if user.usertype == 'admin' %}
+                                    
                                    <td> 
                                     <div class="dropdown no-arrow">
                                         <a class="fas fa-info-circle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
@@ -143,7 +143,7 @@ aria-hidden="true">
               {{ formrf.csrf_token }}
                 <div class="form-group">
                     {{ formrf.rf_category (placeholder="Category", class="form-control mb-2 border border-primary text-center", required="true") }}
-                    {{ formrf.rf_total (placeholder="Total", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    {{ formrf.rf_total (placeholder="Total", type="number", class="form-control mb-2 border border-primary text-center", required="true") }}
                     
                 </div>
 
@@ -160,7 +160,7 @@ aria-hidden="true">
 </div>
                                 </td>
                                 
-                                {% endif %}
+                               
                                 </tr>
                             </tbody>
                                            
@@ -198,7 +198,7 @@ aria-hidden="true">
                                             mb-2 border border-primary") }}
                                         </div>
                                          <div class="col-sm-6">
-                                            {{ formrf.rf_total ( placeholder="Total", class="form-control mb-2
+                                            {{ formrf.rf_total ( placeholder="Total", type="number", class="form-control mb-2
                                             border border-primary") }}
                                         </div>
                                         

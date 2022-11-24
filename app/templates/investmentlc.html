@@ -53,7 +53,8 @@
         }
       }
       document.getElementsByName("total")[0].value = "Php" + total.toLocaleString("en-US", {style: "decimal", minimumFractionDigits: 2});
-  
+    }
+  function totalHas() {
       var inputhas = document.getElementsByName("hectares");
       var has = 0;
       for (var i = 0; i < inputhas.length; i++) {
@@ -61,8 +62,10 @@
           has += parseFloat(inputhas[i].value);
       }
       }
-      document.getElementsByName("has")[0].value = has.toLocaleString("en-US", {style: "decimal", minimumFractionDigits: 2}); + " has.";
     
+      document.getElementsByName("has")[0].value = has.toLocaleString("en-US", {style: "decimal", minimumFractionDigits: 2}); + " has.";
+    }
+  function totalRed() {
       var inputred = document.getElementsByName("reduced");
       var reduced = 0;
       for (var i = 0; i < inputred.length; i++) {
@@ -133,8 +136,8 @@
                     <div class="dropdown no-arrow">
                         
     
-                        <a onclick="exportFireControlToCSV('Land Cover Scenario.csv')" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                            class="fas fa-download fa-sm text-white-50"></i> Download Report</a>
+                      <!----  <a onclick="exportFireControlToCSV('Land Cover Scenario.csv')" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                            class="fas fa-download fa-sm text-white-50"></i> Download Report</a> -->
                        
                         <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                             aria-labelledby="dropdownMenuLink">
@@ -157,7 +160,7 @@
                             
                             <thead>
                                 <tr>
-                                    <th><input type="checkbox" id="selectAll" name="selectAll" value="selectAll" onclick="selectAllCheckboxes();totalIt();">
+                                    <th><input type="checkbox" id="selectAll" name="selectAll" value="selectAll" onclick="selectAllCheckboxes();totalIt();totalHas();totalRed();">
                                         <label for="selectAll"></label>Select All</th>
                                     <th>Hectares</th>
                                     <th>Cost</th> 
@@ -183,12 +186,12 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <span>{{i.investmentlc_name}}</span></td>
-                                    <td><input name="hectares" value="{{i.investmentlc_hectares}}" type="checkbox" onclick="totalIt();"><span>{{i.investmentlc_hectares}} has.</span></td>
+                                    <span>{{i.investmentlc_name}}</span></td>
+                                    <td><input name="hectares" value="{{i.investmentlc_hectares}}" type="checkbox" onclick="totalHas();"><span>{{i.investmentlc_hectares}} has.</span></td>
                                     
                                     <td><input name="product" value="{{i.investmentlc_hectares * investmentcost.investmentcost_cost}}" type="checkbox" onclick="totalIt();">{{"Php {:,.2f}".format(investmentcost.investmentcost_cost * i.investmentlc_hectares)}}</span></td>
                                    <td>
-                                   <input name="reduced" value="{{i.investmentlc_reduced}}" type="checkbox" onclick="totalIt();"> {{i.investmentlc_reduced}} has.
+                                   <input name="reduced" value="{{i.investmentlc_reduced}}" type="checkbox" onclick="totalRed();"> {{i.investmentlc_reduced}} has.
                                    </td>
                                    
                                 </tr>

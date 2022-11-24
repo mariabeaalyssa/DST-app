@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Decision Support Tool - Erosion Model</title>
+    <title>Decision Support Tool</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ url_for('.static', filename='vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -151,13 +151,13 @@
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{ "Php {:,.2f}".format(investment.investment_amount) }}</div>
                                            
                                     </div>
-                                    {% if user.usertype == 'admin' %}
+                                    
                                     <div class="col-auto">
                                         
                                             <a> </a>
                                         
                                     </div>
-                                  {% endif %}
+                                  
                                 </div>
                             </div>
                         </div>
@@ -173,11 +173,11 @@
                                             Hectares Reforested</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{"{:,.2f}".format(hectares.hectares_total)}} has.</div>
                                     </div>
-                                    {% if user.usertype == 'admin' %}
+                                   
                                     <div class="col-auto">
                                         <a></a>
                                     </div>
-                                    {% endif %}
+                                    
                                 </div>
                             </div>
                         </div>
@@ -195,16 +195,16 @@
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             Rainforestation Cost Breakdown</div>
                                             
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ "Php {:,.2f}".format(investmentcost.investmentcost_cost) }} / ha.</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{"Php {:,.2f}".format(rainforestation|sum(attribute='rf_total'))}} / ha.</div>
                                            
                                     </div>
-                                    {% if user.usertype == 'admin' %}
+                                   
                                     <div class="col-auto">
                                         
                                             <a></a>
                                         
                                     </div>
-                                  {% endif %}
+                                    
                                 </div>
                             </div>
                         </div>

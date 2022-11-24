@@ -3,13 +3,14 @@ from wtforms import StringField, PasswordField, SelectField, SubmitField
 from wtforms.validators import DataRequired, EqualTo, Length
 
 class RegistrationForm(FlaskForm):
-	firstname = StringField('firstname') 
-	lastname = StringField('lastname')
-	usertype = StringField('usertype')
-	username = StringField('username', validators=[DataRequired(), Length(min=4,max=20)]) #min4 max 20
-	password = PasswordField('password', validators=[DataRequired(), Length(min=6,max=50)]) #min 6 #max 50
-	confirm = PasswordField('confirm', validators=[DataRequired(), EqualTo('password', message='Passwords must match.')])
-
+    firstname = StringField('firstname') 
+    lastname = StringField('lastname')
+    user_choice = [('admin','admin') , ('technical team','technical team')]
+    username = StringField('username', validators=[DataRequired(), Length(min=4,max=20)])
+    password = PasswordField('password', validators=[DataRequired(), Length(min=6,max=50)])
+    usertype = SelectField('User Type', choices = user_choice)
+    confirm = PasswordField('confirm', validators=[DataRequired(), EqualTo('password', message='Passwords must match.')])
+    
 class LoginForm(FlaskForm):
 	username = StringField('username')
 	password = PasswordField('password')
@@ -79,6 +80,7 @@ class DataGatheringForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class DrySeasonForm(FlaskForm): 
+    dryseason_forestage = StringField('Forest Age')
     dryseason_hectares = StringField('Hectares Reforested')
     dryseason_discharge = StringField('Amount of Dry Season Flow Discharge')
     submit = SubmitField('Submit')

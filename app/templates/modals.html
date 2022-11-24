@@ -17,7 +17,7 @@ aria-hidden="true">
           <form class="modal-content animate" method="POST" action="{{ url_for('update_investment', investment_id=investment.investment_id) }}" >
               {{ form.csrf_token }}
                 <div class="form-group">
-                    {{ form.investment_amount (placeholder="Investment Amount", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    {{ form.investment_amount (placeholder="Investment Amount", type="number", class="form-control mb-2 border border-primary text-center", required="true") }}
                     <!-- <input placeholder="Username" type="text" class="form-control mb-2 border border-primary">
                     <input placeholder="Password" type="password" class="form-control mb-2 border border-primary"> -->
                 </div>
@@ -49,7 +49,7 @@ aria-hidden="true">
           <form class="modal-content animate" method="POST" action="{{ url_for('update_hectares', hectares_id=hectares.hectares_id) }}" >
               {{ form2.csrf_token }}
                 <div class="form-group">
-                    {{ form2.hectares_total (placeholder="Hectares", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    {{ form2.hectares_total (placeholder="Hectares", type="number", class="form-control mb-2 border border-primary text-center", required="true") }}
                     <!-- <input placeholder="Username" type="text" class="form-control mb-2 border border-primary">
                     <input placeholder="Password" type="password" class="form-control mb-2 border border-primary"> -->
                 </div>
@@ -94,11 +94,11 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                         mb-2 border border-primary") }}
                     </div>
                     <div class="col-sm-6 mb-3 mb-sm-0">
-                        {{ forminvlc.investmentlc_hectares ( placeholder="Hectares", class="form-control
+                        {{ forminvlc.investmentlc_hectares ( placeholder="Hectares", type="number", class="form-control
                         mb-2 border border-primary") }}
                     </div>
                     <div class="col-sm-6 mb-3 mb-sm-0">
-                        {{ forminvlc.investmentlc_reduced ( placeholder="Flood Reduced", class="form-control
+                        {{ forminvlc.investmentlc_reduced ( placeholder="Flood Reduced", type="number", class="form-control
                         mb-2 border border-primary") }}
                     </div>
                     
@@ -134,7 +134,7 @@ aria-hidden="true">
           <form class="modal-content animate" method="POST" action="{{ url_for('updatees', erosion_id=erosion.erosion_id) }}" >
               {{ form6.csrf_token }}
                 <div class="form-group">
-                    {{ form6.erosion_soil (placeholder="Soil Eroded", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    {{ form6.erosion_soil (placeholder="Soil Eroded", type="number", class="form-control mb-2 border border-primary text-center", required="true") }}
                    
                 </div>
 
@@ -153,6 +153,59 @@ aria-hidden="true">
 </div>
 
 <!--Dry Season-->
+
+                
+<div class="modal fade" id="AddDrySeason" tabindex="-1" role="dialog"
+aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add New Data</h5>
+          
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form class="form-signin" method="POST" action="{{ url_for('add_dryseason') }}">
+                {{ form5.csrf_token }}
+
+                <a>Fill  Details</a>
+               
+                <span></span>
+                <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        {{ form5.dryseason_forestage ( placeholder="Forest Age", type="number", class="form-control
+                        mb-2 border border-primary") }}
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        {{ form5.dryseason_hectares ( placeholder="Hectares", type="number", class="form-control
+                        mb-2 border border-primary") }}
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        {{ form5.dryseason_discharge ( placeholder="Discharge", type="number", class="form-control
+                        mb-2 border border-primary") }}
+                    </div>
+                    
+                    
+                </div>
+
+
+                <input type="submit" name="login-info" class="btn btn-primary btn-user btn-block">
+
+            </form>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+
+        </div>
+    </div>
+</div>
+</div>
+
+
+<!--Update Dry Season-->
 {% for i in dryseason %}
 <div class="modal fade" id="DrySeason" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 aria-hidden="true">
@@ -168,8 +221,10 @@ aria-hidden="true">
           <form class="modal-content animate" method="POST" action="{{ url_for('updatedsf', dryseason_id=i.dryseason_id) }}" >
               {{ form5.csrf_token }}
                 <div class="form-group">
-                    {{ form5.dryseason_hectares (placeholder="Hectares", class="form-control mb-2 border border-primary text-center", required="true") }}
-                    {{ form5.dryseason_discharge (placeholder="Discharge", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    {{ form5.dryseason_forestage (placeholder="Forest Age", type="number", class="form-control mb-2 border border-primary text-center", required="true") }}
+                  
+                    {{ form5.dryseason_hectares (placeholder="Hectares", type="number", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    {{ form5.dryseason_discharge (placeholder="Discharge",type="number", class="form-control mb-2 border border-primary text-center", required="true") }}
                     
                 </div>
 
@@ -209,7 +264,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <span></span>
                 <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
-                        {{ formic.investmentcost_cost( placeholder="Investment Cost", class="form-control
+                        {{ formic.investmentcost_cost( placeholder="Investment Cost", type="number", class="form-control
                         mb-2 border border-primary") }}
                     </div>
   

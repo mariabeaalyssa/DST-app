@@ -105,7 +105,7 @@
                        {% for i in dryseason %}
                         <tbody>
                             <tr>
-                                <td><center><b>{{i.dryseason_forestage}}</b></center></td>
+                                <td><center><b>{{"{:,}".format(i.dryseason_forestage)}}</b></center></td>
 
                                 
                                 <td>{{"{:,}".format(i.dryseason_hectares)}} has.</td>

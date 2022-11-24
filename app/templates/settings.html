@@ -155,14 +155,14 @@
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{"Php {:,.2f}".format(investment.investment_amount) }}</div>
                                            
                                     </div>
-                                    {% if user.usertype == 'admin' %}
+                                   
                                     <div class="col-auto">
                                         
                                             <a class="fas fa-fw fa-cog" href="" data-toggle="modal" data-target="#InvestmentModal">     
                                             </a>
                                         
                                     </div>
-                                  {% endif %}
+                                  
                                 </div>
                             </div>
                         </div>
@@ -177,12 +177,12 @@
                                             Hectares Reforested</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{ "{:,.2f}".format(hectares.hectares_total)}} has.</div>
                                     </div>
-                                    {% if user.usertype == 'admin' %}
+                                    
                                     <div class="col-auto">
                                         <a class="fas fa-fw fa-cog" href="" data-toggle="modal" data-target="#HectaresModal">     
                                         </a>
                                     </div>
-                                    {% endif %}
+                                    
                                 </div>
                             </div>
                         </div>
@@ -199,17 +199,17 @@
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Rainforestation Cost Breakdown</div>
                                                 
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ "Php {:,.2f}".format(investmentcost.investmentcost_cost) }}</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{"Php {:,.2f}".format(rainforestation|sum(attribute='rf_total'))}}</div>
                                                
                                         </div>
-                                        {% if user.usertype == 'admin' %}
+                                       
                                         <div class="col-auto">
                                             
-                                                <a class="fas fa-fw fa-cog" href="" data-toggle="modal" data-target="#InvestmentCost">     
+                                                <a>     
                                                 </a>
                                             
                                         </div>
-                                      {% endif %}
+                                     
                                     </div>
                                 </div>
                             </div>
@@ -363,12 +363,12 @@
                                             Soil Eroded</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{"{:,}".format(erosion.erosion_soil)}} tons/year</div>
                                     </div>
-                                    {% if user.usertype == 'admin' %}
+                                   
                                     <div class="col-auto">
                                         <a class="fas fa-fw fa-cog" href="" data-toggle="modal" data-target="#Erosion">     
                                         </a>
                                     </div>
-                                    {% endif %}
+                                   
                                 </div>
                             </div>
                         </div>
@@ -390,6 +390,10 @@
                     </div>
                     <div class="card-body">
                     
+                        <a data-toggle="modal" data-target="#AddDrySeason"class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                            class=""></i>  Add Dry Season Data</a>
+                            
+                        </div>
                         <div class="card shadow mb-4">
                             
                                 <div class="table-responsive">
@@ -414,9 +418,25 @@
                                             <td>{{"{:,}".format(i.dryseason_discharge)}}</td>
                                            
                                              <td>
-                                                    <a class="fas fa-info-circle"  data-toggle="modal" data-target="#DrySeason">    
+
+                                                <div class="dropdown no-arrow">
+                                                    <a class="fas fa-info-circle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                     
                                                     </a>
-            
+                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                                        aria-labelledby="dropdownMenuLink">
+                                                        <div class="dropdown-header">Options</div>
+                                                        <form action="{{ url_for('delete_dryseason', dryseason_id=i.dryseason_id) }}" method="POST">
+                                                            <input class="dropdown-item" class="btn btn-danger" type="submit" value="Delete">
+                                                        </form>
+                                        
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item"data-toggle="modal" data-target="#DrySeason"> Update Item    
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                   
             
                                             </td>
             

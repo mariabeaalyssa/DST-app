@@ -55,11 +55,10 @@
                     <h6 class="m-0 font-weight-bold text-primary">Cost Breakdown per Hectare</h6>
 
                     <div class="dropdown no-arrow">
-                        {% if user.usertype == 'admin' %}
-                        <a class="dropdown-toggle fas fa-ellipsis-v fa-sm fa-fw text-gray-400" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
+                        
+                        <a>
                         </a>
-                        {% endif %}
+                       
                         <a onclick="exportFireControlToCSV('Rainforestation_CostBreakdown.csv')" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                             class="fas fa-download fa-sm text-white-50"></i> Download Report</a>
                        
@@ -85,14 +84,14 @@
                                     
                                    
                                     <th>Cost</th>
-                                    {% if user.usertype == 'admin' %}<th>Actions</th>{% endif %}
+                                   
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>Total</th>
 
-                                    <th>{{ "Php {:,.2f}".format(investmentcost.investmentcost_cost) }}</th>  
+                                    <th>{{"Php {:,.2f}".format(rainforestation|sum(attribute='rf_total'))}}</th>  
 
                                     
                                 </tr>
@@ -104,12 +103,13 @@
                                     <td>{{i.rf_category}}</td>
                                     
                                     <td><SPAN>{{"Php {:,.2f}".format(i.rf_total)}}</SPAN></td>
-                                   
                                     
+                                
                                 </tr>
                             </tbody>
                                            
 {% endfor %}  
+
                         </table>
 
                     </div>

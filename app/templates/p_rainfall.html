@@ -1,5 +1,20 @@
 <header>
     <title>Decision Support Tool - Rainfall Scenario </title>
+  <script>
+    function toggleDropdown(){
+
+    var dropdown = document.getElementById('games-dropdown')
+    
+    if (dropdown.style.display == "none"){
+    
+    dropdown.style.display = 'block';
+    } else {
+    dropdown.style.display = "none";  
+    }
+    }
+
+</script>
+
 </header>
 {% extends 'base.html' %}
 {% block content %}
@@ -35,29 +50,45 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-               
-                <div class="row">
+                
+                <div class="row" >
                     
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <iframe width="600" height="371" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSndj9N9y6s5DdHQBeqHr5EfMFnOqQwTg1bD4B1gucUbMxJuihQTljVcxAn2kZEV4K4P97koknkzO9E/pubchart?oid=1385734970&amp;format=interactive"></iframe>
+                    
+                    <div class="card-header d-flex flex-row align-items-center justify-content-between" >
+                        <iframe width="750" height="371" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSndj9N9y6s5DdHQBeqHr5EfMFnOqQwTg1bD4B1gucUbMxJuihQTljVcxAn2kZEV4K4P97koknkzO9E/pubchart?oid=1385734970&amp;format=interactive"></iframe>
                     </div>
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <iframe width="600" height="371" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSndj9N9y6s5DdHQBeqHr5EfMFnOqQwTg1bD4B1gucUbMxJuihQTljVcxAn2kZEV4K4P97koknkzO9E/pubchart?oid=1829623249&amp;format=interactive"></iframe>
+                    <div class="card-header d-flex flex-row align-items-center justify-content-between">
+                        <iframe width="750" height="371" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSndj9N9y6s5DdHQBeqHr5EfMFnOqQwTg1bD4B1gucUbMxJuihQTljVcxAn2kZEV4K4P97koknkzO9E/pubchart?oid=1829623249&amp;format=interactive"></iframe>
                     </div>
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <iframe width="600" height="371" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSndj9N9y6s5DdHQBeqHr5EfMFnOqQwTg1bD4B1gucUbMxJuihQTljVcxAn2kZEV4K4P97koknkzO9E/pubchart?oid=1012237304&amp;format=interactive"></iframe>
+                    <div class="card-header d-flex flex-row align-items-center justify-content-between">
+                        <iframe width="750" height="371" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSndj9N9y6s5DdHQBeqHr5EfMFnOqQwTg1bD4B1gucUbMxJuihQTljVcxAn2kZEV4K4P97koknkzO9E/pubchart?oid=1012237304&amp;format=interactive"></iframe>
                     </div>
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <iframe width="600" height="371" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSndj9N9y6s5DdHQBeqHr5EfMFnOqQwTg1bD4B1gucUbMxJuihQTljVcxAn2kZEV4K4P97koknkzO9E/pubchart?oid=1617016000&amp;format=interactive"></iframe>
+                    <div class="card-header d-flex flex-row align-items-center justify-content-between">
+                    <iframe width="750" height="371" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSndj9N9y6s5DdHQBeqHr5EfMFnOqQwTg1bD4B1gucUbMxJuihQTljVcxAn2kZEV4K4P97koknkzO9E/pubchart?oid=1617016000&amp;format=interactive"></iframe>
                     </div>
                     <center>
                         <div class="card-header d-flex flex-row align-items-center justify-content-between">
-                            <iframe width="1236" height="515" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSndj9N9y6s5DdHQBeqHr5EfMFnOqQwTg1bD4B1gucUbMxJuihQTljVcxAn2kZEV4K4P97koknkzO9E/pubchart?oid=810441674&amp;format=interactive"></iframe>
+                            <iframe width="1400" height="515" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSndj9N9y6s5DdHQBeqHr5EfMFnOqQwTg1bD4B1gucUbMxJuihQTljVcxAn2kZEV4K4P97koknkzO9E/pubchart?oid=810441674&amp;format=interactive"></iframe>
                         </div>
                     </center>
                    
                 </div>
+                </div>
+
                 
+               
+                <!-- Content Row -->
+                   
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    
+                   <!----
+                    <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="toggleDropdown('#games-dropdown')"> Toggle Total Net Effect of Land Cover on Flood 
+                    </a>
+                       
+                -->
+                
+                </div>
+                    
                   
                 <!-- Content Row -->
 

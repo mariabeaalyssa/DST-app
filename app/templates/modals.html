@@ -283,3 +283,180 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
     </div>
 </div>
 </div>
+
+<!--Add LC Classification -->
+
+                
+<div class="modal fade" id="AddFT" tabindex="-1" role="dialog"
+aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add New Data</h5>
+          
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form class="form-signin" method="POST" action="{{ url_for('add_floodtemporal') }}">
+                {{ form8.csrf_token }}
+
+                <a>Fill  Details</a>
+               
+                <span></span>
+                <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        {{ form8.ft_lcc ( placeholder="Classification", class="form-control
+                        mb-2 border border-primary") }}
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        {{ form8.ft_hectares ( placeholder="Hectares Reforested", type="number", class="form-control
+                        mb-2 border border-primary") }}
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        {{ form8.ft_reduced ( placeholder="Flood Reduced", type="number", class="form-control
+                        mb-2 border border-primary") }}
+                    </div>
+                </div>
+
+
+                <input type="submit" name="login-info" class="btn btn-primary btn-user btn-block">
+
+            </form>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+<!--Update LC Classification-->
+{% for i in floodtemporal %}
+<div class="modal fade" id="UpdateFT" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <form class="modal-content animate" method="POST" action="{{ url_for('updateft', ft_id=i.ft_id) }}" >
+              {{ form8.csrf_token }}
+                <div class="form-group">
+                    {{ form8.ft_lcc (placeholder="Classification", class="form-control mb-2 border border-primary text-center", required="true") }}
+                  
+                    {{ form8.ft_hectares (placeholder="Hectares Reforested", type="number", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    {{ form8.ft_reduced (placeholder="Flood Reduced",type="number", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    
+                </div>
+
+              {{ form8.submit(class="btn btn-outline-info") }}
+          </form>
+
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+         
+      </div>
+  </div>
+</div>
+</div>
+{% endfor %}
+
+
+<!--Add LC Classification -->
+
+                
+<div class="modal fade" id="AddET" tabindex="-1" role="dialog"
+aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add New Data</h5>
+          
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form class="form-signin" method="POST" action="{{ url_for('add_erosiontemporal') }}">
+                {{ form9.csrf_token }}
+
+                <a>Fill  Details</a>
+               
+                <span></span>
+                <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        {{ form9.et_lcc ( placeholder="Classification", class="form-control
+                        mb-2 border border-primary") }}
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        {{ form9.et_hectares ( placeholder="Hectares Reforested", type="number", class="form-control
+                        mb-2 border border-primary") }}
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        {{ form9.et_reduced ( placeholder="Erosion Reduced", type="number", class="form-control
+                        mb-2 border border-primary") }}
+                    </div>
+                </div>
+
+
+                <input type="submit" name="login-info" class="btn btn-primary btn-user btn-block">
+
+            </form>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+<!--Update LC Classification-->
+{% for i in erosiontemporal %}
+<div class="modal fade" id="UpdateET" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <form class="modal-content animate" method="POST" action="{{ url_for('updateet', et_id=i.et_id) }}" >
+              {{ form9.csrf_token }}
+                <div class="form-group">
+                    {{ form9.et_lcc (placeholder="Classification", class="form-control mb-2 border border-primary text-center", required="true") }}
+                  
+                    {{ form9.et_hectares (placeholder="Hectares Reforested", type="number", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    {{ form9.et_reduced (placeholder="Erosion Reduced",type="number", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    
+                </div>
+
+              {{ form9.submit(class="btn btn-outline-info") }}
+          </form>
+
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+         
+      </div>
+  </div>
+</div>
+</div>
+{% endfor %}

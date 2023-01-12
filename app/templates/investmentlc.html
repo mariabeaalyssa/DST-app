@@ -119,6 +119,8 @@
       }    
     }
   };
+
+
   </script>
 
 <div class="row">
@@ -173,7 +175,7 @@
                             <tfoot>
                                 <tr>
                                     <th>Total:</th>
-                                    <th> <input value="0 has." readonly="readonly" type="text" name="has" /> has. </th>
+                                    <th> <input value="0 has." readonly="readonly" type="text" name="has" /> ha</th>
                                   <th><input value="Php 0.00" readonly="readonly" type="text" name="total" />  </th>
                                   <th>
                                     <input value="0.00" readonly="readonly" type="text" name="red" />  </th>
@@ -186,29 +188,22 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                    <span>{{i.investmentlc_name}}</span></td>
-                                    <td><input name="hectares" value="{{i.investmentlc_hectares}}" type="checkbox" onclick="totalHas();"><span>{{i.investmentlc_hectares}} has.</span></td>
+                                    <span>{{i.investmentlc_name}}
+                                      
+                                    </span></td>
+                                    <td><input name="hectares" value="{{i.investmentlc_hectares}}" type="checkbox" onclick="totalHas();"><span>{{i.investmentlc_hectares}} ha</span></td>
                                     
                                     <td><input name="product" value="{{i.investmentlc_hectares * investmentcost.investmentcost_cost}}" type="checkbox" onclick="totalIt();">{{"Php {:,.2f}".format(investmentcost.investmentcost_cost * i.investmentlc_hectares)}}</span></td>
                                    <td>
-                                   <input name="reduced" value="{{i.investmentlc_reduced}}" type="checkbox" onclick="totalRed();"> {{i.investmentlc_reduced}} has.
+                                   <input name="reduced" value="{{i.investmentlc_reduced}}" type="checkbox" onclick="totalRed();"> {{i.investmentlc_reduced}} ha
                                    </td>
                                    
                                 </tr>
                               
-                            </tbody>
-                                           
-{% endfor %}  
+                            </tbody>                          
+                        {% endfor %}  
                         </table>
-                       
-                        
-
                     </div>
                 </div>
-
-
-                
-
-
 
 {% include 'modals.html' %}

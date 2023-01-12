@@ -1,0 +1,130 @@
+<header>
+    <title>Decision Support Tool - Dry Season Flow Model </title>
+</header>
+
+
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    {% include 'sidebar.html' %}
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <h1 class="h3 mb-0 text-gray-800">Dry Season Flow Model</h1>
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <!-- Topbar Navbar -->
+                {% include 'topbar.html' %}
+
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+               
+
+              
+
+                <!-- Content Row -->
+                <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Manage Admin</h6>
+                    
+                 
+                    
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th><center>Username</center></th>
+                                <th><center>Name</center></th>
+                                <th><center>Action</center></th>
+                                
+                              
+                            </tr>
+                        </thead> 
+                      
+                       {% for i in user_list %}
+                        <tbody>
+                            <tr>
+                                <td><center><b>{{i.username}}</b></center></td>
+
+                                
+                                <td>{{i.firstname}} {{i.lastname}}</td>
+                                <td>
+                                    <div class="dropdown no-arrow">
+                                        <a class="fas fa-info-circle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                         
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Options</div>
+                                            <form action="{{ url_for('delete_user', id=i.id) }}" method="POST">
+                                                <input class="dropdown-item" class="btn btn-danger" type="submit" value="Delete">
+                                            </form>
+                            
+                                        </div>
+                                    </div>
+                                </td>
+                               
+
+                                
+
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                       
+                        </table> 
+                    </div>
+                </div>
+                </div>
+                
+
+
+                <!-- Content Row -->
+      
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+      
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+{% endblock %}

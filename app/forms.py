@@ -99,3 +99,25 @@ class InvestmentLCForm(FlaskForm):
 class InvestmentCostForm(FlaskForm): 
     investmentcost_cost= StringField('Investment Cost')
     submit = SubmitField('Submit')
+
+class LCClassificationForm(FlaskForm): 
+    lcc_classification = StringField('Classification')
+    lcc_initial = StringField('Initial Land Cover')
+    lcc_publicdomain = StringField('Public Domain Land Cover')
+    lcc_desired = StringField('Desired Land Cover')
+    lcc_maximum = StringField('Maximum Land Cover')
+    submit = SubmitField('Submit')
+
+class FloodTemporalForm(FlaskForm):
+    category = [('Close Forest','Close Forest'),('Open Forest','Open Forest'),('Shrubs','Shrubs')]
+    ft_lcc = SelectField('Classification', choices = category)
+    ft_hectares = StringField('Hectares')
+    ft_reduced = StringField('Flood Reduced')
+    submit = SubmitField('Submit')
+
+class ErosionTemporalForm(FlaskForm): 
+    category = [('Close Forest','Close Forest'),('Open Forest','Open Forest'),('Shrubs','Shrubs')]
+    et_lcc = SelectField('Classification', choices = category)
+    et_hectares = StringField('Hectares')
+    et_reduced = StringField('Erosion Reduced')
+    submit = SubmitField('Submit')

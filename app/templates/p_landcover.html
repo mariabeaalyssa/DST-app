@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Decision Support Tool - Land Cover Scenario</title>
+    <title>Decision Support Tool - Flood Model</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ url_for('.static', filename='vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -33,18 +33,116 @@
     />
 
     <style>
-      html,
-      body,
+      
       #viewDiv {
         padding: 0;
         margin: 0;
-        height: 100%;
+        height: 70%;
         width: 100%;
         overflow: hidden;
       }
     </style>
+      <style>
+        .hovertext {
+          position: relative;
+          border-bottom: 1px dotted black;
+        }
+
+        .hovertext:before {
+          content: attr(data-hover);
+          visibility: hidden;
+          opacity: 0;
+          width: 200px;
+          background-color: rgb(231, 229, 229);
+          color: rgb(37, 35, 35);
+          text-align: center;
+          border-radius: 5px;
+          padding: 10px 0;
+          transition: opacity 1s ease-in-out;
+
+          position: absolute;
+          z-index: 1;
+          left: 0;
+          top: 110%;
+        }
+
+        .hovertext:hover:before {
+          opacity: 1;
+          visibility: visible;
+        }
+        .switch {
+          position: relative;
+          display: inline-block;
+          width: 60px;
+          height: 34px;
+        }
+        
+        .switch input { 
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+        
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #ccc;
+          -webkit-transition: .4s;
+          transition: .4s;
+        }
+        
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 26px;
+          width: 26px;
+          left: 4px;
+          bottom: 4px;
+          background-color: white;
+          -webkit-transition: .4s;
+          transition: .4s;
+        }
+        
+        input:checked + .slider {
+          background-color: #2196F3;
+        }
+        
+        input:focus + .slider {
+          box-shadow: 0 0 1px #2196F3;
+        }
+        
+        input:checked + .slider:before {
+          -webkit-transform: translateX(26px);
+          -ms-transform: translateX(26px);
+          transform: translateX(26px);
+        }
+        
+        /* Rounded sliders */
+        .slider.round {
+          border-radius: 34px;
+        }
+        
+        .slider.round:before {
+          border-radius: 50%;
+        }
+        </style>
+        <script>
+        function toggle(ID){
+    var element = document.getElementById(ID);
+    if(element.style.display === "none"){
+        element.style.display = "block";
+    }else{
+        element.style.display = "none";
+    }
+}
+          </script>
 
     <script src="https://js.arcgis.com/4.24/"></script>
+    
 
     <script>
       require([
@@ -93,6 +191,7 @@
       scene.startup();
     });
 
+      
     </script>
     
  
@@ -109,7 +208,7 @@
 
           <!-- Topbar -->
           <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-            <h1 class="h3 mb-0 text-gray-800">Land Cover Scenario</h1>
+            <h1 class="h3 mb-0 text-gray-800">Flood Model</h1>
               <!-- Sidebar Toggle (Topbar) -->
               <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                   <i class="fa fa-bars"></i>
@@ -120,14 +219,232 @@
               {% include 'p_topbar.html' %}
 
           </nav>
-          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        
             <h6 class="m-0 font-weight-bold text-primary"></h6>
-            
-        </div>
-          <div id="viewDiv"></div>
-          <!-- End of Topbar -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                          <div class="col mr-2">
+                              <a class="text-xs font-weight-bold text-primary text-uppercase mb-1" href="{{ url_for('p_rainscenario') }}">
+                                  Rainfall Scenario</a>
+                                  
+                              <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                 
+                          </div>
 
+                      </div>
+                  </div>
+              </div>
+          </div>
+        
+     
+          <div id="viewDiv"></div>
+          <!--testing-->
+          <!--testing end-->
+        
           <!-- Begin Page Content -->
+          <div class="card-body">
+            <div class="card shadow mb-4">
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Flood Reduced</h6>
+
+             <span>
+              <h8 class="m-0 font-weight-bold text-primary">1-10 years</h8>
+              <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider round"
+                id="bt" 
+                onclick="toggle('table1')"></span>
+              </label>
+              
+              <h8 class="m-0 font-weight-bold text-primary">11-20 years</h8>
+                <label class="switch">
+                  <input type="checkbox">
+                  <span class="slider round"
+                  id="bt" 
+                  onclick="toggle('table11')"></span>
+                </label>
+
+                <h8 class="m-0 font-weight-bold text-primary">21-30 years</h8>
+                <label class="switch">
+                  <input type="checkbox">
+                  <span class="slider round"
+                  id="bt" 
+                  onclick="toggle('table21')"></span>
+                </label>
+               </span>
+            
+            
+            </div>
+             <!----<span>
+                <label class="switch">
+                  <input type="checkbox"checked>
+                  <span class="slider round"
+                  id="bt" 
+                  onclick="toggle('divID')"></span>
+                </label> 30 years
+                </span>
+                --->
+            <div class="card-body">
+              <div>
+                
+            <div class="table-responsive">
+              <div style="border:solid 1px #ddd;  padding:10px;" id="table1" >
+                <center>
+                <iframe width="1300" height="300" seamless frameborder="0" scrolling="no" 
+               src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSKdW0YQHpks_Bg_mcih5AgmUbAgRYoC9GkpPx5VWh8QMvH5_-spoRk9s4kaezCiqSX195fkuaCtcK7/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+              </center>
+              </div>
+             <!--table 1
+                <table class="table table-bordered" width="100%" cellspacing="0" >
+                  <thead>
+                  <tr>
+                    
+                <span class="hovertext" data-hover="The amount of flood reduced from a reforested area in  year 1-10">
+                  <h6 class="m-0 font-weight-bold text-primary">Flood Reduced in 1-10 years</h6>
+                </span>
+
+                    <th><center>Land Cover Classification</center></th>
+                    <th><center>Hectares Reforested</center></th>
+                    <th><center>Cost</center></th>
+                    <th><center>Flood Reduced</center></th>
+                  </tr>
+              </thead> 
+
+              <tfoot>
+                  <th><center>Total:</center></th>
+                  <th>{{"{:,}".format(floodtemporal|sum (attribute='ft_hectares'))}} ha</th>
+                  <th>Php   </th>
+                  <th></th>
+                   
+                </tr>
+            </tfoot>
+
+              <tbody>
+                
+                {% for i in floodtemporal %}
+           
+                  <tr>
+                      <td><center><b>{{i.ft_lcc}}</b></center></td>
+                                    <td>{{"{:,}".format(i.ft_hectares)}} ha</td>
+                                    <td>Php {{"{:,.2f}".format(i.ft_hectares * (investmentcost.investmentcost_cost))}}</td>
+                                    <td>{{"{:,}".format(i.ft_reduced)}}</td>
+                                    
+
+                  </tr>
+              {% endfor %}
+              </tbody>
+              </table> 
+              --->
+              </div>
+
+              <!--11-20 years -->
+              <div style="border:solid 1px #ddd;  padding:10px;  display:none;" id="table11" >
+                <center>
+                  <iframe width="1300" height="250" seamless frameborder="0" scrolling="no" 
+                 src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSKdW0YQHpks_Bg_mcih5AgmUbAgRYoC9GkpPx5VWh8QMvH5_-spoRk9s4kaezCiqSX195fkuaCtcK7/pubhtml?gid=1515745094&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+               </center>
+                <!--table 11
+                <table class="table table-bordered" width="100%" cellspacing="0" >
+                  <thead>
+                  <tr>
+                    
+                <span class="hovertext" data-hover="The amount of flood reduced from a reforested area in  year 1-10">
+                  <h6 class="m-0 font-weight-bold text-primary">Flood Reduced in 11-20 years</h6>
+                </span>
+
+                    <th><center>Land Cover Classification</center></th>
+                    <th><center>Hectares Reforested</center></th>
+                    <th><center>Cost</center></th>
+                    <th><center>Flood Reduced</center></th>
+                  </tr>
+              </thead> 
+              <tfoot>
+                <th><center>Total:</center></th>
+                <th>{{"{:,}".format(floodtemporal|sum (attribute='ft_hectares'))}}</th>
+                <th>{{"{:,}".format(floodtemporal|sum (attribute='ft_hectares'))}} has.</th>
+                <th></th>
+              
+          </tfoot>
+              <tbody>
+                
+             {% for i in floodtemporal %}
+             {% if i.ft_lcc != "Shrubs" %}
+                  <tr>
+                      <td><center><b>{{i.ft_lcc}}</b></center></td>
+                                    <td>{{"{:,}".format(i.ft_hectares)}} has.</td>
+                                    {% if rainforestation.rf_category != "Seedlings & Equipment" %}
+                                    
+                                    <td>{{"{:,}".format(i.ft_hectares * (rainforestation|sum (attribute='rf_total')))}}</td>
+                                    
+                                    {% endif %}
+                                    <td>{{"{:,}".format(i.ft_reduced)}}</td>
+                                    
+
+                  </tr>
+                {% endif %}
+              {% endfor %}
+              </tbody>
+              
+              </table> 
+              --->
+                </div>
+                <!--21-30 years-->
+                <div style="border:solid 1px #ddd;  padding:10px;  display:none;" id="table21" >
+                  <center>
+                     
+                    <iframe width="1300" height="220" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSKdW0YQHpks_Bg_mcih5AgmUbAgRYoC9GkpPx5VWh8QMvH5_-spoRk9s4kaezCiqSX195fkuaCtcK7/pubhtml?gid=2060357384&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+                  </center>
+                  <!--table21--
+                  <table class="table table-bordered" width="100%" cellspacing="0" >
+                    <thead>
+                    <tr>
+                      
+                  <span class="hovertext" data-hover="The amount of flood reduced from a reforested area in  year 1-10">
+                    <h6 class="m-0 font-weight-bold text-primary">Flood Reduced in 21-30 years</h6>
+                  </span>
+  
+                      <th><center>Land Cover Classification</center></th>
+                      <th><center>Hectares Reforested</center></th>
+                      <th><center>Cost</center></th>
+                      <th><center>Flood Reduced</center></th>
+                    </tr>
+                </thead> 
+                <tfoot>
+                  <th><center>Total:</center></th>
+                  <th>{{"{:,}".format(floodtemporal|sum (attribute='ft_hectares'))}}</th>
+                  <th>{{"{:,}".format(floodtemporal|sum (attribute='ft_hectares'))}} has.</th>
+                  <th></th>
+                
+            </tfoot>
+                <tbody>
+                  
+               {% for i in floodtemporal %}
+               {% if i.ft_lcc == "Close Forest" %}
+                    <tr>
+                        <td><center><b>{{i.ft_lcc}}</b></center></td>
+                                      <td>{{"{:,}".format(i.ft_hectares)}} has.</td>
+                                      {% if rainforestation.rf_category != "Seedlings & Equipment", "Training & Technicaal Assistance", "Payments to Farmers"  %}
+                                      
+                                      <td>{{"{:,}".format(i.ft_hectares * (rainforestation|sum (attribute='rf_total')))}}</td>
+                                      
+                                      {% endif %}
+                                      <td>{{"{:,}".format(i.ft_reduced)}}</td>
+                                      
+  
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+                </tbody>
+                
+                </table> 
+              -->
+                  </div>
+                <!-- end of 21-30 years-->
+          </div>
+        </div>
+        </div>
           
   <!-- /.container-fluid -->
 
@@ -149,3 +466,4 @@
 
 
 </html>
+

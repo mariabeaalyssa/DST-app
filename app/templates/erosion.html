@@ -31,16 +31,85 @@
   />
 
   <style>
-    html,
-    body,
     #viewDiv {
       padding: 0;
       margin: 0;
-      height: 100%;
+      height: 90%;
       width: 100%;
       overflow: hidden;
     }
   </style>
+ <style>
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+  </style>
+  <script>
+  function toggle(ID){
+var element = document.getElementById(ID);
+if(element.style.display === "none"){
+  element.style.display = "block";
+}else{
+  element.style.display = "none";
+}
+}
+    </script>
 
   <script src="https://js.arcgis.com/4.24/"></script>
 
@@ -130,29 +199,241 @@
           <!-- Begin Page Content -->
           <div class="container-fluid">
 
-              <!-- Page Heading -->
-              
+              <!-- Page Heading --
+              <div class ="row">
+                <div class="col-xl-3 col-md-6 mb-4">
+                  <div class="card border-left-primary shadow h-100 py-2">
+                      <div class="card-body" >
+                          <div class="row no-gutters align-items-center">
+                              <div class="col mr-2" >
+                                  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" >
+                                      Eroded Soil Reduced 
+                                      <br>Shrubs
+                                      <br>(year 21-30)
+                                    </div>
+                                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{"{:,}".format(erosion.erosion_soil)}} tons/year</div>
+                              </div>
+                            
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
               <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-success shadow h-100 py-2">
                     <div class="card-body" >
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2" >
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1" >
-                                    Soil Eroded</div>
+                                  Eroded Soil Reduced 
+                                  <br>Open Forest
+                                <br>(year 11-20)
+                                </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{"{:,}".format(erosion.erosion_soil)}} tons/year</div>
                             </div>
-                           
+                          
                         </div>
                     </div>
                 </div>
-            </div>
+              </div>
+
+              <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body" >
+                      <div class="row no-gutters align-items-center">
+                          <div class="col mr-2" >
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" >
+                                Eroded Soil Reduced 
+                                <br>Mature Forest
+                                <br>(year 21-30)
+                              </div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">{{"{:,}".format(erosion.erosion_soil)}} tons/year</div>
+                          </div>
+                        
+                      </div>
+                      </div>
+                  </div>
+              </div>
            
+          
+        </div>
+              --->
 
-              
+        </div>
 
-          </div>
 
           <div id="viewDiv"></div>
+           
+
+          <div class="card-body">
+          
+            <div class="card shadow mb-4">
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Erosion Reduced</h6>
+
+             <span>
+              <h8 class="m-0 font-weight-bold text-primary">1-10 years</h8>
+              <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider round"
+                id="bt" 
+                onclick="toggle('table1')"></span>
+              </label>
+              
+              <h8 class="m-0 font-weight-bold text-primary">11-20 years</h8>
+                <label class="switch">
+                  <input type="checkbox">
+                  <span class="slider round"
+                  id="bt" 
+                  onclick="toggle('table11')"></span>
+                </label>
+
+                <h8 class="m-0 font-weight-bold text-primary">21-30 years</h8>
+                <label class="switch">
+                  <input type="checkbox">
+                  <span class="slider round"
+                  id="bt" 
+                  onclick="toggle('table21')"></span>
+                </label>
+               </span>
+            
+            
+            </div>
+             <!----<span>
+                <label class="switch">
+                  <input type="checkbox"checked>
+                  <span class="slider round"
+                  id="bt" 
+                  onclick="toggle('divID')"></span>
+                </label> 30 years
+                </span>
+                --->
+            <div class="card-body">
+            <div class="table-responsive">
+              <div style="border:solid 1px #ddd;  padding:10px;" id="table1" >
+                <center>
+                  <iframe width="1270" height="275" seamless frameborder="0" scrolling="no" 
+                   src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSKdW0YQHpks_Bg_mcih5AgmUbAgRYoC9GkpPx5VWh8QMvH5_-spoRk9s4kaezCiqSX195fkuaCtcK7/pubhtml?gid=1690093160&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+                 </center>
+                <!--table 1--
+              <table class="table table-bordered" width="100%" cellspacing="0" >
+                  <thead>
+                  <tr>
+                    <h6 class="m-0 font-weight-bold text-primary">Erosion Reduced in 1-10 years</h6>
+                    <th><center>Land Cover Classification</center></th>
+                    <th><center>Hectares Reforested</center></th>
+                    <th><center>Cost</center></th>
+                    <th><center>Flood Reduced</center></th>
+                  </tr>
+              </thead>
+              <tfoot>
+                <th><center>Total:</center></th>
+                <th>{{"{:,}".format(erosiontemporal|sum (attribute='et_hectares'))}}</th>
+                <th>{{"{:,}".format(erosiontemporal|sum (attribute='et_hectares'))}} ha</th>
+                <th></th>
+              </tfoot>
+            
+              {% for i in erosiontemporal %}
+              <tbody>
+                  <tr>
+                      <td><center><b>{{i.et_lcc}}</b></center></td>
+                      <td>{{"{:,}".format(i.et_hectares)}} ha</td>
+                      <td>{{i.et_hectares * investmentcost.investmentcost_cost}}</td>
+                      <td>{{"{:,}".format(i.et_reduced)}}</td>
+                  </tr>
+              </tbody>
+              {% endfor %}
+             
+              </table> 
+              --->
+              </div>
+
+              <!--11-20 years -->
+              <div style="border:solid 1px #ddd;  padding:10px; display:none;" id="table11" >
+                <center>
+                  <iframe width="1200" height="275" seamless frameborder="0" scrolling="no" 
+                   src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSKdW0YQHpks_Bg_mcih5AgmUbAgRYoC9GkpPx5VWh8QMvH5_-spoRk9s4kaezCiqSX195fkuaCtcK7/pubhtml?gid=1836594753&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+                 </center>
+                <!--table 11--
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                      <h6 class="m-0 font-weight-bold text-primary">Erosion Reduced in 11-20 years</h6>
+                      <th><center>Land Cover Classification</center></th>
+                      <th><center>Hectares Reforested</center></th>
+                      <th><center>Cost</center></th>
+                      <th><center>Flood Reduced</center></th>
+                    </tr>
+                </thead> 
+                <tfoot>
+                  <th><center>Total:</center></th>
+                  <th>{{"{:,}".format(erosiontemporal|sum (attribute='et_hectares'))}}</th>
+                  <th>{{"{:,}".format(erosiontemporal|sum (attribute='et_hectares'))}} ha</th>
+                  <th></th>
+                </tfoot>
+                {% for i in erosiontemporal %}
+                {% if i.et_lcc != "Shrubs" %}
+              <tbody>
+                  <tr>
+                      <td><center><b>{{i.et_lcc}}</b></center></td>
+                      <td>{{"{:,}".format(i.et_hectares)}} has.</td>
+                      <td>{{i.et_hectares * investmentcost.investmentcost_cost}}</td>
+                      <td>{{"{:,}".format(i.et_reduced)}}</td>
+                  </tr>
+              </tbody>
+              {% endif %}
+              {% endfor %}
+             
+                </table>
+                ---> 
+                </div>
+                <!--21-30 years-->
+                <!--11-20 years -->
+              <div style="border:solid 1px #ddd;  padding:10px;  display:none;" id="table21" >
+                <center>
+                  <iframe width="1200" height="220" seamless frameborder="0" scrolling="no" 
+               src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSKdW0YQHpks_Bg_mcih5AgmUbAgRYoC9GkpPx5VWh8QMvH5_-spoRk9s4kaezCiqSX195fkuaCtcK7/pubhtml?gid=1791316516&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+                </center> 
+               <!--table 21--
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                      <h6 class="m-0 font-weight-bold text-primary">Erosion Reduced in 21-30 years</h6>
+                        <th><center>Land Cover Classification</center></th>
+                        <th><center>Hectares Reforested</center></th>
+                        <th><center>Cost</center></th>
+                        <th><center>Flood Reduced</center></th>
+                       
+                    </tr>
+                </thead> 
+                <tfoot>
+                  <th><center>Total:</center></th>
+                  <th>{{"{:,}".format(erosiontemporal|sum (attribute='et_hectares'))}}</th>
+                  <th>{{"{:,}".format(erosiontemporal|sum (attribute='et_hectares'))}} ha</th>
+                  <th></th>
+                </tfoot>
+              
+                {% for i in erosiontemporal %}
+                {% if i.et_lcc == "Close Forest" %}
+              <tbody>
+                  <tr>
+                      <td><center><b>{{i.et_lcc}}</b></center></td>
+                      <td>{{"{:,}".format(i.et_hectares)}} ha</td>
+                      <td>{{i.et_hectares * investmentcost.investmentcost_cost}}</td>
+                      <td>{{"{:,}".format(i.et_reduced)}}</td>
+                  </tr>
+              </tbody>
+              {% endif %}
+              {% endfor %}
+              
+               
+                </table>
+                ---> 
+                </div>
+                <!-- end of 21-30 years-->
+          </div>
+        </div>
+        </div>
           
           <!-- /.container-fluid -->
 

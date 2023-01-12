@@ -65,12 +65,18 @@ def dashboard():
 	datagathering = Datagathering.query.all()
 	investmentlc = InvestmentLC.query.all()
 	investmentcost = InvestmentCost.query.filter_by(investmentcost_id=1).first()
+	lcclass = LCClassification.query.all()
+	floodtemporal = FloodTemporal.query.all()
+	erosiontemporal = ErosionTemporal.query.all()
 	form = InvestmentForm()
 	form2 = HectaresForm()
 	form3 = ReforestationForm()
 	form4 = FireControlForm()
 	form5 = DrySeasonForm() 
-	form6 = ErosionForm()  	
+	form6 = ErosionForm()
+	form7 = LCClassificationForm()
+	form8 = FloodTemporalForm()
+	form9 = ErosionTemporalForm()
 	formfp = ForestProtectionForm()
 	formrf = RainforestationForm()
 	formdg = DataGatheringForm()
@@ -80,7 +86,7 @@ def dashboard():
 	#rf_sum = Rainforestation.query.all()
 	#print(sum(rf_sum))
 
-	return render_template('index.html', investmentcost=investmentcost,formic=formic, forminvlc=forminvlc,investmentlc=investmentlc, form=form, form2=form2, form3=form3, form4=form4, form5=form5, form6=form6, formfp=formfp, formrf=formrf, formdg=formdg, reforestation=reforestation, hectares=hectares, investment=investment, dryseason=dryseason, erosion=erosion, forestprotection=forestprotection, rainforestation=rainforestation, datagathering=datagathering, user=user )
+	return render_template('index.html', investmentcost=investmentcost,formic=formic, forminvlc=forminvlc,investmentlc=investmentlc, form=form, form2=form2, form3=form3, form4=form4, form5=form5, form6=form6, form7=form7, form8=form8, form9=form9, formfp=formfp, formrf=formrf, formdg=formdg, reforestation=reforestation, hectares=hectares, investment=investment, dryseason=dryseason, erosion=erosion, forestprotection=forestprotection, rainforestation=rainforestation, datagathering=datagathering, floodtemporal = floodtemporal, erosiontemporal= erosiontemporal, lcclass=lcclass, user=user )
 
 
 @server.route('/admin/settings', methods=["GET","POST"])
@@ -97,12 +103,18 @@ def settings():
 	datagathering = Datagathering.query.all()
 	investmentlc = InvestmentLC.query.all()
 	investmentcost = InvestmentCost.query.filter_by(investmentcost_id=1).first()
+	lcclass = LCClassification.query.all()
+	floodtemporal = FloodTemporal.query.all()
+	erosiontemporal = ErosionTemporal.query.all()
 	form = InvestmentForm()
 	form2 = HectaresForm()
 	form3 = ReforestationForm()
 	form4 = FireControlForm()
 	form5 = DrySeasonForm() 
-	form6 = ErosionForm()  	
+	form6 = ErosionForm()
+	form7 = LCClassificationForm()
+	form8 = FloodTemporalForm() 	
+	form9 = ErosionTemporalForm()
 	formfp = ForestProtectionForm()
 	formrf = RainforestationForm()
 	formdg = DataGatheringForm()
@@ -112,7 +124,7 @@ def settings():
 	#rf_sum = Rainforestation.query.all()
 	#print(sum(rf_sum))
 
-	return render_template('settings.html', investmentcost=investmentcost,formic=formic, forminvlc=forminvlc,investmentlc=investmentlc, form=form, form2=form2, form3=form3, form4=form4, form5=form5, form6=form6, formfp=formfp, formrf=formrf, formdg=formdg, reforestation=reforestation, hectares=hectares, investment=investment, dryseason=dryseason, erosion=erosion, forestprotection=forestprotection, rainforestation=rainforestation, datagathering=datagathering, user=user )
+	return render_template('settings.html', investmentcost=investmentcost,formic=formic, forminvlc=forminvlc,investmentlc=investmentlc, form=form, form2=form2, form3=form3, form4=form4, form5=form5, form6=form6,form7=form7, form8=form8, form9=form9, formfp=formfp, formrf=formrf, formdg=formdg, reforestation=reforestation, hectares=hectares, investment=investment, dryseason=dryseason, erosion=erosion, forestprotection=forestprotection, rainforestation=rainforestation, datagathering=datagathering, lcclass=lcclass,floodtemporal=floodtemporal, erosiontemporal=erosiontemporal, user=user )
 
 
 @server.route('/admin/rainforestation_cost', methods=["GET","POST"])
@@ -416,10 +428,15 @@ def landcover():
 	investment = Investment.query.filter_by(investment_id=1).first()
 	hectares = Hectares.query.filter_by(hectares_id=1).first()
 	reforestation = Reforestation.query.filter_by(reforestation_id=1).first()
+	floodtemporal = FloodTemporal.query.all()
+	investmentcost = InvestmentCost.query.filter_by(investmentcost_id=1).first()
+	datagathering = Datagathering.query.all()
+	rainforestation = Rainforestation.query.all()
 	form = InvestmentForm()
 	form2 = HectaresForm()
 	form3 = ReforestationForm()
-	return render_template('landcover.html', form=form, form2=form2, form3=form3, reforestation=reforestation, hectares=hectares, investment=investment, user=user )
+	form8 = FloodTemporalForm()
+	return render_template('landcover.html', form=form, form2=form2, form3=form3,form8=form8, datagathering = datagathering, rainforestation=rainforestation, investmentcost=investmentcost, floodtemporal=floodtemporal, reforestation=reforestation, hectares=hectares, investment=investment, user=user )
 	
 
 @server.route('/admin/rainscenario', methods=['GET','POST'])
@@ -440,8 +457,10 @@ def rainscenario():
 def erosion():
 	user = User.query.filter_by(id=current_user.id).first()
 	erosion = Erosion.query.filter_by(erosion_id=1).first()
+	erosiontemporal = ErosionTemporal.query.all()
+	investmentcost = InvestmentCost.query.filter_by(investmentcost_id=1).first()
 	form6 = ErosionForm()
-	return render_template('erosion.html', form6=form6, erosion=erosion, user=user )
+	return render_template('erosion.html', form6=form6, erosiontemporal=erosiontemporal, investmentcost=investmentcost,erosion=erosion, user=user )
 
 
 @server.route('/admin/update/<int:erosion_id>/erosion', methods=['GET','POST'])
@@ -508,6 +527,158 @@ def delete_dryseason(dryseason_id):
     flash('Your post has been deleted!', 'success')
     return redirect(url_for('settings'))
 
+@server.route('/admin/landcover_classification', methods=['GET','POST'])
+@login_required
+def lcclass():
+	user = User.query.filter_by(id=current_user.id).first()
+	investment = Investment.query.filter_by(investment_id=1).first()
+	hectares = Hectares.query.filter_by(hectares_id=1).first()
+	reforestation = Reforestation.query.filter_by(reforestation_id=1).first()
+	lcclass = LCClassification.query.all()
+	form = InvestmentForm()
+	form2 = HectaresForm()
+	form7 = LCClassificationForm()
+	return render_template('dryseason.html', form=form, form2=form2, form7=form7, reforestation=reforestation, hectares=hectares, investment=investment, user=user, lcclass=lcclass )
+
+
+@server.route('/admin/update/<int:lcc_id>/landcover_classification', methods=['GET','POST'])
+def updatelcc(lcc_id):
+	form7 = LCClassificationForm()
+	lccclass = LCClassification.query.get_or_404(lcc_id)
+	if form7.validate_on_submit():
+		lccclass.lcc_classification = form7.lcc_classification.data
+		lccclass.lcc_initial = form7.lcc_initial.data
+		lccclass.lcc_publicdomain = form7.lcc_publicdomain.data
+		lccclass.lcc_desired= form7.lcc_desired.data
+		lccclass.lcc_maximum = form7.lcc_maximum.data
+		dbase.session.commit()
+		flash('Your post has been updated!', 'success')
+		return redirect(url_for('settings', lccclass=lccclass))
+	elif request.method == 'GET':
+		form7.lcc_classification.data = lccclass.lcc_classification
+		form7.lcc_initial.data = lccclass.lcc_initial
+		form7.lcc_publicdomain.data = lccclass.lcc_publicdomain
+		form7.lcc_desired.data = lccclass.lcc_desired
+		form7.lcc_maximum.data = lccclass.lcc_maximum
+	return redirect(url_for('settings.html', form7=form7, lccclass=lccclass))
+
+@server.route('/admin/add_landcover_classification', methods=['GET','POST'])
+def add_lcclassification():
+	form7 = LCClassificationForm()
+	if form7.validate_on_submit():
+		new_lcclassification = LCClassification(form7.lcc_classification.data, form7.lcc_initial.data, form7.lcc_publicdomain.data,form7.lcc_desired.data, form7.lcc_maximum.data)
+		dbase.session.add(new_lcclassification)
+		dbase.session.commit()	
+		return redirect(url_for('settings',form7=form7))
+	return render_template('settings.html', form7=form7)
+
+@server.route('/admin/<int:lcc_id>/landcover_classification/delete', methods=['POST'])
+def delete_lcc(lcc_id):
+    deletelcc = LCClassification.query.get_or_404(lcc_id)
+    dbase.session.delete(deletelcc)
+    dbase.session.commit()
+    flash('Your post has been deleted!', 'success')
+    return redirect(url_for('settings'))
+
+@server.route('/admin/flood_temporal', methods=['GET','POST'])
+@login_required
+def floodtemporal():
+	user = User.query.filter_by(id=current_user.id).first()
+	investment = Investment.query.filter_by(investment_id=1).first()
+	hectares = Hectares.query.filter_by(hectares_id=1).first()
+	reforestation = Reforestation.query.filter_by(reforestation_id=1).first()
+	floodtempporal = FloodTemporal.query.all()
+	form = InvestmentForm()
+	form2 = HectaresForm()
+	form8 = FloodTemporalForm()
+	return render_template('dryseason.html', form=form, form2=form2, form8=form8, reforestation=reforestation, hectares=hectares, investment=investment, user=user, floodtempporal=floodtempporal )
+
+
+@server.route('/admin/update/<int:ft_id>/flood_temporal', methods=['GET','POST'])
+def updateft(ft_id):
+	form8 = FloodTemporalForm()
+	floodtemporal = FloodTemporal.query.get_or_404(ft_id)
+	if form8.validate_on_submit():
+		floodtemporal.ft_lcc = form8.ft_lcc.data
+		floodtemporal.ft_hectares = form8.ft_hectares.data
+		floodtemporal.ft_reduced = form8.ft_reduced.data
+		dbase.session.commit()
+		flash('Your post has been updated!', 'success')
+		return redirect(url_for('settings', floodtemporal=floodtemporal))
+	elif request.method == 'GET':
+		form8.ft_lcc.data = floodtemporal.ft_lcc
+		form8.ft_hectares.data = floodtemporal.ft_hectares
+		form8.ft_reduced.data = floodtemporal.ft_reduced
+	return redirect(url_for('settings.html', form8=form8, floodtemporal=floodtemporal))
+
+@server.route('/admin/add_flodd_temporal', methods=['GET','POST'])
+def add_floodtemporal():
+	form8 = FloodTemporalForm()
+	if form8.validate_on_submit():
+		new_floodtemporal = FloodTemporal(form8.ft_lcc.data, form8.ft_hectares.data, form8.ft_reduced.data)
+		dbase.session.add(new_floodtemporal)
+		dbase.session.commit()	
+		return redirect(url_for('settings',form8=form8))
+	return render_template('settings.html', form8=form8)
+
+@server.route('/admin/<int:ft_id>/flood_temporal/delete', methods=['POST'])
+def delete_ft(ft_id):
+    deleteft = FloodTemporal.query.get_or_404(ft_id)
+    dbase.session.delete(deleteft)
+    dbase.session.commit()
+    flash('Your post has been deleted!', 'success')
+    return redirect(url_for('settings'))
+
+
+@server.route('/admin/erosion_temporal', methods=['GET','POST'])
+@login_required
+def erosiontemporal():
+	user = User.query.filter_by(id=current_user.id).first()
+	investment = Investment.query.filter_by(investment_id=1).first()
+	hectares = Hectares.query.filter_by(hectares_id=1).first()
+	reforestation = Reforestation.query.filter_by(reforestation_id=1).first()
+	erosiontemporal = ErosionTemporal.query.all()
+	form = InvestmentForm()
+	form2 = HectaresForm()
+	form9 = ErosionTemporal()
+	return render_template('dryseason.html', form=form, form2=form2, form9=form9, reforestation=reforestation, hectares=hectares, investment=investment, user=user, erosiontemporal=erosiontemporal )
+
+
+@server.route('/admin/update/<int:et_id>/erosion_temporal', methods=['GET','POST'])
+def updateet(et_id):
+	form9 = ErosionTemporalForm()
+	erosiontemporal = FloodTemporal.query.get_or_404(et_id)
+	if form9.validate_on_submit():
+		erosiontemporal.et_lcc = form9.et_lcc.data
+		erosiontemporal.et_hectares = form9.et_hectares.data
+		erosiontemporal.et_reduced = form9.et_reduced.data
+		dbase.session.commit()
+		flash('Your post has been updated!', 'success')
+		return redirect(url_for('settings', erosiontemporal=erosiontemporal))
+	elif request.method == 'GET':
+		form9.et_lcc.data = erosiontemporal.et_lcc
+		form9.et_hectares.data = erosiontemporal.et_hectares
+		form9.et_reduced.data = erosiontemporal.et_reduced
+	return redirect(url_for('settings.html', form9=form9, erosiontemporal=erosiontemporal))
+
+@server.route('/admin/add_erosion_temporal', methods=['GET','POST'])
+def add_erosiontemporal():
+	form9 = ErosionTemporalForm()
+	if form9.validate_on_submit():
+		new_erosiontemporal = ErosionTemporal(form9.et_lcc.data, form9.et_hectares.data, form9.et_reduced.data)
+		dbase.session.add(new_erosiontemporal)
+		dbase.session.commit()	
+		return redirect(url_for('settings',form9=form9))
+	return render_template('settings.html', form9=form9)
+
+@server.route('/admin/<int:et_id>/erosion_temporal/delete', methods=['POST'])
+def delete_et(et_id):
+    deleteet = ErosionTemporal.query.get_or_404(et_id)
+    dbase.session.delete(deleteet)
+    dbase.session.commit()
+    flash('Your post has been deleted!', 'success')
+    return redirect(url_for('settings'))
+
 @server.route('/about', methods=['GET','POST'])
 @login_required
 def about():
@@ -545,24 +716,30 @@ def p_dashboard():
 	reforestation = Reforestation.query.filter_by(reforestation_id=1).first()
 	dryseason = DrySeason.query.all()
 	erosion = Erosion.query.filter_by(erosion_id=1).first()
+	floodtemporal = FloodTemporal.query.all()
+	erosiontemporal = ErosionTemporal.query.all()
 	forestprotection = ForestProtection.query.all()
 	rainforestation = Rainforestation.query.all()
 	datagathering = Datagathering.query.all()
 	investmentlc = InvestmentLC.query.all()
 	investmentcost = InvestmentCost.query.filter_by(investmentcost_id=1).first()
+	lcclass = LCClassification.query.all()
 	form = InvestmentForm()
 	form2 = HectaresForm()
 	form3 = ReforestationForm()
 	form4 = FireControlForm()
 	form5 = DrySeasonForm() 
-	form6 = ErosionForm()  	
+	form6 = ErosionForm()
+	form7 = LCClassificationForm()
+	form8 = FloodTemporalForm()
+	form9 = ErosionTemporalForm()
 	formfp = ForestProtectionForm()
 	formrf = RainforestationForm()
 	formdg = DataGatheringForm()
 	forminvlc  = InvestmentLCForm()
 	formic = InvestmentCostForm()
 
-	return render_template('p_index.html', investmentcost=investmentcost,formic=formic, forminvlc=forminvlc,investmentlc=investmentlc, form=form, form2=form2, form3=form3, form4=form4, form5=form5, form6=form6, formfp=formfp, formrf=formrf, formdg=formdg, reforestation=reforestation, hectares=hectares, investment=investment, dryseason=dryseason, erosion=erosion, forestprotection=forestprotection, rainforestation=rainforestation, datagathering=datagathering, user=user )
+	return render_template('p_index.html', investmentcost=investmentcost,formic=formic, forminvlc=forminvlc,investmentlc=investmentlc, form=form, form2=form2, form3=form3, form4=form4, form5=form5, form6=form6, form7=form7, form8=form8, form9=form9, formfp=formfp, formrf=formrf, formdg=formdg, reforestation=reforestation, hectares=hectares, investment=investment, dryseason=dryseason, erosion=erosion, forestprotection=forestprotection, rainforestation=rainforestation, datagathering=datagathering, lcclass=lcclass, floodtemporal=floodtemporal, erosiontemporal=erosiontemporal,user=user )
 
 
 @server.route('/rainforestation_cost', methods=["GET","POST"])
@@ -620,10 +797,12 @@ def p_landcover():
 	investment = Investment.query.filter_by(investment_id=1).first()
 	hectares = Hectares.query.filter_by(hectares_id=1).first()
 	reforestation = Reforestation.query.filter_by(reforestation_id=1).first()
+	rainforestation = Rainforestation.query.all()
+	lcclass = LCClassification.query.all()
 	form = InvestmentForm()
 	form2 = HectaresForm()
 	form3 = ReforestationForm()
-	return render_template('p_landcover.html', form=form, form2=form2, form3=form3, reforestation=reforestation, hectares=hectares, investment=investment, user=user )
+	return render_template('p_landcover.html', form=form, form2=form2, form3=form3, lcclass = lcclass, rainforestation=rainforestation, reforestation=reforestation, hectares=hectares, investment=investment, user=user )
 	
 
 @server.route('/rainscenario', methods=['GET','POST'])
@@ -659,4 +838,18 @@ def p_dry_season():
 	form5 = DrySeasonForm()
 	return render_template('p_dryseason.html', form=form, form2=form2, form3=form3,form5=form5, erosion=erosion, reforestation=reforestation, hectares=hectares, investment=investment, user=user, dryseason=dryseason )
 
- 
+@server.route('/manage_users', methods=['GET','POST'])
+@login_required
+def manage_users():
+	user = User.query.filter_by(id=current_user.id).first()
+	user_list = User.query.all()
+	
+	return render_template('users.html', user=user, user_list=user_list )
+
+@server.route('/admin/user/<int:id>/delete', methods=['POST'])
+def delete_user(id):
+    delete_user = User.query.get_or_404(id)
+    dbase.session.delete(delete_user)
+    dbase.session.commit()
+    flash('Your post has been deleted!', 'success')
+    return redirect(url_for('manage_users'))

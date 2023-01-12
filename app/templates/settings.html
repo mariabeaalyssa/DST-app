@@ -111,7 +111,26 @@
             <div class="container-fluid">
 
                 <!-- Shapefile Settings -->
-                   
+                
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        
+                        <h6 class="m-0 font-weight-bold text-primary">Admin Instruction Manual</h6>
+                      
+                        
+                    </div>
+                    <div class="card-body">
+
+                        
+                            <h6 class="m-0 font-weight-bold text-primary"></h6>
+                    
+                             <a href="https://docs.google.com/document/d/1Gsc6DYwGHZ-XinlbK5N7Od2k55SjkD0CfMLydrsQS10/edit?usp=sharing" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i></i> View Instructions
+                            </a>
+                       
+
+                    </div>
+                
+                </div>    
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         
@@ -324,9 +343,86 @@
             </div>
         </div>
 
-        
+         <!-- Flood Model Settings -->
+        <!-- Flood Tempopral Table--
 
-                <!-- Rainfall Scenario Settings -->
+        <div class="card shadow mb-4">
+
+                    
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                
+                <h6 class="m-0 font-weight-bold text-primary">Flood Model Settings </h6>
+              
+                
+            </div>
+            <div class="card-body">
+            
+                <a data-toggle="modal" data-target="#AddFT"class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                    class=""></i>  Add Flood Temporal Scenario Data</a>
+                    
+                
+                <div class="card shadow mb-4">
+                    
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th><center>Land Cover Classification</center></th>
+                                    <th><center>Hectares Reforested</center></th>
+                                    <th><center>Cost</center></th>
+                                    <th><center>Flood Reduced</center></th>
+                                    <th><center>Action</center></th>
+                                  
+                                </tr>
+                            </thead> 
+                          
+                           {% for i in floodtemporal %}
+                            <tbody>
+                                <tr>
+                                    <td><b>{{i.ft_lcc}}</b></td>
+    
+                                    
+                                    <td>{{"{:,}".format(i.ft_hectares)}} has.</td>
+                                    <td>{{i.ft_hectares*investmentcost.investmentcost_cost}}</td>
+                                    <td>{{"{:,}".format(i.ft_reduced)}}</td>
+                                     <td>
+
+                                        <div class="dropdown no-arrow">
+                                            <a class="fas fa-info-circle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false">
+                                             
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                                aria-labelledby="dropdownMenuLink">
+                                                <div class="dropdown-header">Options</div>
+                                                <form action="{{ url_for('delete_ft', ft_id=i.ft_id) }}" method="POST">
+                                                    <input class="dropdown-item" class="btn btn-danger" type="submit" value="Delete">
+                                                </form>
+                                
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item"data-toggle="modal" data-target="#UpdateFT"> Update Item    
+                                                </a>
+                                            </div>
+                                        </div>
+                                           
+    
+                                    </td>
+    
+                                    
+    
+                                </tr>
+                            </tbody>
+                            {% endfor %}
+                           
+                            </table> 
+                        </div>
+                    
+                    </div>
+                    </div>
+                       
+              
+         Land Classification Table End-->
+        <!-- Rainfall Scenario Settings -->
 
 
                 <div class="card shadow mb-4">
@@ -337,13 +433,82 @@
                         
                     </div>
                     <div class="card-body">
-                    
-                        <a href="https://docs.google.com/spreadsheets/d/1_PRQBchszpnG6mgHLry30HMI3fIuyr7BttSU1Px5g_A/edit?usp=sharing" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i></i> Update Rainfall Scenario Data
-                        </a>
+                       
+                            <a href="https://docs.google.com/spreadsheets/d/1_PRQBchszpnG6mgHLry30HMI3fIuyr7BttSU1Px5g_A/edit?usp=sharing" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i></i> Update Data
+                            </a>
+                       
                     </div>
+                  </div>  
+                  
+            <!--- Erosion Table
+            <div class="card-body">
+            
+                <a data-toggle="modal" data-target="#AddET"class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                    class=""></i>  Add Erosion Temporal Scenario Data</a>
                 
+                
+                <div class="card shadow mb-4">
+                    
+                        <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th><center>Land Cover Classification</center></th>
+                                    <th><center>Hectares Reforested</center></th>
+                                    <th><center>Cost</center></th>
+                                    <th><center>Erosion Reduced</center></th>
+                                  
+                                    <th><center>Action</center></th>
+                                  
+                                </tr>
+                            </thead> 
+                          
+                           {% for i in erosiontemporal %}
+                            <tbody>
+                                <tr>
+                                    <td><b>{{i.et_lcc}}</b></td>
+                                    <td>{{"{:,}".format(i.et_hectares)}} has.</td>
+                                    <td>{{i.et_hectares * investmentcost.investmentcost_cost}}</td>
+                                    <td>{{"{:,}".format(i.et_reduced)}}</td>
+                                   
+                                     <td>
+
+                                        <div class="dropdown no-arrow">
+                                            <a class="fas fa-info-circle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false">
+                                             
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                                aria-labelledby="dropdownMenuLink">
+                                                <div class="dropdown-header">Options</div>
+                                                <form action="{{ url_for('delete_et', et_id=i.et_id) }}" method="POST">
+                                                    <input class="dropdown-item" class="btn btn-danger" type="submit" value="Delete">
+                                                </form>
+                                
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item"data-toggle="modal" data-target="#UpdateET"> Update Item    
+                                                </a>
+                                            </div>
+                                        </div>
+                                           
+    
+                                    </td>
+    
+                                    
+    
+                                </tr>
+                            </tbody>
+                            {% endfor %}
+                           
+                            </table> 
+                        </div>
+                    
+                    </div>
+                    </div>
+                    
+                </div>  
                 </div>
-                <!-- End  Rainfall Scenario Settings-->
+                -- End  Rainfall Scenario Settings-->
 
                 <!-- Erosion Settings -->
                 <div class="card shadow mb-4">
@@ -352,6 +517,13 @@
                         <h6 class="m-0 font-weight-bold text-primary">Erosion Model Settings</h6>
                       
                     </div>
+                    <div class="card-body">
+                       
+                        <a href="https://docs.google.com/spreadsheets/d/1P7ewJzp4_lpkCSBaGR2B01gYpZwdqj1h6twIVkPUQdI/edit?usp=sharing" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i></i> Update Data
+                        </a>
+                   
+                    </div>
+                    <!-- erosion card--
                     <div class="card-body">
                     <div class="row">
                     <div class="col-xl-3 col-md-6 mb-4">
@@ -375,7 +547,7 @@
                     </div>
                     </div>
                     </div>
-                
+                -->
                 </div>
                 <!-- End Erosion Settings -->
                 <!-- Dry Season Settings -->
@@ -389,11 +561,18 @@
                         
                     </div>
                     <div class="card-body">
+                       
+                        <a href="https://docs.google.com/spreadsheets/d/1P7ewJzp4_lpkCSBaGR2B01gYpZwdqj1h6twIVkPUQdI/edit?usp=sharing" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i></i> Update Data
+                        </a>
+                   
+                    </div>
+                     <!--dry season table--
+                    <div class="card-body">
                     
                         <a data-toggle="modal" data-target="#AddDrySeason"class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                             class=""></i>  Add Dry Season Data</a>
                             
-                        </div>
+                       
                         <div class="card shadow mb-4">
                             
                                 <div class="table-responsive">
@@ -448,7 +627,7 @@
                                    
                                     </table> 
                                 </div>
-                            
+                            -->
                             </div>
 
 
@@ -456,6 +635,31 @@
                 
                 </div>
                 <!-- End Dry Season Settings-->
+
+                <!-- Manage User-->
+                
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        
+                        <h6 class="m-0 font-weight-bold text-primary">User Settings</h6>
+                      
+                        
+                    </div>
+                    <div class="card-body">
+
+                        
+                            <h6 class="m-0 font-weight-bold text-primary"></h6>
+                    
+                             <a href="{{url_for('manage_users')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i></i> Manage Users
+                            </a>
+                       
+
+                    </div>
+                
+                </div>
+                </div>
+
+                <!-- End Manage User-->
 
             </div>
             <!-- /.container-fluid -->

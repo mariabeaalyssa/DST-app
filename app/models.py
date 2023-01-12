@@ -171,3 +171,46 @@ class InvestmentCost(dbase.Model):
 
 	def __init__(self, investmentcost_cost='' ):
 		self.investmentcost_cost = investmentcost_cost
+
+class LCClassification(dbase.Model):
+	__tablename__="classification"
+
+	lcc_id = dbase.Column(dbase.Integer, primary_key=True)
+	lcc_classification = dbase.Column(dbase.String(200))
+	lcc_initial = dbase.Column(dbase.Integer)
+	lcc_publicdomain = dbase.Column(dbase.Integer)
+	lcc_desired = dbase.Column(dbase.Integer)
+	lcc_maximum = dbase.Column(dbase.Integer)
+
+	def __init__(self, lcc_classification='', lcc_initial='', lcc_publicdomain='',lcc_desired='', lcc_maximum='' ):
+		self.lcc_classification = lcc_classification
+		self.lcc_initial = lcc_initial
+		self.lcc_publicdomain = lcc_publicdomain
+		self.lcc_desired = lcc_desired
+		self.lcc_maximum = lcc_maximum
+
+class FloodTemporal(dbase.Model):
+	__tablename__="floodtemporal"
+
+	ft_id = dbase.Column(dbase.Integer, primary_key=True)
+	ft_lcc = dbase.Column(dbase.String(200))
+	ft_hectares = dbase.Column(dbase.Integer)
+	ft_reduced = dbase.Column(dbase.Integer)
+
+	def __init__(self, ft_lcc='', ft_hectares='',ft_reduced=''):
+		self.ft_lcc = ft_lcc
+		self.ft_hectares = ft_hectares
+		self.ft_reduced = ft_reduced
+
+class ErosionTemporal(dbase.Model):
+	__tablename__="erosiontemporal"
+
+	et_id = dbase.Column(dbase.Integer, primary_key=True)
+	et_lcc = dbase.Column(dbase.String(200))
+	et_hectares = dbase.Column(dbase.Integer)
+	et_reduced = dbase.Column(dbase.Integer)
+
+	def __init__(self, et_lcc='', et_hectares='',et_reduced=''):
+		self.et_lcc = et_lcc
+		self.et_hectares = et_hectares
+		self.et_reduced = et_reduced

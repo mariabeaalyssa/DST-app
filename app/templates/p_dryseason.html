@@ -6,7 +6,77 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
+<style>
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+    
+    .switch input { 
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+    
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+    
+    input:checked + .slider {
+      background-color: #2196F3;
+    }
+    
+    input:focus + .slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+    
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+    
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+    
+    .slider.round:before {
+      border-radius: 50%;
+    }
+    </style>
+    <script>
+    function toggle(ID){
+  var element = document.getElementById(ID);
+  if(element.style.display === "none"){
+    element.style.display = "block";
+  }else{
+    element.style.display = "none";
+  }
+  }
+      </script>
 
 <script>
     //user-defined function to download CSV file
@@ -74,22 +144,88 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-               
-
+                <div class="card shadow mb-4">
+                <center>
+                    
+                <iframe width="1500" height="550" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSndj9N9y6s5DdHQBeqHr5EfMFnOqQwTg1bD4B1gucUbMxJuihQTljVcxAn2kZEV4K4P97koknkzO9E/pubchart?oid=1599765566&amp;format=interactive"></iframe>
               
-
+               </center>
+              </div>
                 <!-- Content Row -->
+                 <!----csv
                 <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary"></h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Dry-Season River Flow Temporal Scenario</h6>
                     
                  
                             <a onclick="exportDrySeasonToCSV('DrySeason.csv')" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Download Report</a>
-                  
+                            -->
                     
-                </div>
+                
+                
                 <div class="card-body">
+                    <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                      <h6 class="m-0 font-weight-bold text-primary">Dry-Season River Flow Temporal Scenario</h6>
+                      
+             <span>
+                <h8 class="m-0 font-weight-bold text-primary">1-10 years</h8>
+                <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider round"
+                  id="bt" 
+                  onclick="toggle('table1')"></span>
+                </label>
+                
+                <h8 class="m-0 font-weight-bold text-primary">11-20 years</h8>
+                  <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"
+                    id="bt" 
+                    onclick="toggle('table11')"></span>
+                  </label>
+  
+                  <h8 class="m-0 font-weight-bold text-primary">21-30 years</h8>
+                  <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"
+                    id="bt" 
+                    onclick="toggle('table21')"></span>
+                  </label>
+                 </span>
+                  
+                  
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <div style="border:solid 1px #ddd;  padding:10px;" id="table1" >
+                        <center>
+                          <iframe width="1500" height="300" seamless frameborder="0" scrolling="no" 
+                         src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSKdW0YQHpks_Bg_mcih5AgmUbAgRYoC9GkpPx5VWh8QMvH5_-spoRk9s4kaezCiqSX195fkuaCtcK7/pubhtml?gid=1085046382&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+                        </center>
+                        </div>
+
+                        <div style="border:solid 1px #ddd;  padding:10px; display:none;" id="table11" >
+                        <center>
+                        <iframe width="1500" height="275" seamless frameborder="0" scrolling="no" 
+                        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSKdW0YQHpks_Bg_mcih5AgmUbAgRYoC9GkpPx5VWh8QMvH5_-spoRk9s4kaezCiqSX195fkuaCtcK7/pubhtml?gid=376028747&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+                        </center>
+                        </div>
+
+
+
+                        <div style="border:solid 1px #ddd;  padding:10px;  display:none;" id="table21" >
+                            <center>
+                            <iframe width="1500" height="220" seamless frameborder="0" scrolling="no" 
+                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSKdW0YQHpks_Bg_mcih5AgmUbAgRYoC9GkpPx5VWh8QMvH5_-spoRk9s4kaezCiqSX195fkuaCtcK7/pubhtml?gid=1990759262&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+                            </center> 
+                        </div>
+                  </div>
+                  </div>
+
+               
+                  <!--table--
                     <div class="table-responsive">
                         <table class="table table-bordered" width="100%" cellspacing="0">
                             <thead>
@@ -108,8 +244,8 @@
                                 <td><center><b>{{"{:,}".format(i.dryseason_forestage)}}</b></center></td>
 
                                 
-                                <td>{{"{:,}".format(i.dryseason_hectares)}} has.</td>
-                                <td>{{"{:,}".format(i.dryseason_discharge)}}</td>
+                                <td>{{i.dryseason_hectares}} has.</td>
+                                <td>{{i.dryseason_discharge}}</td>
                                
 
                                 
@@ -120,6 +256,7 @@
                        
                         </table> 
                     </div>
+                   --->
                 </div>
                 </div>
                 

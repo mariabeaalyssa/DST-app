@@ -1,158 +1,416 @@
+<!--land cover draft-->
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <title>Read CSV In JavaScript</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
-<body>
-  <div class="container" style="margin-top: 30px;">
-    <div class="col-md-4">
-      <input type="file" id="fileToUpload" class="form-control">
-    </div>
-    <div class="col-md-4">
-      <button type="button" class="btn btn-info btn-lg" id="btnUploadFile">Upload File</button>
-    </div>
-    <div class="table-responsive col-md-12 csv-table" style="margin-top: 20px;">
-      <table class="table table-bordered table-hover table-striped"></table>
-    </div>
-  </div>
-</body>
-</html>
-<script type="text/javascript">
-    var csvParsedArray = [];
-    $(document).on('click','#btnUploadFile',function(){
-      if ($("#fileToUpload").get(0).files.length == 0) {
-        alert("Please upload the file first.");
-        return;
-      }
-      let fileUpload = $("#fileToUpload").get(0);
-      let files = fileUpload.files;
-      if (files[0].name.toLowerCase().lastIndexOf(".csv") == -1) {
-        alert("Please upload only CSV files");
-        return;
-      }
-      let reader = new FileReader();
-      let bytes = 50000;
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Decision Support Tool - Flood Model</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="{{ url_for('.static', filename='vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{{ url_for('.static', filename='css/sb-admin-2.min.css')}}" rel="stylesheet" type="text/css">
+
+    <link href="{{ url_for('.static', filename='vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
   
-      reader.onloadend = function (evt) {
-        let lines = evt.target.result;
-        if (lines && lines.length > 0) {
-          let line_array = CSVToArray(lines);
-          if (lines.length == bytes) {
-            line_array = line_array.splice(0, line_array.length - 1);
-          }
-          var columnArray = [];
-          var stringHeader = "<thead><tr>";
-          var stringBody = "<tbody>";
-          for (let i = 0; i < line_array.length; i++) {
-            let cellArr = line_array[i];
-            stringBody += "<tr>";
-            for (var j = 0; j < cellArr.length; j++) {
-              if(i == 0) {
-                columnArray.push(cellArr[j].replace('ï»¿', ''));
-                stringHeader += "<th>" + columnArray[j] + "</th>";
-              }
-              else{
-                stringBody += "<td>" + cellArr[j] + "</td>";
-                csvParsedArray.push({
-                  "column" : columnArray[j],
-                  "value": cellArr[j]
-                });
-              }
-            }
-            stringBody += "</tr>";
-          }
-          stringBody += "</tbody>";
-          stringHeader += "</tr></thead>";
-          $('.csv-table table').append(stringHeader);
-          $('.csv-table table').append(stringBody);
-        }
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+   
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.24/esri/themes/light/main.css"
+    />
+
+    <style>
+      
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 70%;
+        width: 100%;
+        overflow: hidden;
       }
-  
-      let blob = files[0].slice(0, bytes);
-      reader.readAsBinaryString(blob);
-    });
-  
-    function CSVToArray(strData, strDelimiter) {
-      strDelimiter = (strDelimiter || ",");
-      let objPattern = new RegExp(
-        (
-          "(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
-          "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
-          "([^\"\\" + strDelimiter + "\\r\\n]*))"
-          ),
-        "gi"
-        );
-      let arrData = [[]];
-      let arrMatches = null;
-      while (arrMatches = objPattern.exec(strData)) {
-        let strMatchedDelimiter = arrMatches[1];
-        let strMatchedValue = [];
-        if (strMatchedDelimiter.length && (strMatchedDelimiter != strDelimiter)) {
-          arrData.push([]);
+    </style>
+      <style>
+        .hovertext {
+          position: relative;
+          border-bottom: 1px dotted black;
         }
-        if (arrMatches[2]) {
-          strMatchedValue = arrMatches[2].replace(new RegExp("\"\"", "g"),"\"");
-        } else {
-          strMatchedValue = arrMatches[3];
+
+        .hovertext:before {
+          content: attr(data-hover);
+          visibility: hidden;
+          opacity: 0;
+          width: 200px;
+          background-color: rgb(231, 229, 229);
+          color: rgb(37, 35, 35);
+          text-align: center;
+          border-radius: 5px;
+          padding: 10px 0;
+          transition: opacity 1s ease-in-out;
+
+          position: absolute;
+          z-index: 1;
+          left: 0;
+          top: 110%;
         }
-        arrData[arrData.length - 1].push(strMatchedValue);
-      }
-      return (arrData);
+
+        .hovertext:hover:before {
+          opacity: 1;
+          visibility: visible;
+        }
+        .switch {
+          position: relative;
+          display: inline-block;
+          width: 60px;
+          height: 34px;
+        }
+        
+        .switch input { 
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+        
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #ccc;
+          -webkit-transition: .4s;
+          transition: .4s;
+        }
+        
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 26px;
+          width: 26px;
+          left: 4px;
+          bottom: 4px;
+          background-color: white;
+          -webkit-transition: .4s;
+          transition: .4s;
+        }
+        
+        input:checked + .slider {
+          background-color: #2196F3;
+        }
+        
+        input:focus + .slider {
+          box-shadow: 0 0 1px #2196F3;
+        }
+        
+        input:checked + .slider:before {
+          -webkit-transform: translateX(26px);
+          -ms-transform: translateX(26px);
+          transform: translateX(26px);
+        }
+        
+        /* Rounded sliders */
+        .slider.round {
+          border-radius: 34px;
+        }
+        
+        .slider.round:before {
+          border-radius: 50%;
+        }
+        </style>
+        <script>
+        function toggle(ID){
+    var element = document.getElementById(ID);
+    if(element.style.display === "none"){
+        element.style.display = "block";
+    }else{
+        element.style.display = "none";
     }
-  </script>
+}
+          </script>
 
+    <script src="https://js.arcgis.com/4.24/"></script>
+    
 
+    <script>
+      require([
+        "esri/config",
+        "esri/views/SceneView",
+        "esri/widgets/LayerList",
+        "esri/widgets/Legend",
+        "esri/WebMap"
+      ], (esriConfig,SceneView, LayerList, Legend, WebMap) => {
+        esriConfig.apiKey = "AAPKf793e8626e4745f3b6ac2d9ee72063badZRO5Xycxb9gPP3jy1gSsrb0y580fmNvR14G-1vePOaFVP9IxO93ALdFGi93bM1z";
+        const scene = new WebMap({
+          portalItem: {
+            // autocasts as new PortalItem()
+            id: "15089ddf10cc4a619b238b77228b1f5e"
+          }
+        });
 
-@server.route('/update/<int:dryseason_id>/dryseason', methods=['GET','POST'])
-def update_dryseason(dryseason_id):
-	form5 = DrySeasonForm()
-	dryseason = DrySeason.query.get_or_404(dryseason_id)
-	if form5.validate_on_submit():
-		dryseason.dryseason_forestage = form5.dryseason_forestage.data
-		dryseason.dryseason_hectares= form5.dryseason_hectares.data
-		dryseason.dryseason_discharge= form5.dryseason_discharge.data
-		dbase.session.commit()
-		flash('Your post has been updated!', 'success')
-		return redirect(url_for('dryseason', from5=form5,dryseason=dryseason))
-	elif request.method == 'GET':
-		form5.dryseason_forestage.data = dryseason.dryseason_forestage
-		form5.dryseason_hectares.data = dryseason.dryseason_hectares
-		form5.dryseason_discharge.data = dryseason.dryseason_discharge
-	return redirect(url_for('dryseaon.html', form5=form5, dryseason=dryseason))
+        const view = new SceneView({
+          container: "viewDiv",
+          map: scene
+        });
 
-                <!-- Content Row 
-                <div class="modal fade" id="firecontrolModal" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Add New Item</h5>
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form class="modal-content animate" method="POST" action="{{ url_for('update_dryseason', dryseason_id=dryseason.dryseason_id) }}" >
-                                {{ form5.csrf_token }}
-                                  <div class="form-group">
-                                      {{ form5.dryseason_forestage (placeholder="Age of Forest", class="form-control mb-2 border border-primary text-center", required="true") }}
-                                      {{ form5.dryseason_hectares (placeholder="Hectares", class="form-control mb-2 border border-primary text-center", required="true") }}
-                                      {{ form5.dryseason_discharge (placeholder="Discharge", class="form-control mb-2 border border-primary text-center", required="true") }}
-                                       
-                                  </div>
+        view.when(() => {
+        const layerList = new LayerList({
+          view: view
+        });
+
+        view.ui.add(layerList, "top-right");
+
+        const featureLayer = scene.layers.getItemAt(0);
+
+        const legend = new Legend({
+          view: view,
+          layerInfos: [
+            {
+              layer: featureLayer,
+              title: "Erosion Model"
+            }
+          ]
+        });
+
+        // Add widget to the bottom right corner of the view
+        view.ui.add(legend, "bottom-left");
+              
+      });
+      scene.startup();
+    });
+
+      
+    </script>
+    
+ 
+ 
+  </head>
+
+<body id="page-top">
+  <div id="wrapper">
+    {% include 'sidebar.html' %}
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+          <!-- Topbar -->
+          <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+            <h1 class="h3 mb-0 text-gray-800">Flood Model</h1>
+              <!-- Sidebar Toggle (Topbar) -->
+              <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                  <i class="fa fa-bars"></i>
+              </button>
+
+              <!-- Topbar Navbar -->
+
+              {% include 'topbar.html' %}
+
+          </nav>
+        
+            <h6 class="m-0 font-weight-bold text-primary"></h6>
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                          <div class="col mr-2">
+                              <a class="text-xs font-weight-bold text-primary text-uppercase mb-1" href="{{ url_for('rainscenario') }}">
+                                  Rainfall Scenario</a>
+                                  
+                              <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                                  
-                                {{ form5.submit(class="btn btn-outline-info") }}
-                            </form>
+                          </div>
 
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        
+     
+          <div id="viewDiv"></div>
+        
+          <!-- Begin Page Content -->
+          <div class="card-body">
+            <div class="card shadow mb-4">
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Flood Reduced</h6>
 
-                        </div>
-                    </div>
-                </div>
+             <span>
+              <h8 class="m-0 font-weight-bold text-primary">1-10 years</h8>
+              <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider round"
+                id="bt" 
+                onclick="toggle('table1')"></span>
+              </label>
+              
+              <h8 class="m-0 font-weight-bold text-primary">11-20 years</h8>
+                <label class="switch">
+                  <input type="checkbox">
+                  <span class="slider round"
+                  id="bt" 
+                  onclick="toggle('table11')"></span>
+                </label>
+
+                <h8 class="m-0 font-weight-bold text-primary">21-30 years</h8>
+                <label class="switch">
+                  <input type="checkbox">
+                  <span class="slider round"
+                  id="bt" 
+                  onclick="toggle('table21')"></span>
+                </label>
+               </span>
+            
+            
             </div>
-        -->
+             <!----<span>
+                <label class="switch">
+                  <input type="checkbox"checked>
+                  <span class="slider round"
+                  id="bt" 
+                  onclick="toggle('divID')"></span>
+                </label> 30 years
+                </span>
+                --->
+            <div class="card-body">
+              <div>
+              </div>
+            <div class="table-responsive">
+              <div style="border:solid 1px #ddd;  padding:10px;" id="table1" >
+              <table class="table table-bordered" width="100%" cellspacing="0" >
+                  <thead>
+                  <tr>
+                    
+                <span class="hovertext" data-hover="The amount of flood reduced from a reforested area in  year 1-10">
+                  <h6 class="m-0 font-weight-bold text-primary">Flood Reduced in 1-10 years</h6>
+                </span>
+
+                    <th><center>Land Cover Classification</center></th>
+                    <th><center>Hectares Reforested</center></th>
+                    <th><center>Cost</center></th>
+                    <th><center>Flood Reduced</center></th>
+                  </tr>
+              </thead> 
+            
+             {% for i in floodtemporal %}
+              <tbody>
+                  <tr>
+                      <td><center><b>{{i.ft_lcc}}</b></center></td>
+                                    <td>{{"{:,}".format(i.ft_hectares)}} has.</td>
+                                    <td>{{i.ft_hectares * investmentcost.investmentcost_cost}}</td>
+                                    <td>{{"{:,}".format(i.ft_reduced)}}</td>
+                                    
+
+                  </tr>
+              </tbody>
+              {% endfor %}
+             
+             
+              </table> 
+              </div>
+
+              <!--11-20 years -->
+              <div style="border:solid 1px #ddd;  padding:10px;  display:none;" id="table11" >
+              <center>
+                <iframe width="1200" height="300" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSndj9N9y6s5DdHQBeqHr5EfMFnOqQwTg1bD4B1gucUbMxJuihQTljVcxAn2kZEV4K4P97koknkzO9E/pubhtml?gid=902296287&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+              </center>
+              <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                      <h6 class="m-0 font-weight-bold text-primary">Flood Reduced in 11-20 years</h6>
+                      <th><center>Land Cover Classification</center></th>
+                      <th><center>Hectares Reforested</center></th>
+                      <th><center>Cost</center></th>
+                      <th><center>Flood Reduced</center></th>
+                    </tr>
+                </thead> 
+              
+                {% for i in floodtemporal %}
+                {% if i.ft_lcc != "Shrubs" %}
+                <tbody>
+                    <tr>
+                        <td><center><b>{{i.ft_lcc}}</b></center></td>
+                                      <td>{{"{:,}".format(i.ft_hectares)}} has.</td>
+                                      <td>{{i.ft_hectares * investmentcost.investmentcost_cost}}</td>
+                                      <td>{{"{:,}".format(i.ft_reduced)}}</td>
+                                       
+  
+                    </tr>
+                </tbody>
+                {% endif %}
+                {% endfor %}
+                </table> 
+             
+                </div>
+                <!--21-30 years-->
+                <!--11-20 years -->
+              <div style="border:solid 1px #ddd;  padding:10px;  display:none;" id="table21" >
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                      <h6 class="m-0 font-weight-bold text-primary">Flood Reduced in 21-30 years</h6>
+                        <th><center>Land Cover Classification</center></th>
+                        <th><center>Hectares Reforested</center></th>
+                        <th><center>Cost</center></th>
+                        <th><center>Flood Reduced</center></th>
+                       
+                    </tr>
+                </thead> 
+              
+                {% for i in floodtemporal %}
+                {% if i.ft_lcc == "Close Forest" %}
+                <tbody>
+                    <tr>
+                        <td><center><b>{{i.ft_lcc}}</b></center></td>
+                                      <td>{{"{:,}".format(i.ft_hectares)}} has.</td>
+                                      <td>{{i.ft_hectares * investmentcost.investmentcost_cost}}</td>
+                                      <td>{{"{:,}".format(i.ft_reduced)}}</td>
+                                      
+  
+                    </tr>
+                </tbody>
+                {% endif %}
+                {% endfor %}
+               
+                </table> 
+                </div>
+                <!-- end of 21-30 years-->
+          </div>
+        </div>
+        </div>
+          
+  <!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
+
+<!-- Footer -->
+
+<!-- End of Footer -->
+
+</div>
+  </div>
+</body> 
+
+
+<script src="{{ url_for('.static', filename='main.js')}}"></script>
+<script src="{{ url_for('.static', filename='main.js')}}"></script>
+
+
+
+</html>
+

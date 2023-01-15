@@ -39,7 +39,94 @@
       overflow: hidden;
     }
   </style>
+      <style>
+        .hovertext {
+          position: relative;
+          border-bottom: 1px dotted black;
+        }
 
+        .hovertext:before {
+          content: attr(data-hover);
+          visibility: hidden;
+          opacity: 0;
+          width: 200px;
+          background-color: rgb(231, 229, 229);
+          color: rgb(37, 35, 35);
+          text-align: center;
+          border-radius: 5px;
+          padding: 10px 0;
+          transition: opacity 1s ease-in-out;
+
+          position: absolute;
+          z-index: 1;
+          left: 0;
+          top: 110%;
+        }
+
+        .hovertext:hover:before {
+          opacity: 1;
+          visibility: visible;
+        }
+        .switch {
+          position: relative;
+          display: inline-block;
+          width: 60px;
+          height: 34px;
+        }
+        
+        .switch input { 
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+        
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #ccc;
+          -webkit-transition: .4s;
+          transition: .4s;
+        }
+        
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 26px;
+          width: 26px;
+          left: 4px;
+          bottom: 4px;
+          background-color: white;
+          -webkit-transition: .2s;
+          transition: .1s;
+        }
+        
+        input:checked + .slider {
+          background-color: #2196F3;
+        }
+        
+        input:focus + .slider {
+          box-shadow: 0 0 1px #2196F3;
+        }
+        
+        input:checked + .slider:before {
+          -webkit-transform: translateX(26px);
+          -ms-transform: translateX(26px);
+          transform: translateX(26px);
+        }
+        
+        /* Rounded sliders */
+        .slider.round {
+          border-radius: 34px;
+        }
+        
+        .slider.round:before {
+          border-radius: 50%;
+        }
+        </style>
   <script src="https://js.arcgis.com/4.24/"></script>
 
   <script>
@@ -55,7 +142,7 @@
       const scene = new WebMap({
         portalItem: {
           // autocasts as new PortalItem()
-          id: "97223cfa2a7a4d28a85ac736ea05d7a9"
+          id: "97223cfa2a7a4d28a85ac736ea05d7a9 "
         }
       });
       
@@ -78,7 +165,7 @@
           layerInfos: [
             {
               layer: featureLayer,
-              title: "Erosion Model"
+              title: "Investments"
             }
           ]
         });
@@ -139,15 +226,17 @@
                 <div class="row">
                     <!-- Investment -->
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-primary shadow h-100 py-2">
+                        <span class="hovertext" data-hover="Total amount invested for reforestation. Click the link below to see the list of investors">
+                        <div class="card border-left-success shadow h-100 py-2">
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                             Investment</div>
                                             
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{ "Php {:,.2f}".format(investment.investment_amount) }}</div>
-                                           
+                                        <span><a href="{{ url_for('investors') }}">View List of Investors</a></span>
                                     </div>
                                     
                                     <div class="col-auto">
@@ -157,12 +246,16 @@
                                     </div>
                                   
                                 </div>
+                                
                             </div>
                         </div>
+                        </span>
                     </div>
 
                     <!-- Hecatres -->
+                    
                     <div class="col-xl-3 col-md-6 mb-4">
+                        <span class="hovertext" data-hover="Initial Area Reforested.">
                         <div class="card border-left-success shadow h-100 py-2">
                             <div class="card-body" >
                                 <div class="row no-gutters align-items-center">
@@ -170,31 +263,35 @@
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1" >
                                             Hectares Reforested</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{"{:,.2f}".format(hectares.hectares_total)}} ha</div>
+                                      
+                                       
                                     </div>
                                    
                                     <div class="col-auto">
-                                        <a></a>
+                                       
                                     </div>
                                     
                                 </div>
                             </div>
                         </div>
+                    </span>
                     </div>
                    
 
 
                     <!--Costing--->
-                    <a href="{{ url_for('rainforestation_cost') }}">
+                    
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-left-primary shadow h-100 py-2">
+                        <span class="hovertext" data-hover="Reforestation Cost per Hectare. Click to view breakdown">
+                        <div class="card border-left-success shadow h-100 py-2">
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            Rainforestation Cost Breakdown</div>
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            Rainforestation Cost</div>
                                             
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{ "Php {:,.2f}".format(investmentcost.investmentcost_cost) }} / ha</div>
-                                           
+                                        <a href="{{ url_for('rainforestation_cost') }}">View Rainforestation Cost Breakdown</a>
                                     </div>
                                    
                                     <div class="col-auto">
@@ -206,6 +303,7 @@
                                 </div>
                             </div>
                         </div>
+                    </span>
                     </div>
                     </a>
                     </div>

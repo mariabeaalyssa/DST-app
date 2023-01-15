@@ -121,3 +121,12 @@ class ErosionTemporalForm(FlaskForm):
     et_hectares = StringField('Hectares')
     et_reduced = StringField('Erosion Reduced')
     submit = SubmitField('Submit')
+
+class InvestorForm(FlaskForm): 
+    investors_name = StringField('Investor Name')
+    investors_office = StringField('Office')
+    investors_address = StringField('Address')
+    investors_amount = StringField('Amount')
+    investors_hectares = StringField('Hectares')
+    investors_area = StringField('Reforestation Area')
+    submit = SubmitField('Submit')

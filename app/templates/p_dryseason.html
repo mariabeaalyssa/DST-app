@@ -1,5 +1,5 @@
 <header>
-    <title>Decision Support Tool - Dry Season Flow Model </title>
+  <title>Decision Support Tool - Dry Season Flow Model </title>
 </header>
 
 
@@ -7,283 +7,291 @@
 {% block content %}
 
 <style>
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 60px;
-      height: 34px;
-    }
-    
-    .switch input { 
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-    
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      -webkit-transition: .4s;
-      transition: .4s;
-    }
-    
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 26px;
-      width: 26px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      -webkit-transition: .4s;
-      transition: .4s;
-    }
-    
-    input:checked + .slider {
-      background-color: #2196F3;
-    }
-    
-    input:focus + .slider {
-      box-shadow: 0 0 1px #2196F3;
-    }
-    
-    input:checked + .slider:before {
-      -webkit-transform: translateX(26px);
-      -ms-transform: translateX(26px);
-      transform: translateX(26px);
-    }
-    
-    /* Rounded sliders */
-    .slider.round {
-      border-radius: 34px;
-    }
-    
-    .slider.round:before {
-      border-radius: 50%;
-    }
-    </style>
-    <script>
-    function toggle(ID){
-  var element = document.getElementById(ID);
-  if(element.style.display === "none"){
-    element.style.display = "block";
-  }else{
-    element.style.display = "none";
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
   }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
   }
-      </script>
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+  </style>
+  <script>
+  function toggle(ID){
+var element = document.getElementById(ID);
+if(element.style.display === "none"){
+  element.style.display = "block";
+}else{
+  element.style.display = "none";
+}
+}
+    </script>
 
 <script>
-    //user-defined function to download CSV file
-    function downloadCSV(csv, filename) {
-        var csvFile;
-        var downloadLink;
-       
-        //define the file type to text/csv
-        csvFile = new Blob([csv], {type: 'text/csv'});
-        downloadLink = document.createElement("a");
-        downloadLink.download = filename;
-        downloadLink.href = window.URL.createObjectURL(csvFile);
-        downloadLink.style.display = "none";
-    
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-    }
-    
-    //user-defined function to export the data to CSV file format
-    function exportDrySeasonToCSV(filename) {
-       //declare a JavaScript variable of array type
-       var csv = [];
-       var rows = document.querySelectorAll("table tr");
+  //user-defined function to download CSV file
+  function downloadCSV(csv, filename) {
+      var csvFile;
+      var downloadLink;
      
-       //merge the whole data in tabular form 
-       for(var i=0; i<rows.length; i++) {
-        var row = [], cols = rows[i].querySelectorAll("td, th");
-        for( var j=0; j<cols.length; j++)
-           row.push(cols[j].innerText);
-        csv.push(row.join(","));
-       } 
-       //call the function to download the CSV file
-       downloadCSV(csv.join("\n"), filename);
-    }
-    </script>
+      //define the file type to text/csv
+      csvFile = new Blob([csv], {type: 'text/csv'});
+      downloadLink = document.createElement("a");
+      downloadLink.download = filename;
+      downloadLink.href = window.URL.createObjectURL(csvFile);
+      downloadLink.style.display = "none";
+  
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+  }
+  
+  //user-defined function to export the data to CSV file format
+  function exportDrySeasonToCSV(filename) {
+     //declare a JavaScript variable of array type
+     var csv = [];
+     var rows = document.querySelectorAll("table tr");
+   
+     //merge the whole data in tabular form 
+     for(var i=0; i<rows.length; i++) {
+      var row = [], cols = rows[i].querySelectorAll("td, th");
+      for( var j=0; j<cols.length; j++)
+         row.push(cols[j].innerText);
+      csv.push(row.join(","));
+     } 
+     //call the function to download the CSV file
+     downloadCSV(csv.join("\n"), filename);
+  }
+  </script>
 
 <!-- Page Wrapper -->
 <div id="wrapper">
 
-    <!-- Sidebar -->
-    {% include 'p_sidebar.html' %}
-    <!-- End of Sidebar -->
+  <!-- Sidebar -->
+  {% include 'p_sidebar.html' %}
+  <!-- End of Sidebar -->
 
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
 
-        <!-- Main Content -->
-        <div id="content">
+      <!-- Main Content -->
+      <div id="content">
 
-            <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                <h1 class="h3 mb-0 text-gray-800">Dry Season Flow Model</h1>
-                <!-- Sidebar Toggle (Topbar) -->
-                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                    <i class="fa fa-bars"></i>
-                </button>
+          <!-- Topbar -->
+          <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+              <h1 class="h3 mb-0 text-gray-800">Dry Season Flow Model</h1>
+              <!-- Sidebar Toggle (Topbar) -->
+              <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                  <i class="fa fa-bars"></i>
+              </button>
 
-                <!-- Topbar Navbar -->
-                {% include 'p_topbar.html' %}
+              <!-- Topbar Navbar -->
+              {% include 'p_topbar.html' %}
 
-            </nav>
-            <!-- End of Topbar -->
+          </nav>
+          <!-- End of Topbar -->
 
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
 
-                <!-- Page Heading -->
-                <div class="card shadow mb-4">
-                <center>
-                    
-                <iframe width="1500" height="550" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSndj9N9y6s5DdHQBeqHr5EfMFnOqQwTg1bD4B1gucUbMxJuihQTljVcxAn2kZEV4K4P97koknkzO9E/pubchart?oid=1599765566&amp;format=interactive"></iframe>
+              <!-- Page Heading -->
+              <div class="card shadow mb-4">
+              <center>
               
-               </center>
-              </div>
-                <!-- Content Row -->
-                 <!----csv
-                <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                
+                <iframe width="800" height="493" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQLOo0kUVFvIhnwjF47Zz5YjUWXJvRPcbprbFXhXOr28EkiApDUOtLhqOprnvEUxQ/pubchart?oid=849284600&amp;format=interactive"></iframe>
+                <iframe width="800" height="477" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQLOo0kUVFvIhnwjF47Zz5YjUWXJvRPcbprbFXhXOr28EkiApDUOtLhqOprnvEUxQ/pubchart?oid=198802023&amp;format=interactive"></iframe>
+                <br>
+                <iframe width="800" height="493" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQLOo0kUVFvIhnwjF47Zz5YjUWXJvRPcbprbFXhXOr28EkiApDUOtLhqOprnvEUxQ/pubchart?oid=764130682&amp;format=interactive"></iframe>
+                <iframe width="800" height="493" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQLOo0kUVFvIhnwjF47Zz5YjUWXJvRPcbprbFXhXOr28EkiApDUOtLhqOprnvEUxQ/pubchart?oid=800043100&amp;format=interactive"></iframe>
+                <br>
+                <iframe width="1025" height="493" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQLOo0kUVFvIhnwjF47Zz5YjUWXJvRPcbprbFXhXOr28EkiApDUOtLhqOprnvEUxQ/pubchart?oid=1885639841&amp;format=interactive"></iframe>
+             
+
+              </center>
+            </div>
+              <!-- Content Row -->
+               <!----csv
+              <div class="card shadow mb-4">
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Dry-Season River Flow Temporal Scenario</h6>
+                  
+               
+                          <a onclick="exportDrySeasonToCSV('DrySeason.csv')" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                              class="fas fa-download fa-sm text-white-50"></i> Download Report</a>
+                          -->
+                  
+              
+              
+              <div class="card-body">
+                  <div class="card shadow mb-4">
+                  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Dry-Season River Flow Temporal Scenario</h6>
                     
-                 
-                            <a onclick="exportDrySeasonToCSV('DrySeason.csv')" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Download Report</a>
-                            -->
-                    
-                
-                
-                <div class="card-body">
-                    <div class="card shadow mb-4">
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                      <h6 class="m-0 font-weight-bold text-primary">Dry-Season River Flow Temporal Scenario</h6>
-                      
-             <span>
-                <h8 class="m-0 font-weight-bold text-primary">1-10 years</h8>
+           <span>
+              <h8 class="m-0 font-weight-bold text-primary">1-10 years</h8>
+              <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider round"
+                id="bt" 
+                onclick="toggle('table1')"></span>
+              </label>
+              
+              <h8 class="m-0 font-weight-bold text-primary">11-20 years</h8>
                 <label class="switch">
-                  <input type="checkbox" checked>
+                  <input type="checkbox">
                   <span class="slider round"
                   id="bt" 
-                  onclick="toggle('table1')"></span>
+                  onclick="toggle('table11')"></span>
                 </label>
+
+                <h8 class="m-0 font-weight-bold text-primary">21-30 years</h8>
+                <label class="switch">
+                  <input type="checkbox">
+                  <span class="slider round"
+                  id="bt" 
+                  onclick="toggle('table21')"></span>
+                </label>
+               </span>
                 
-                <h8 class="m-0 font-weight-bold text-primary">11-20 years</h8>
-                  <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider round"
-                    id="bt" 
-                    onclick="toggle('table11')"></span>
-                  </label>
-  
-                  <h8 class="m-0 font-weight-bold text-primary">21-30 years</h8>
-                  <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider round"
-                    id="bt" 
-                    onclick="toggle('table21')"></span>
-                  </label>
-                 </span>
-                  
-                  
-                  </div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <div style="border:solid 1px #ddd;  padding:10px;" id="table1" >
-                        <center>
-                          <iframe width="1500" height="300" seamless frameborder="0" scrolling="no" 
-                         src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSKdW0YQHpks_Bg_mcih5AgmUbAgRYoC9GkpPx5VWh8QMvH5_-spoRk9s4kaezCiqSX195fkuaCtcK7/pubhtml?gid=1085046382&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
-                        </center>
-                        </div>
+                
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <div style="border:solid 1px #ddd;  padding:10px;" id="table1" >
+                      <center>
+                        <iframe width="1500" height="400" seamless frameborder="0" scrolling="no" 
+                       src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSKdW0YQHpks_Bg_mcih5AgmUbAgRYoC9GkpPx5VWh8QMvH5_-spoRk9s4kaezCiqSX195fkuaCtcK7/pubhtml?gid=1085046382&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+                      </center>
+                      </div>
 
-                        <div style="border:solid 1px #ddd;  padding:10px; display:none;" id="table11" >
-                        <center>
-                        <iframe width="1500" height="275" seamless frameborder="0" scrolling="no" 
-                        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSKdW0YQHpks_Bg_mcih5AgmUbAgRYoC9GkpPx5VWh8QMvH5_-spoRk9s4kaezCiqSX195fkuaCtcK7/pubhtml?gid=376028747&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
-                        </center>
-                        </div>
+                      <div style="border:solid 1px #ddd;  padding:10px; display:none;" id="table11" >
+                      <center>
+                      <iframe width="1500" height="300" seamless frameborder="0" scrolling="no" 
+                      src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSKdW0YQHpks_Bg_mcih5AgmUbAgRYoC9GkpPx5VWh8QMvH5_-spoRk9s4kaezCiqSX195fkuaCtcK7/pubhtml?gid=376028747&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+                      </center>
+                      </div>
 
 
 
-                        <div style="border:solid 1px #ddd;  padding:10px;  display:none;" id="table21" >
-                            <center>
-                            <iframe width="1500" height="220" seamless frameborder="0" scrolling="no" 
-                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSKdW0YQHpks_Bg_mcih5AgmUbAgRYoC9GkpPx5VWh8QMvH5_-spoRk9s4kaezCiqSX195fkuaCtcK7/pubhtml?gid=1990759262&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
-                            </center> 
-                        </div>
-                  </div>
-                  </div>
+                      <div style="border:solid 1px #ddd;  padding:10px;  display:none;" id="table21" >
+                          <center>
+                          <iframe width="1500" height="250" seamless frameborder="0" scrolling="no" 
+                          src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSKdW0YQHpks_Bg_mcih5AgmUbAgRYoC9GkpPx5VWh8QMvH5_-spoRk9s4kaezCiqSX195fkuaCtcK7/pubhtml?gid=1990759262&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+                          </center> 
+                      </div>
+                </div>
+                </div>
 
-               
-                  <!--table--
-                    <div class="table-responsive">
-                        <table class="table table-bordered" width="100%" cellspacing="0">
-                            <thead>
-                            <tr>
-                                <th><center>Age of Forest</center></th>
-                                <th><center>Hectares Reforested</center></th>
-                                <th><center>Amount of Dry Season Flow (discharge)</center></th>
-                                
+             
+                <!--table--
+                  <div class="table-responsive">
+                      <table class="table table-bordered" width="100%" cellspacing="0">
+                          <thead>
+                          <tr>
+                              <th><center>Age of Forest</center></th>
+                              <th><center>Hectares Reforested</center></th>
+                              <th><center>Amount of Dry Season Flow (discharge)</center></th>
                               
-                            </tr>
-                        </thead> 
-                      
-                       {% for i in dryseason %}
-                        <tbody>
-                            <tr>
-                                <td><center><b>{{"{:,}".format(i.dryseason_forestage)}}</b></center></td>
+                            
+                          </tr>
+                      </thead> 
+                    
+                     {% for i in dryseason %}
+                      <tbody>
+                          <tr>
+                              <td><center><b>{{"{:,}".format(i.dryseason_forestage)}}</b></center></td>
 
-                                
-                                <td>{{i.dryseason_hectares}} has.</td>
-                                <td>{{i.dryseason_discharge}}</td>
-                               
+                              
+                              <td>{{i.dryseason_hectares}} has.</td>
+                              <td>{{i.dryseason_discharge}}</td>
+                             
 
-                                
+                              
 
-                            </tr>
-                        </tbody>
-                        {% endfor %}
-                       
-                        </table> 
-                    </div>
-                   --->
-                </div>
-                </div>
-                
+                          </tr>
+                      </tbody>
+                      {% endfor %}
+                     
+                      </table> 
+                  </div>
+                 --->
+              </div>
+              </div>
+              
 
 
-                <!-- Content Row -->
-      
+              <!-- Content Row -->
+    
 
-            </div>
-            <!-- /.container-fluid -->
+          </div>
+          <!-- /.container-fluid -->
 
-        </div>
-        <!-- End of Main Content -->
+      </div>
+      <!-- End of Main Content -->
 
-        <!-- Footer -->
-      
-        <!-- End of Footer -->
+      <!-- Footer -->
+    
+      <!-- End of Footer -->
 
-    </div>
-    <!-- End of Content Wrapper -->
+  </div>
+  <!-- End of Content Wrapper -->
 
 </div>
 <!-- End of Page Wrapper -->
 
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
+  <i class="fas fa-angle-up"></i>
 </a>
 
 

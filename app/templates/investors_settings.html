@@ -1,0 +1,417 @@
+<header>
+    <title>Decision Support Tool - Investors </title>
+</header>
+
+
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+    
+    .switch input { 
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+    
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+    
+    input:checked + .slider {
+      background-color: #2196F3;
+    }
+    
+    input:focus + .slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+    
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+    
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+    
+    .slider.round:before {
+      border-radius: 50%;
+    }
+    </style>
+    <script>
+    function toggle(ID){
+  var element = document.getElementById(ID);
+  if(element.style.display === "none"){
+    element.style.display = "block";
+  }else{
+    element.style.display = "none";
+  }
+  }
+      </script>
+
+<script>
+    //user-defined function to download CSV file
+    function downloadCSV(csv, filename) {
+        var csvFile;
+        var downloadLink;
+       
+        //define the file type to text/csv
+        csvFile = new Blob([csv], {type: 'text/csv'});
+        downloadLink = document.createElement("a");
+        downloadLink.download = filename;
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+        downloadLink.style.display = "none";
+    
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+    }
+    
+    //user-defined function to export the data to CSV file format
+    function exportDrySeasonToCSV(filename) {
+       //declare a JavaScript variable of array type
+       var csv = [];
+       var rows = document.querySelectorAll("table tr");
+     
+       //merge the whole data in tabular form 
+       for(var i=0; i<rows.length; i++) {
+        var row = [], cols = rows[i].querySelectorAll("td, th");
+        for( var j=0; j<cols.length; j++)
+           row.push(cols[j].innerText);
+        csv.push(row.join(","));
+       } 
+       //call the function to download the CSV file
+       downloadCSV(csv.join("\n"), filename);
+    }
+    </script>
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    {% include 'sidebar.html' %}
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <h1 class="h3 mb-0 text-gray-800"></h1>
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <!-- Topbar Navbar -->
+                {% include 'topbar.html' %}
+
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+               
+               
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h3 class="m-0 font-weight-bold text-primary">Investors</h3>
+                </div>
+                <div class="card-body mb-4">
+                
+                    <a data-toggle="modal" data-target="#AddInvestor"class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                     class=""></i> Add Investors</a>
+              
+                       
+                    <!-- table-->
+                    <div class="table-responsive">
+                        
+                      <table class="table table-bordered" width="100%" cellspacing="0">
+                          <thead>
+                          <tr>
+                              <th><center>Investor Name</center></th>
+                              <th><center>Office</center></th>
+                              <th><center>Address</center></th>
+                              <th><center>Amount Invested</center></th>
+                              <th><center>Hectares Reforested</center></th>
+                              <th><center>Reforestation Area</center></th>
+                              <th><center>Action</center></th>
+                            
+                          </tr>
+                      </thead> 
+                    
+                     {% for i in investors %}
+                      <tbody>
+                          <tr>
+                              <td><center><b>{{i.investors_name}}</b></center></td>
+                              <td>{{i.investors_office}}</td>
+                              <td>{{i.investors_address}}</td>
+                              <td>{{i.investors_amount}}</td>
+                              <td>{{i.investors_hectares}}</td>
+                              <td>{{i.investors_area}}</td>
+                              <td>
+
+                                <div class="dropdown no-arrow">
+                                    <a class="fas fa-info-circle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                     
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                        aria-labelledby="dropdownMenuLink">
+                                        <div class="dropdown-header">Options</div>
+                                        <form action="{{ url_for('delete_investors', investors_id=i.investors_id) }}" method="POST">
+                                            <input class="dropdown-item" class="btn btn-danger" type="submit" value="Delete">
+                                        </form>
+                        
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item"data-toggle="modal" data-target="#UpdateInvestors"> Update Item    
+                                        </a>
+                                    </div>
+                                </div>
+                                   
+
+                            </td>
+
+                              
+
+                          </tr>
+                      </tbody>
+                      {% endfor %}
+                     
+                      </table> 
+                  </div>
+                    
+                  <!--end table-->
+
+                </div>
+            </div>
+
+
+            <!-- Dry Season Settings --
+                <div class="card shadow mb-4">
+
+                    <div class="card-body">
+                    
+                        <a data-toggle="modal" data-target="#AddDrySeason"class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                            class=""></i>  Add Dry Season Data</a>
+                            
+                       
+                        <div class="card shadow mb-4">
+                            
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th><center>Age of Forest</center></th>
+                                            <th><center>Hectares Reforested</center></th>
+                                            <th><center>Amount of Dry Season Flow (discharge)</center></th>
+                                            <th><center>Action</center></th>
+                                          
+                                        </tr>
+                                    </thead> 
+                                  
+                                   {% for i in dryseason %}
+                                    <tbody>
+                                        <tr>
+                                            <td><center><b>{{i.dryseason_forestage}}</b></center></td>
+            
+                                            
+                                            <td>{{"{:,}".format(i.dryseason_hectares)}} has.</td>
+                                            <td>{{"{:,}".format(i.dryseason_discharge)}}</td>
+                                           
+                                             <td>
+
+                                                <div class="dropdown no-arrow">
+                                                    <a class="fas fa-info-circle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                     
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                                        aria-labelledby="dropdownMenuLink">
+                                                        <div class="dropdown-header">Options</div>
+                                                        <form action="{{ url_for('delete_dryseason', dryseason_id=i.dryseason_id) }}" method="POST">
+                                                            <input class="dropdown-item" class="btn btn-danger" type="submit" value="Delete">
+                                                        </form>
+                                        
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item"data-toggle="modal" data-target="#DrySeason"> Update Item    
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                   
+            
+                                            </td>
+            
+                                            
+            
+                                        </tr>
+                                    </tbody>
+                                    {% endfor %}
+                                   
+                                    </table> 
+                                </div>
+                            -->
+                            
+                    
+                <!-- End Dry Season Settings-->
+              
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+      
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+<!-- Add Investors -->
+                
+<div class="modal fade" id="AddInvestor" tabindex="-1" role="dialog"
+aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add New Investor</h5>
+          
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form class="form-signin" method="POST" action="{{ url_for('add_investors') }}">
+                {{ investorform.csrf_token }}
+
+                <a>Fill  Details</a>
+               
+                <span></span>
+                <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        {{ investorform.investors_name ( placeholder="Investor Name", class="form-control
+                        mb-2 border border-primary") }}
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        {{ investorform.investors_office ( placeholder="Organization", class="form-control
+                        mb-2 border border-primary") }}
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        {{ investorform.investors_address ( placeholder="Address", class="form-control
+                        mb-2 border border-primary") }}
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        {{ investorform.investors_amount ( placeholder="Amount", type="number", class="form-control
+                        mb-2 border border-primary") }}
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        {{ investorform.investors_hectares ( placeholder="Hectares", type="number", class="form-control
+                        mb-2 border border-primary") }}
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        {{ investorform.investors_area ( placeholder="Reforestation Area", class="form-control
+                        mb-2 border border-primary") }}
+                    </div>
+                </div>
+
+
+                <input type="submit" name="login-info" class="btn btn-primary btn-user btn-block">
+
+            </form>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+<!--Update Investors-->
+{% for i in investors %}
+<div class="modal fade" id="UpdateInvestors" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <form class="modal-content animate" method="POST" action="{{ url_for('updateinvestor', investors_id=i.investors_id) }}" >
+              {{ investorform.csrf_token }}
+                <div class="form-group">
+                    {{ investorform.investors_name (placeholder="Investor Name", class="form-control mb-2 border border-primary text-center", required="true") }}
+                  
+                    {{ investorform.investors_office (placeholder="Office", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    {{ investorform.investors_address (placeholder="Address",class="form-control mb-2 border border-primary text-center", required="true") }}
+                    {{ investorform.investors_amount (placeholder="Amount", type="number", class="form-control mb-2 border border-primary text-center", required="true") }}
+                  
+                    {{ investorform.investors_hectares (placeholder="Hectares", type="number", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    {{ investorform.investors_area (placeholder="Reforestation Area", class="form-control mb-2 border border-primary text-center", required="true") }}
+                    
+                </div>
+
+              {{ investorform.submit(class="btn btn-outline-info") }}
+          </form>
+
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+         
+      </div>
+  </div>
+</div>
+</div>
+{% endfor %}
+
+{% endblock %}
+

@@ -124,7 +124,7 @@
                         
                             <h6 class="m-0 font-weight-bold text-primary"></h6>
                     
-                             <a href="https://docs.google.com/document/d/1Gsc6DYwGHZ-XinlbK5N7Od2k55SjkD0CfMLydrsQS10/edit?usp=sharing" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i></i> View Instructions
+                             <a href="https://docs.google.com/document/d/1Gsc6DYwGHZ-XinlbK5N7Od2k55SjkD0CfMLydrsQS10/edit?usp=sharing" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" target="_blank" rel="noopener"><i></i> View Instructions
                             </a>
                        
 
@@ -143,7 +143,7 @@
                         
                             <h6 class="m-0 font-weight-bold text-primary"></h6>
                     
-                             <a href="https://geze8fvjywraocwo.maps.arcgis.com/home/content.html?view=table&sortOrder=desc&sortField=modified&folder=geosed#content" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i></i> Update Shapefiles
+                             <a href="https://geze8fvjywraocwo.maps.arcgis.com/home/content.html?view=table&sortOrder=desc&sortField=modified&folder=geosed#content" target="_blank" rel="noopener" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i></i> Update Shapefiles
                             </a>
                        
 
@@ -195,6 +195,7 @@
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1" >
                                             Hectares Reforested</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{ "{:,.2f}".format(hectares.hectares_total)}} has.</div>
+                                        <a href="{{ url_for('investors_settings') }}">View List to Update</a>
                                     </div>
                                     
                                     <div class="col-auto">
@@ -209,7 +210,6 @@
                     
     
 
-                    <a href="{{ url_for('rainforestation_cost') }}">
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
@@ -219,7 +219,7 @@
                                                 Rainforestation Cost Breakdown</div>
                                                 
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ "Php {:,.2f}".format(investmentcost.investmentcost_cost) }}</div>
-                                               
+                                            <a href="{{ url_for('rainforestation_cost') }}"> View Reforstation Cost Breakdown to Update</a>
                                         </div>
                                        
                                         <div class="col-auto">
@@ -343,6 +343,9 @@
             </div>
         </div>
 
+
+
+
          <!-- Flood Model Settings -->
         <!-- Flood Tempopral Table--
 
@@ -428,19 +431,21 @@
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         
-                        <h6 class="m-0 font-weight-bold text-primary">Flood Model Settings </h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Flood, Erosion, and Dry-Season Flow Model Settings </h6>
                       
                         
                     </div>
                     
                     <div class="card-body">
+                        <h6> Update for Flood, Erosion, and Dry-Season Flow Model Data</h6>
                         
-                            <a href="https://docs.google.com/spreadsheets/d/1P7ewJzp4_lpkCSBaGR2B01gYpZwdqj1h6twIVkPUQdI/edit?usp=sharing" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i></i> Update Flood Table Data
+                            <a href="https://docs.google.com/spreadsheets/d/1P7ewJzp4_lpkCSBaGR2B01gYpZwdqj1h6twIVkPUQdI/edit?usp=sharing" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" target="_blank" rel="noopener" ><i></i> Update Data
                             </a>
                        
                      </div>
                      <div class="card-body">
-                            <a href="https://docs.google.com/spreadsheets/d/1_PRQBchszpnG6mgHLry30HMI3fIuyr7BttSU1Px5g_A/edit?usp=sharing" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i></i> Update Rainfall Scenario Data
+                        <h6> Update for Rainfall Scenario Data</h6>
+                            <a href="https://docs.google.com/spreadsheets/d/1_PRQBchszpnG6mgHLry30HMI3fIuyr7BttSU1Px5g_A/edit?usp=sharing" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" target="_blank" rel="noopener" ><i></i> Update Rainfall Scenario Data
                             </a>
                        
                     </div>
@@ -516,7 +521,7 @@
                 </div>
                 -- End  Rainfall Scenario Settings-->
 
-                <!-- Erosion Settings -->
+                <!-- Erosion Settings --
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         
@@ -525,11 +530,11 @@
                     </div>
                     <div class="card-body">
                        
-                        <a href="https://docs.google.com/spreadsheets/d/1P7ewJzp4_lpkCSBaGR2B01gYpZwdqj1h6twIVkPUQdI/edit?usp=sharing" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i></i> Update Data
+                        <a href="https://docs.google.com/spreadsheets/d/1P7ewJzp4_lpkCSBaGR2B01gYpZwdqj1h6twIVkPUQdI/edit?usp=sharing" target="_blank" rel="noopener" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i></i> Update Data
                         </a>
                    
                     </div>
-                    <!-- erosion card--
+                    <-- erosion card--
                     <div class="card-body">
                     <div class="row">
                     <div class="col-xl-3 col-md-6 mb-4">
@@ -554,25 +559,11 @@
                     </div>
                     </div>
                 -->
-                </div>
+                
                 <!-- End Erosion Settings -->
-                <!-- Dry Season Settings -->
+                <!-- Dry Season Settings --
                 <div class="card shadow mb-4">
 
-                    
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        
-                        <h6 class="m-0 font-weight-bold text-primary">Dry Season Flow Settings </h6>
-                      
-                        
-                    </div>
-                    <div class="card-body">
-                       
-                        <a href="https://docs.google.com/spreadsheets/d/1P7ewJzp4_lpkCSBaGR2B01gYpZwdqj1h6twIVkPUQdI/edit?usp=sharing" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i></i> Update Data
-                        </a>
-                   
-                    </div>
-                     <!--dry season table--
                     <div class="card-body">
                     
                         <a data-toggle="modal" data-target="#AddDrySeason"class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
@@ -634,12 +625,8 @@
                                     </table> 
                                 </div>
                             -->
-                            </div>
-
-
-                    </div>
-                
-                </div>
+                            
+                    
                 <!-- End Dry Season Settings-->
 
                 <!-- Manage User-->

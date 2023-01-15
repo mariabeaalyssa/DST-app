@@ -91,8 +91,8 @@
           right: 0;
           bottom: 0;
           background-color: #ccc;
-          -webkit-transition: .4s;
-          transition: .4s;
+          -webkit-transition: .2s;
+          transition: .2s;
         }
         
         .slider:before {
@@ -103,8 +103,8 @@
           left: 4px;
           bottom: 4px;
           background-color: white;
-          -webkit-transition: .4s;
-          transition: .4s;
+          -webkit-transition: .2s;
+          transition: .1s;
         }
         
         input:checked + .slider {
@@ -221,12 +221,13 @@
           </nav>
         
             <h6 class="m-0 font-weight-bold text-primary"></h6>
+            <span class="hovertext" data-hover="Click to view Different Land Covers to Flood">
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-primary shadow h-100 py-2">
                   <div class="card-body">
                       <div class="row no-gutters align-items-center">
                           <div class="col mr-2">
-                              <a class="text-xs font-weight-bold text-primary text-uppercase mb-1" href="{{ url_for('p_rainscenario') }}">
+                              <a class="text-xs font-weight-bold text-primary text-uppercase mb-1" href="{{ url_for('rainscenario') }}">
                                   Rainfall Scenario</a>
                                   
                               <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
@@ -237,6 +238,7 @@
                   </div>
               </div>
           </div>
+          </span>
         
      
           <div id="viewDiv"></div>
@@ -287,12 +289,11 @@
                 </span>
                 --->
             <div class="card-body">
-              <div>
-                
+               
             <div class="table-responsive">
-              <div style="border:solid 1px #ddd;  padding:10px;" id="table1" >
+              <div style="border:solid 1px #ddd;  padding:1px;" id="table1" >
                 <center>
-                <iframe width="1300" height="300" seamless frameborder="0" scrolling="no" 
+                <iframe width="1500" height="410" seamless frameborder="0" scrolling="no" 
                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSKdW0YQHpks_Bg_mcih5AgmUbAgRYoC9GkpPx5VWh8QMvH5_-spoRk9s4kaezCiqSX195fkuaCtcK7/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
               </center>
               </div>
@@ -340,9 +341,9 @@
               </div>
 
               <!--11-20 years -->
-              <div style="border:solid 1px #ddd;  padding:10px;  display:none;" id="table11" >
+              <div style="border:solid 1px #ddd;  padding:1;  display:none;" id="table11" >
                 <center>
-                  <iframe width="1300" height="250" seamless frameborder="0" scrolling="no" 
+                  <iframe width="1500" height="320" seamless frameborder="0" scrolling="no" 
                  src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSKdW0YQHpks_Bg_mcih5AgmUbAgRYoC9GkpPx5VWh8QMvH5_-spoRk9s4kaezCiqSX195fkuaCtcK7/pubhtml?gid=1515745094&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
                </center>
                 <!--table 11
@@ -394,7 +395,7 @@
                 <div style="border:solid 1px #ddd;  padding:10px;  display:none;" id="table21" >
                   <center>
                      
-                    <iframe width="1300" height="220" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSKdW0YQHpks_Bg_mcih5AgmUbAgRYoC9GkpPx5VWh8QMvH5_-spoRk9s4kaezCiqSX195fkuaCtcK7/pubhtml?gid=2060357384&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+                    <iframe width="1500" height="250" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSKdW0YQHpks_Bg_mcih5AgmUbAgRYoC9GkpPx5VWh8QMvH5_-spoRk9s4kaezCiqSX195fkuaCtcK7/pubhtml?gid=2060357384&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
                   </center>
                   <!--table21--
                   <table class="table table-bordered" width="100%" cellspacing="0" >

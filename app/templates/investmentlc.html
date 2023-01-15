@@ -6,7 +6,94 @@
 
 
 <!--Download CSV-->
+<style>
+  .hovertext {
+    position: relative;
+    border-bottom: 1px dotted black;
+  }
 
+  .hovertext:before {
+    content: attr(data-hover);
+    visibility: hidden;
+    opacity: 0;
+    width: 200px;
+    background-color: rgb(231, 229, 229);
+    color: rgb(37, 35, 35);
+    text-align: center;
+    border-radius: 5px;
+    padding: 10px 0;
+    transition: opacity 1s ease-in-out;
+
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 110%;
+  }
+
+  .hovertext:hover:before {
+    opacity: 1;
+    visibility: visible;
+  }
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .2s;
+    transition: .1s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+  </style>
 <script>
     //user-defined function to download CSV file
     function downloadCSV(csv, filename) {
@@ -157,17 +244,17 @@
 
 
                 <div class="card-body">
-                    <div class="table-responsive">
+                  <div class="table-responsive">
                         <table class="table table-bordered"  width="100%" cellspacing="0" >
                             
                             <thead>
                                 <tr>
-                                    <th><input type="checkbox" id="selectAll" name="selectAll" value="selectAll" onclick="selectAllCheckboxes();totalIt();totalHas();totalRed();">
+                                   <th><span class="hovertext" data-hover="Land Cover Scenarios to be reforested"><h8>Land Cover Scenario</h8></span>
+                                      <br><input type="checkbox" id="selectAll" name="selectAll" value="selectAll" onclick="selectAllCheckboxes();totalIt();totalHas();totalRed();">
                                         <label for="selectAll"></label>Select All</th>
-                                    <th>Hectares</th>
-                                    <th>Cost</th> 
-                                    <th>Flood Reduced</th>
-
+                                        <th><span class="hovertext" data-hover="Amount of hectares of the land cover area">Hectares</span</th>
+                                        <th><span class="hovertext" data-hover="Hectares multiplied by the rainforestation cost per hectare">Cost</span></th></span>
+                                       <th> <span class="hovertext" data-hover="Amount of flood reduced when landcover is reforested">Flood Reduced (depth)</span></th>
 
                                    
                                 </tr>
@@ -195,8 +282,7 @@
                                     
                                     <td><input name="product" value="{{i.investmentlc_hectares * investmentcost.investmentcost_cost}}" type="checkbox" onclick="totalIt();">{{"Php {:,.2f}".format(investmentcost.investmentcost_cost * i.investmentlc_hectares)}}</span></td>
                                    <td>
-                                   <input name="reduced" value="{{i.investmentlc_reduced}}" type="checkbox" onclick="totalRed();"> {{i.investmentlc_reduced}} ha
-                                   </td>
+                                   <input name="reduced" value="{{i.investmentlc_reduced}}" type="checkbox" onclick="totalRed();"> {{i.investmentlc_reduced}} meters
                                    
                                 </tr>
                               

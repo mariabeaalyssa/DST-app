@@ -1,5 +1,5 @@
 <header>
-    <title>Decision Support Tool - About </title>
+    <title>Decision Support Tool - Investors </title>
 </header>
 
 
@@ -67,7 +67,6 @@
       border-radius: 50%;
     }
     </style>
-    
     <script>
     function toggle(ID){
   var element = document.getElementById(ID);
@@ -144,64 +143,55 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
-           
-              <div class="row">
-
-                <div class="col-lg-8">
-
-           
-                    <!-- Basic Card Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h4 class="m-0 font-weight-bold text-primary">About</h4>
-                        </div>
-                        <div class="card-body">
-                          <h4>
-                            The <b>Decision Support Tool</b>
-                            will provide vital information that will guide decision-makers and stakeholders in investing for reforestation and conservation programs that would help avert floods and increase season flow around the Cagayan de Oro River basin Payment for Ecosystem Services (PES) scheme.
-
-                          <br>
-                          <br>
-
-                          The Decision Support Tool consists of four (4) different models namely:
-                          <br> • Investment Model
-                          <br> • Flood Model
-                          <br> • Erosion Model
-                          <br> • Dry-Season Flow Model
-                          </h4>
-                        </div>
-                    </div>
-
+               
+               
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h3 class="m-0 font-weight-bold text-primary">Investors</h3>
                 </div>
-
-                <div class="col-lg-4">
-
-                    <!-- Dropdown Card Example -->
-                    <div class="card shadow mb-4">
-                        <!-- Card Header - Dropdown -->
-                        <div
-                            class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h4 class="m-0 font-weight-bold text-primary">Details</h4>
+                <div class="card-body mb-4">
+                
+                  <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th><center>Investor Name</center></th>
+                            <th><center>Office</center></th>
+                            <th><center>Address</center></th>
+                            <th><center>Amount Invested</center></th>
+                            <th><center>Hectares Reforested</center></th>
+                            <th><center>Reforestation Area</center></th>
+                            
                           
-                        </div>
-                        <!-- Card Body -->
-                        <div class="card-body">
-                          <h5>
-                           Contact Information:
-                          <br>
-                          <br>
-                           Address:
-                          <br>
-                          <br>
-                           Contact Number:
-                          </h5>
-                        </div>
-                    </div>
+                        </tr>
+                    </thead> 
+                  
+                   {% for i in investors %}
+                    <tbody>
+                        <tr>
+                            <td><center><b>{{i.investors_name}}</b></center></td>
+                            <td>{{i.investors_office}}</td>
+                            <td>{{i.investors_address}}</td>
+                            <td>{{i.investors_amount}}</td>
+                            <td>{{i.investors_hectares}}</td>
+                            <td>{{i.investors_area}}</td>
+                            
+
+                            
+
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                   
+                    </table> 
+                </div>
+                  <!--end table-->
 
                 </div>
-
             </div>
 
+
+              
 
             </div>
             <!-- /.container-fluid -->

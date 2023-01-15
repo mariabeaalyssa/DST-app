@@ -214,3 +214,22 @@ class ErosionTemporal(dbase.Model):
 		self.et_lcc = et_lcc
 		self.et_hectares = et_hectares
 		self.et_reduced = et_reduced
+
+class Investors(dbase.Model):
+	__tablename__="investors"
+
+	investors_id = dbase.Column(dbase.Integer, primary_key=True)
+	investors_name = dbase.Column(dbase.String(200))
+	investors_office = dbase.Column(dbase.String(200))
+	investors_address = dbase.Column(dbase.String(200))
+	investors_amount = dbase.Column(dbase.Integer)
+	investors_hectares = dbase.Column(dbase.Integer)
+	investors_area = dbase.Column(dbase.String(200))
+
+	def __init__(self, investors_name='', investors_office='',investors_address='', investors_amount ='', investors_hectares = '', investors_area=''):
+		self.investors_name = investors_name
+		self.investors_office = investors_office
+		self.investors_address = investors_address
+		self.investors_amount = investors_amount
+		self.investors_hectares = investors_hectares
+		self.investors_area = investors_area

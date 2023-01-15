@@ -106,6 +106,8 @@ def settings():
 	lcclass = LCClassification.query.all()
 	floodtemporal = FloodTemporal.query.all()
 	erosiontemporal = ErosionTemporal.query.all()
+	investors = Investors.query.all()
+	investorform = InvestorForm()
 	form = InvestmentForm()
 	form2 = HectaresForm()
 	form3 = ReforestationForm()
@@ -124,7 +126,7 @@ def settings():
 	#rf_sum = Rainforestation.query.all()
 	#print(sum(rf_sum))
 
-	return render_template('settings.html', investmentcost=investmentcost,formic=formic, forminvlc=forminvlc,investmentlc=investmentlc, form=form, form2=form2, form3=form3, form4=form4, form5=form5, form6=form6,form7=form7, form8=form8, form9=form9, formfp=formfp, formrf=formrf, formdg=formdg, reforestation=reforestation, hectares=hectares, investment=investment, dryseason=dryseason, erosion=erosion, forestprotection=forestprotection, rainforestation=rainforestation, datagathering=datagathering, lcclass=lcclass,floodtemporal=floodtemporal, erosiontemporal=erosiontemporal, user=user )
+	return render_template('settings.html', investors=investors, investorform=investorform, investmentcost=investmentcost,formic=formic, forminvlc=forminvlc,investmentlc=investmentlc, form=form, form2=form2, form3=form3, form4=form4, form5=form5, form6=form6,form7=form7, form8=form8, form9=form9, formfp=formfp, formrf=formrf, formdg=formdg, reforestation=reforestation, hectares=hectares, investment=investment, dryseason=dryseason, erosion=erosion, forestprotection=forestprotection, rainforestation=rainforestation, datagathering=datagathering, lcclass=lcclass,floodtemporal=floodtemporal, erosiontemporal=erosiontemporal, user=user )
 
 
 @server.route('/admin/rainforestation_cost', methods=["GET","POST"])
@@ -141,7 +143,6 @@ def rainforestation_cost():
 	formic = InvestmentCostForm()
 
 	return render_template('costbreakdown.html', investmentcost=investmentcost, formic=formic, formfp=formfp, formrf=formrf, formdg=formdg, forestprotection=forestprotection, rainforestation=rainforestation, datagathering=datagathering, user=user )
-
 
 @server.route('/admin/investment',methods=["GET","POST"])
 @login_required
@@ -679,7 +680,83 @@ def delete_et(et_id):
     flash('Your post has been deleted!', 'success')
     return redirect(url_for('settings'))
 
-@server.route('/about', methods=['GET','POST'])
+
+@server.route('/admin/investors', methods=['GET','POST'])
+@login_required
+def investors():
+	user = User.query.filter_by(id=current_user.id).first()
+	investment = Investment.query.filter_by(investment_id=1).first()
+	hectares = Hectares.query.filter_by(hectares_id=1).first()
+	reforestation = Reforestation.query.filter_by(reforestation_id=1).first()
+	erosiontemporal = ErosionTemporal.query.all()
+	investors = Investors.query.all()
+	investorform = InvestorForm()
+	form = InvestmentForm()
+	form2 = HectaresForm()
+	form9 = ErosionTemporal()
+	return render_template('investors.html', investors = investors, investorform=investorform, form=form, form2=form2, form9=form9, reforestation=reforestation, hectares=hectares, investment=investment, user=user, erosiontemporal=erosiontemporal )
+
+
+@server.route('/investors_settings', methods=['GET','POST'])
+@login_required
+def investors_settings():
+	user = User.query.filter_by(id=current_user.id).first()
+	investment = Investment.query.filter_by(investment_id=1).first()
+	hectares = Hectares.query.filter_by(hectares_id=1).first()
+	reforestation = Reforestation.query.filter_by(reforestation_id=1).first()
+	erosiontemporal = ErosionTemporal.query.all()
+	investors = Investors.query.all()
+	investorform = InvestorForm()
+	form = InvestmentForm()
+	form2 = HectaresForm()
+	form9 = ErosionTemporal()
+	return render_template('investors_settings.html', investors = investors, investorform=investorform, form=form, form2=form2, form9=form9, reforestation=reforestation, hectares=hectares, investment=investment, user=user, erosiontemporal=erosiontemporal )
+
+
+@server.route('/admin/update/<int:investors_id>/investors', methods=['GET','POST'])
+def updateinvestor(investors_id):
+	investorform = InvestorForm()
+	investors = Investors.query.get_or_404(investors_id)
+	user = User.query.filter_by(id=current_user.id).first()
+	if investorform.validate_on_submit():
+		investors.investors_name = investorform.investors_name.data
+		investors.investors_office = investorform.investors_office.data
+		investors.investors_address = investorform.investors_address.data
+		investors.investors_amount = investorform.investors_amount.data
+		investors.investors_hectares = investorform.investors_hectares.data
+		investors.investors_area = investorform.investors_area.data
+		dbase.session.commit()
+		flash('Your post has been updated!', 'success')
+		return redirect(url_for('investors_settings', investors=investors))
+	elif request.method == 'GET':
+		investorform.investors_name.data = investors.investors_name
+		investorform.investors_office.data = investors.investors_office
+		investorform.investors_address.data = investors.investors_address
+		investorform.investors_amount.data = investors.investors_amount
+		investorform.investors_hectares.data = investors.investors_hectares
+		investorform.investors_area.data = investors.investors_area
+	return redirect(url_for('investors_settings.html', investorform=investorform, investors=investors, user=user))
+
+@server.route('/admin/add_investors', methods=['GET','POST'])
+def add_investors():
+	user = User.query.filter_by(id=current_user.id).first()
+	investorform = InvestorForm()
+	if investorform.validate_on_submit():
+		new_investor = Investors(investorform.investors_name.data, investorform.investors_office.data, investorform.investors_address.data, investorform.investors_amount.data, investorform.investors_hectares.data, investorform.investors_area.data)
+		dbase.session.add(new_investor)
+		dbase.session.commit()	
+		return redirect(url_for('investors_settings',investorform=investorform, user=user))
+	return render_template('investors_settings.html', investorform=investorform, user=user)
+
+@server.route('/admin/<int:investors_id>/investors/delete', methods=['POST'])
+def delete_investors(investors_id):
+    delete_investors = Investors.query.get_or_404(investors_id)
+    dbase.session.delete(delete_investors)
+    dbase.session.commit()
+    flash('Your post has been deleted!', 'success')
+    return redirect(url_for('investors_settings'))
+
+@server.route('/admin/about', methods=['GET','POST'])
 @login_required
 def about():
 	user = User.query.filter_by(id=current_user.id).first()
@@ -692,7 +769,22 @@ def about():
 	form2 = HectaresForm()
 	form3 = ReforestationForm()
 	form5 = DrySeasonForm()
-	return render_template('currency.html', form=form, form2=form2, form3=form3,form5=form5, erosion=erosion, reforestation=reforestation, hectares=hectares, investment=investment, user=user, dryseason=dryseason )
+	return render_template('about.html', form=form, form2=form2, form3=form3,form5=form5, erosion=erosion, reforestation=reforestation, hectares=hectares, investment=investment, user=user, dryseason=dryseason )
+
+
+@server.route('/', methods=['GET','POST'])
+def p_about():
+	user = User.query.filter_by(id=current_user.id).first()
+	investment = Investment.query.filter_by(investment_id=1).first()
+	hectares = Hectares.query.filter_by(hectares_id=1).first()
+	reforestation = Reforestation.query.filter_by(reforestation_id=1).first()
+	dryseason = DrySeason.query.all()
+	erosion = Erosion.query.all()
+	form = InvestmentForm()
+	form2 = HectaresForm()
+	form3 = ReforestationForm()
+	form5 = DrySeasonForm()
+	return render_template('p_about.html', form=form, form2=form2, form3=form3,form5=form5, erosion=erosion, reforestation=reforestation, hectares=hectares, investment=investment, user=user, dryseason=dryseason )
 
 
 @server.route('/logout')
@@ -708,7 +800,7 @@ def logout():
 ##-------------------- public view
 ##-------------------- public view
 
-@server.route('/', methods=["GET","POST"])
+@server.route('/dashboard', methods=["GET","POST"])
 def p_dashboard():
 	user = user = User.query.filter_by(id=1).first()
 	investment = Investment.query.filter_by(investment_id=1).first()
@@ -853,3 +945,18 @@ def delete_user(id):
     dbase.session.commit()
     flash('Your post has been deleted!', 'success')
     return redirect(url_for('manage_users'))
+
+@server.route('/investors', methods=['GET','POST'])
+@login_required
+def p_investors():
+	user = User.query.filter_by(id=current_user.id).first()
+	investment = Investment.query.filter_by(investment_id=1).first()
+	hectares = Hectares.query.filter_by(hectares_id=1).first()
+	reforestation = Reforestation.query.filter_by(reforestation_id=1).first()
+	erosiontemporal = ErosionTemporal.query.all()
+	investors = Investors.query.all()
+	investorform = InvestorForm()
+	form = InvestmentForm()
+	form2 = HectaresForm()
+	form9 = ErosionTemporal()
+	return render_template('p_investors.html', investors = investors, investorform=investorform, form=form, form2=form2, form9=form9, reforestation=reforestation, hectares=hectares, investment=investment, user=user, erosiontemporal=erosiontemporal )

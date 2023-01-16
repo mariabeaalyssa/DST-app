@@ -774,17 +774,8 @@ def about():
 
 @server.route('/', methods=['GET','POST'])
 def p_about():
-	user = User.query.filter_by(id=current_user.id).first()
-	investment = Investment.query.filter_by(investment_id=1).first()
-	hectares = Hectares.query.filter_by(hectares_id=1).first()
-	reforestation = Reforestation.query.filter_by(reforestation_id=1).first()
-	dryseason = DrySeason.query.all()
-	erosion = Erosion.query.all()
-	form = InvestmentForm()
-	form2 = HectaresForm()
-	form3 = ReforestationForm()
-	form5 = DrySeasonForm()
-	return render_template('p_about.html', form=form, form2=form2, form3=form3,form5=form5, erosion=erosion, reforestation=reforestation, hectares=hectares, investment=investment, user=user, dryseason=dryseason )
+
+	return render_template('p_about.html' )
 
 
 @server.route('/logout')

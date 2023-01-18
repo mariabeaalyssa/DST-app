@@ -777,6 +777,16 @@ def p_about():
 
 	return render_template('p_about.html' )
 
+@server.route('/admin/waterlevel', methods=['GET','POST'])
+def realtime():
+	user = User.query.filter_by(id=current_user.id).first()
+	return render_template('realtime.html', user=user)
+
+@server.route('/waterlevel', methods=['GET','POST'])
+def p_realtime():
+
+	return render_template('p_realtime.html' )
+
 
 @server.route('/logout')
 @login_required

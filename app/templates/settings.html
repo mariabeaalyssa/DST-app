@@ -172,7 +172,7 @@
                                             Investment</div>
                                             
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{"Php {:,.2f}".format(investment.investment_amount) }}</div>
-                                           
+                                        <a href="{{ url_for('investors_settings') }}">View List to Update</a> 
                                     </div>
                                    
                                     <div class="col-auto">
@@ -195,7 +195,7 @@
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1" >
                                             Hectares Reforested</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{ "{:,.2f}".format(hectares.hectares_total)}} has.</div>
-                                        <a href="{{ url_for('investors_settings') }}">View List to Update</a>
+                                      
                                     </div>
                                     
                                     <div class="col-auto">

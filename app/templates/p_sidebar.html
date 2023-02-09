@@ -15,7 +15,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item">
-        <span class="hovertext" data-hover="Investment model displays which land cover scenario has the highest decreased flood risk when reforested and its cost">
+        <span class="hovertext" data-hover="Shows the List of Investors, Investment, Hectares Reforested, Rainforestation Cost Breakdown, and Investors’ land cover in map">
         <a class="nav-link" href="{{ url_for('p_dashboard') }}">
             
             <span>Investment Model</span></a>
@@ -36,7 +36,7 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <span class="hovertext" data-hover="Flood Model shows the temporal land cover scenario per hectare, its cost, and the amount of flood reduced in depth.">
+        <span class="hovertext" data-hover="Displays the comparison of different Land Cover Scenario in 5, 10, 25, 50, 100 year Rainfall Return Period. Users may also view real-time water level and river discharge in downstream and upstream hydrological sensors ">
         <a class="nav-link" href="{{ url_for('p_landcover') }}">  <span>Flood Model</span></a>
         </span>
         <!--<a class="nav-link" href="{{ url_for('rainscenario') }}">  <span>Rainfall Scenario</span></a>-->
@@ -51,7 +51,7 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <span class="hovertext" data-hover="Erosion Model shows the amout of reduced soil erosion when land cover areas are reforested">
+        <span class="hovertext" data-hover="Displays the influence of rainforestation to soil erosion in different land cover scenario in different rainfall return period.">
         <a class="nav-link" href="{{ url_for('p_erosion') }}">
             
             <span>Erosion Model</span></a>
@@ -62,7 +62,8 @@
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-        <span class="hovertext" data-hover="Dry-Season Flow Model shows the amount of river flow when land cover areas are reforested">
+        <span class="hovertext" data-hover="Displays the comparison of different land cover scenario in different  rainfall return period in which characterized by low precipitation and decreased water availability.
+        ">
         <a class="nav-link" href="{{ url_for('p_dry_season') }}">
             
             <span>Dry Season Flow Model</span></a>
@@ -71,9 +72,17 @@
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
+    
+    <li class="nav-item">
+        <span class="hovertext" data-hover="Guide to Manage DST">
+        <a class="nav-link" href="https://docs.google.com/document/d/1Gsc6DYwGHZ-XinlbK5N7Od2k55SjkD0CfMLydrsQS10/edit?usp=sharing"  target="_blank" rel="noopener">
+            
+            <span>Manual</span></a>
+        <span></span>
+    </li>
 
     <li class="nav-item">
-        <a class="nav-link" data-toggle="modal" href="{{ url_for('p_about') }}">
+        <a class="nav-link"  href="{{ url_for('p_about') }}">
             
             <span>About</span></a>
             

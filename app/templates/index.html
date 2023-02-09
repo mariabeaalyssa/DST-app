@@ -290,7 +290,7 @@
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                             Rainforestation Cost</div>
                                             
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ "Php {:,.2f}".format(investmentcost.investmentcost_cost) }} / ha</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{"Php {:,.2f}".format(rainforestation|sum(attribute='rf_total'))}} / ha</div>
                                         <a href="{{ url_for('rainforestation_cost') }}">View Rainforestation Cost Breakdown</a>
                                     </div>
                                    
@@ -321,7 +321,8 @@
             
 <!--rainforestation cost mmodal-->
 
-            <div id="viewDiv"></div>
+            <div id="viewDiv"><span class="hovertext" data-hover="Investors’ Land Cover">
+            </div>
 
             {% include 'investmentlc.html' %}
             <!-- /.container-fluid -->
@@ -344,12 +345,28 @@
 
 </div>
 
+<!-- Footer -->
+<footer class="sticky-footer bg-white">
+  <div class="container my-auto">
+      <div class="copyright text-left my-auto">
+        <b>REFERENCES</b>
+        <br>
+         <br> Map elements: Hineleban Foundation Inc. (HFI), ESRI
 
+      </div>
+  </div>
+</footer>
+<!-- End of Footer -->
+
+</div>
+<!-- End of Content Wrapper -->
+
+</div>
 <!-- End of Page Wrapper -->
 
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
+<i class="fas fa-angle-up"></i>
 </a>
 
 

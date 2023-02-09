@@ -179,7 +179,7 @@
           layerInfos: [
             {
               layer: featureLayer,
-              title: "Erosion Model"
+             
             }
           ]
         });
@@ -219,11 +219,13 @@
               {% include 'p_topbar.html' %}
 
           </nav>
-        
-          
-            <h6 class="m-0 font-weight-bold text-primary"></h6>
-            <span class="hovertext" data-hover="Click to view Different Land Covers to Flood">
+          <div class="container-fluid">
+
+          <div class="row">
+
+            
             <div class="col-xl-3 col-md-6 mb-4">
+            <span class="hovertext" data-hover="Displays the comparison of different Land Cover Scenario in 5, 10, 25, 50, 100 year Rainfall Return Period">
               <div class="card border-left-primary shadow h-100 py-2">
                   <div class="card-body">
                       <div class="row no-gutters align-items-center">
@@ -238,11 +240,12 @@
                       </div>
                   </div>
               </div>
-          </div>
           </span>
+          </div>
 
+          <div class="col-xl-3 col-md-6 mb-4">
           <span class="hovertext" data-hover="Click to view Real-time water level and river discharge ">
-            <div class="col-xl-3 col-md-6 mb-4">
+              <span class="hovertext" data-hover="Click to view Real-time water level and river discharge "></span>
               <div class="card border-left-primary shadow h-100 py-2">
                   <div class="card-body">
                       <div class="row no-gutters align-items-center">
@@ -257,10 +260,16 @@
                       </div>
                   </div>
               </div>
-          </div>
           </span>
-        
-     
+          </div>
+          </div>
+          </div>
+          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary"></h6>
+            
+                   
+        </div>
+          
           <div id="viewDiv"></div>
           
           <!--testing-->
@@ -273,6 +282,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">Flood Reduced</h6>
 
              <span>
+              <span class="hovertext" data-hover="Flood Reduced in 1-10 year">
               <h8 class="m-0 font-weight-bold text-primary">1-10 years</h8>
               <label class="switch">
                 <input type="checkbox" checked>
@@ -281,6 +291,7 @@
                 onclick="toggle('table1')"></span>
               </label>
               
+              <span class="hovertext" data-hover="Flood Reduced in 11-20 year">
               <h8 class="m-0 font-weight-bold text-primary">11-20 years</h8>
                 <label class="switch">
                   <input type="checkbox">
@@ -289,7 +300,9 @@
                   onclick="toggle('table11')"></span>
                 </label>
 
-                <h8 class="m-0 font-weight-bold text-primary">21-30 years</h8>
+                
+                <span class="hovertext" data-hover="Flood Reduced in 21-30 year">
+                <h8 class="m-0 font-weight-bold text-primary">21-30 years</h8>             
                 <label class="switch">
                   <input type="checkbox">
                   <span class="slider round"
@@ -465,22 +478,38 @@
                   </div>
                 <!-- end of 21-30 years-->
           </div>
-        </div>
-        </div>
+       
           
   <!-- /.container-fluid -->
 
 </div>
 <!-- End of Main Content -->
+</div>
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-left my-auto">
+            <b>REFERENCES</b>
+            <br>
+           <br> Map elements:
+           <br>· Sentinel-2, USGS
+           <br>· HEC-HMS, HEC-RAS, ESRI
+           
+            </div>
+        </div>
+    </footer>
+      <!-- End of Footer -->
 
-<!-- Footer -->
-
-<!-- End of Footer -->
+  </div>
+  <!-- End of Content Wrapper -->
 
 </div>
-  </div>
-</body> 
+<!-- End of Page Wrapper -->
 
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+  <i class="fas fa-angle-up"></i>
+</a>
 
 <script src="{{ url_for('.static', filename='main.js')}}"></script>
 <script src="{{ url_for('.static', filename='main.js')}}"></script>

@@ -271,15 +271,18 @@ if(element.style.display === "none"){
               <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">Erosion Reduced</h6>
 
-             <span>
+             
+              <span class="hovertext" data-hover="Soil Erosion Reduced in 1-10 year">
               <h8 class="m-0 font-weight-bold text-primary">1-10 years</h8>
               <label class="switch">
                 <input type="checkbox" checked>
                 <span class="slider round"
                 id="bt" 
-                onclick="toggle('table1')"></span>
+                onclick="toggle('table1')">
               </label>
               
+              
+              <span class="hovertext" data-hover="Soil Erosion Reduced in 11-20 year">
               <h8 class="m-0 font-weight-bold text-primary">11-20 years</h8>
                 <label class="switch">
                   <input type="checkbox">
@@ -287,7 +290,10 @@ if(element.style.display === "none"){
                   id="bt" 
                   onclick="toggle('table11')"></span>
                 </label>
+                </span>
 
+                
+              <span class="hovertext" data-hover="Soil Erosion Reduced in 21-30 year">
                 <h8 class="m-0 font-weight-bold text-primary">21-30 years</h8>
                 <label class="switch">
                   <input type="checkbox">
@@ -433,16 +439,23 @@ if(element.style.display === "none"){
                 <!-- end of 21-30 years-->
           </div>
         </div>
-        </div>
+
           
           <!-- /.container-fluid -->
 
       </div>
-      <!-- End of Main Content -->
-
-      <!-- Footer -->
-    
-      <!-- End of Footer -->
+      
+  <!-- Footer -->
+  <footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+      <div class="copyright text-left my-auto">
+        <b>REFERENCES</b>
+        <br>
+       <br> Map elements: ESRI
+        </div>
+    </div>
+</footer>
+  <!-- End of Footer -->
 
   </div>
   <!-- End of Content Wrapper -->

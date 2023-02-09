@@ -948,7 +948,6 @@ def delete_user(id):
     return redirect(url_for('manage_users'))
 
 @server.route('/investors', methods=['GET','POST'])
-@login_required
 def p_investors():
 	user = User.query.filter_by(id=current_user.id).first()
 	investment = Investment.query.filter_by(investment_id=1).first()

@@ -1,227 +1,219 @@
 <header>
-    <title>Decision Support Tool - About </title>
+  <title>Decision Support Tool - About </title>
 </header>
 
 
 {% extends 'base.html' %}
 {% block content %}
-
+<head>
+<title>Bootstrap Example</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <style>
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 60px;
-      height: 34px;
-    }
-    
-    .switch input { 
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-    
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      -webkit-transition: .4s;
-      transition: .4s;
-    }
-    
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 26px;
-      width: 26px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      -webkit-transition: .4s;
-      transition: .4s;
-    }
-    
-    input:checked + .slider {
-      background-color: #2196F3;
-    }
-    
-    input:focus + .slider {
-      box-shadow: 0 0 1px #2196F3;
-    }
-    
-    input:checked + .slider:before {
-      -webkit-transform: translateX(26px);
-      -ms-transform: translateX(26px);
-      transform: translateX(26px);
-    }
-    
-    /* Rounded sliders */
-    .slider.round {
-      border-radius: 34px;
-    }
-    
-    .slider.round:before {
-      border-radius: 50%;
-    }
-    </style>
-    
-    <script>
-    function toggle(ID){
-  var element = document.getElementById(ID);
-  if(element.style.display === "none"){
-    element.style.display = "block";
-  }else{
-    element.style.display = "none";
+/* Make the image fully responsive */
+.carousel-inner img {
+  width: 100%;
+  height: 85%;
+}
+</style>
+</head>
+<style>
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
   }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
   }
-      </script>
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+  </style>
+  
+  <script>
+  function toggle(ID){
+var element = document.getElementById(ID);
+if(element.style.display === "none"){
+  element.style.display = "block";
+}else{
+  element.style.display = "none";
+}
+}
+    </script>
 
 <script>
-    //user-defined function to download CSV file
-    function downloadCSV(csv, filename) {
-        var csvFile;
-        var downloadLink;
-       
-        //define the file type to text/csv
-        csvFile = new Blob([csv], {type: 'text/csv'});
-        downloadLink = document.createElement("a");
-        downloadLink.download = filename;
-        downloadLink.href = window.URL.createObjectURL(csvFile);
-        downloadLink.style.display = "none";
-    
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-    }
-    
-    //user-defined function to export the data to CSV file format
-    function exportDrySeasonToCSV(filename) {
-       //declare a JavaScript variable of array type
-       var csv = [];
-       var rows = document.querySelectorAll("table tr");
+  //user-defined function to download CSV file
+  function downloadCSV(csv, filename) {
+      var csvFile;
+      var downloadLink;
      
-       //merge the whole data in tabular form 
-       for(var i=0; i<rows.length; i++) {
-        var row = [], cols = rows[i].querySelectorAll("td, th");
-        for( var j=0; j<cols.length; j++)
-           row.push(cols[j].innerText);
-        csv.push(row.join(","));
-       } 
-       //call the function to download the CSV file
-       downloadCSV(csv.join("\n"), filename);
-    }
-    </script>
+      //define the file type to text/csv
+      csvFile = new Blob([csv], {type: 'text/csv'});
+      downloadLink = document.createElement("a");
+      downloadLink.download = filename;
+      downloadLink.href = window.URL.createObjectURL(csvFile);
+      downloadLink.style.display = "none";
+  
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+  }
+  
+  //user-defined function to export the data to CSV file format
+  function exportDrySeasonToCSV(filename) {
+     //declare a JavaScript variable of array type
+     var csv = [];
+     var rows = document.querySelectorAll("table tr");
+   
+     //merge the whole data in tabular form 
+     for(var i=0; i<rows.length; i++) {
+      var row = [], cols = rows[i].querySelectorAll("td, th");
+      for( var j=0; j<cols.length; j++)
+         row.push(cols[j].innerText);
+      csv.push(row.join(","));
+     } 
+     //call the function to download the CSV file
+     downloadCSV(csv.join("\n"), filename);
+  }
+  </script>
 
 <!-- Page Wrapper -->
 <div id="wrapper">
 
-    <!-- Sidebar -->
-    {% include 'p_sidebar.html' %}
-    <!-- End of Sidebar -->
+  <!-- Sidebar -->
+  {% include 'p_sidebar.html' %}
+  <!-- End of Sidebar -->
 
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
 
-        <!-- Main Content -->
-        <div id="content">
+      <!-- Main Content -->
+      <div id="content">
 
-            <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                <h1 class="h3 mb-0 text-gray-800"></h1>
-                <!-- Sidebar Toggle (Topbar) -->
-                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                    <i class="fa fa-bars"></i>
-                </button>
+          <!-- Topbar -->
+          <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+              <h1 class="h3 mb-0 text-gray-800"></h1>
+              <!-- Sidebar Toggle (Topbar) -->
+              <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                  <i class="fa fa-bars"></i>
+              </button>
 
-                <!-- Topbar Navbar -->
-                {% include 'p_topbar.html' %}
+              <!-- Topbar Navbar -->
+              {% include 'p_topbar.html' %}
 
-            </nav>
-            <!-- End of Topbar -->
+          </nav>
+          <!-- End of Topbar -->
 
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
-
-           
-              <div class="row">
-
-                <div class="col-lg-8">
-
-           
-                    <!-- Basic Card Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h4 class="m-0 font-weight-bold text-primary">About</h4>
-                        </div>
-                        <div class="card-body">
-                          <h4>
-                            The <b>Decision Support Tool</b>
-                            will provide vital information that will guide decision-makers and stakeholders in investing for reforestation and conservation programs that would help avert floods and increase season flow around the Cagayan de Oro River basin Payment for Ecosystem Services (PES) scheme.
-
-                          <br>
-                          <br>
-
-                          The Decision Support Tool consists of four (4) different models namely:
-                          <br> • Investment Model
-                          <br> • Flood Model
-                          <br> • Erosion Model
-                          <br> • Dry-Season Flow Model
-                          </h4>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="col-lg-4">
-
-                    <!-- Dropdown Card Example -->
-                    <div class="card shadow mb-4">
-                        <!-- Card Header - Dropdown -->
-                        <div
-                            class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h4 class="m-0 font-weight-bold text-primary">Details</h4>
-                          
-                        </div>
-                        <!-- Card Body -->
-                        <div class="card-body">
-                          <h5>
-                           Contact Information:
-                          <br>
-                          <br>
-                           Address:
-                          <br>
-                          <br>
-                           Contact Number:
-                          </h5>
-                        </div>
-                    </div>
-
-                </div>
-
+          
+          <body>
+          
+          <div id="demo" class="carousel slide" data-ride="carousel">
+            <ul class="carousel-indicators">
+              <li data-target="#demo" data-slide-to="0" class="active"></li>
+              <li data-target="#demo" data-slide-to="1"></li>
+              <li data-target="#demo" data-slide-to="2"></li>
+            </ul>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="https://lh3.googleusercontent.com/tmhE6fD_GkEJdP7pVaNAoOPjRU4H48viRrYAOy0xn8CO1SQtRkzAPSSJ_noHAAS9MlvZ28W0sk_Tqj8O-SsxDaeSHT75TxArlZPYl3zulL3fhP1wLfstAcz_K9Z-UebTzv2_CyVo_6jqctHxOwbhRNuRom2hM8kNBgt09Vl37HRNBHzksg7JcpWmwBI5fAcEhj7QGkcn7jL828JpAGLqNT_tHP7YbuCwLU7ey4YUFNg2l3ijnnIzM6hyJgzrSJT4YOi9bVbAtcMb5UhIhaKqZk77obNx7BuOiod7dRFpYyz_OwxvYhG911cRCFvaN_hPzk5HtIFgRut_Ee8apmahumEL4GipNb8tan0hUvFgkOzgN_5TAK0AYl3J5Hetrl33DxRdZTdCqkKl6hChD30dnjQX310pWlpDrGE83hg7HKRGkZdHM4QmPRiOznE_2uTHbZHGwOdu5-fV0O1JgNeLEaKGj89GB0YJPMcc7AzbN1IcWxr9HK5jQAY002Xm5IGehoysBFy8yPbFy77ZzPtEJqCVfbdBdU2wvJDKcun-BDUD__5l8X6-FORf6h35Fj5ylN7-Ot5ZZhrvN9pF4QLds87VCqHPqL3X0IhsxJ_KhZsGz_7ciUCwuo9N--1i5n5kBsMGiNzzk29rSX3osHrjdmjynC8rmd197JF6oLSRrmMApRov6uj-zg4KYzqvzNOPYqYRsSy1d76U78bj4sAL5TBVbRwQOAcv1UnuF8zJqhU3GX6K5ST9S4HjzmiTEKQhityKsClml2_J3t0ChH7Tp6Y9Sv-qZDksdGJr8kHt_ie5LRO5B7yL-vHYWcTg1sk4H-k7Lr1WG0YOeGd2q0py1UjsopN9hcqiZ6JMz-YXnbhFhRcJvsVsVub3Y45YDbM1SxoKoVgeX15S15SFgzOignZ_ia-ipq-q1rrtnFTVgCfNLIdCBRXUZ2fO1r41FvsRmEa5Ie5EGEXhYyCdTFv135iNbVIu9Khp3iNpKS_sgegJufR0N3CShqDT=w1908-h954-no?authuser=3" alt="Los Angeles" width="900" height="100">
+                <div class="carousel-caption">
+                  <h3>Swipe right</h3>
+                  <p></p>
+                </div>   
+              </div>
+              <div class="carousel-item">
+                <img src="https://lh3.googleusercontent.com/Y2cVi4oVgKQHVxJ6evnFXu9N3ASbrKXCC21sOmH2g9Welh-rrBeDeN7gJTViJppMEg5ufAImfQ3Uk527mlLMo9eV1CakpTGuaMvMnemJ_Ww3Xap2G-IiBofE7pkbRWWheOGRhovKdd23873jDk1Q50tOcWRJE17XXWHETfRwetamS6LA3FTuAr3-7ztA1ccQ8y9HFLlyrRAlPgUeb7I7iBah22pALVjV4OzsuIwL1jfPQG8rQBUJpOhMB3jJFN0oa9MeIjwxITkeh10ZFW5t_z6Z5Y7pmHiKbcO-zyUFSTKr_AKITBvfaDIYlazcynEGfJSTIC8VQhMHwRXxWT2W6v4e-d_iVpaO3l2UnH_rrS20ALivTfhFrMyvZuSwZZXG6x1zHNF7CH3rKdbvfI40YPbbIcFGmynekXswuZmBeBMKvvmase_1KHv1GlYVaWii0v6-WMwbtU-KmqvFW3YdjNofFUZulSxcgNi3Srp8ev2kmvYSJ232PqvMFBulvktgfhbk6k51jZ3CVKcd69tXlOB53eBnd4oc8RoFQ0uLesW80q1q26i71KAQXI8wlJvDe7gOexUQO65lhCcMgRJY5K-pn45syggWrgVfQ0DxXpGOblZfv8rtAYuwNRfiNkfPqdncEGiOBN2u5bSDkxVTB4EC-z8P3AEhDtz-PJDdJzeLtOpDM9jGSF4JYbzjrFnZzEe_nhoy6ckreMJHay95NvA-jJixwfJZsmKG5IHZefjswLNYDhuwwsQZioo9FeALIFWLVWUp_9i3GckIfWnzDHtPEs0MokSEfB66OAJ6O_-XFZdN-C6WTXNhPTIyi6X24YYvJxeafIdLqAZrLb-Pn1t7-O5slg1_EsOAASm-iLjClJ7h7KHxXLf-0bSySr751Iv_A83pD-Lp5f9d2A7LcrjkkQDjinO4j-P_v1fO_WHFD82nxektRkAD99nCnZyLX9ViZLcFU_aWFLruOlm-eMhfGbG-UY4-flvhacet3a_TS9hGKeK4SQVD=w1908-h954-no?authuser=3" alt="Chicago" width="900" height="100">
+                <div class="carousel-caption">
+                    
+                 
+                </div>   
+              </div>
+              <div class="carousel-item">
+                <img src="https://lh3.googleusercontent.com/rFVP6hJ06p12kQGJlHnTsXjIVFmfUq46GL8wLBEOBnM9Rd0ThuMJreR0XcZzm7IBdJLFwqujWnhiTh6LjP-iX14xbqSq9nfNgPEMcHMc050I_HKwChBYFVx6tTA-SXMwV4ZORukOCR50ZN9ZH6H59j3ot08KQPVuH5dRDQm2nqFS_3L9rA8tRgwVsc7fGenKeEWirFZbrfpO8xWODjFqzcfUEPz8YF_PlDVGVMP1IeKVYTYD55mH_qs3qMiJ-0LYHjtby4bPJ4xb-j-_uKDRguexJZmFCuI2FCktXNLkpkGFCPVT0zoem23JPZjNw8cgnLoClFt43vmCwmkFL_tRUxnPeeIusWPjVbRjqLoxQzBq5s0H5pfcu2xEBLQyttGLEjSu8lqYE3YKByfqx1KE9Wu9_yHv8TNW-4qkcB8u4I8w8t0D74F4Ah2NoxKrSxcHA58H1rEdDD79DKf2NesBdctSQ4Dl9zwC-kq8VNW6d_aZBbK4xV9iJcVsL-uvdkRl2_igDB-Q0L7b4mqec-h1-yWcVLYcsaD-id3P6Y9L6d3tv5vwbVcubQu4i47klhJ9pBmTO82LO2d0M7AwfxkwkSJaSTNS8ZM_nqA4Dl2C8knpBwNbk6NCYObRNbTv8wpnVUSsoXwOUjnqJIKoIyakMcfSVAFrhPqz_en_Xn9uywuPzNFBSpoP6a-LwlQMED_SFj0ijAOkpDKRDev6FiPIUBY884CgNDUeQ_vrWXJoTtVmAU5Swg8VqcqOG5IYz2pRgO9Y5F3OWuBgD2m-HirntiBTF8sigKcKNlFkhR4xgD1rgeU3hWcFKQLVAm-S0NELwelPsDmv36Hp3WLDevI71g9Ny_S1cGxXBZcTXBvXPL2NVXA226_KhtJOVix1EZfrYqFxZY20e3etTIf4MfmayqE8Rby8Nc_rbQNCcSr_7mnmRf7cy6oykQ3HOeq90GI2DIn-1KGcohclWLT29peWfEAQ06_ZIuvQNLTl5-fHH_T7dkxE7oqt2DEJ=w1908-h954-no?authuser=3" alt="New York" width="900" height="100">
+                <div class="carousel-caption">
+                  <h3></h3>
+                  <p></p>
+                </div>   
+              </div>
             </div>
+            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#demo" data-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </a>
+          </div>
+          
+          </div>
+          <!-- /.container-fluid -->
 
+      </div>
+      <!-- End of Main Content -->
 
-            </div>
-            <!-- /.container-fluid -->
+      <!-- Footer -->
+    
+      <!-- End of Footer -->
 
-        </div>
-        <!-- End of Main Content -->
-
-        <!-- Footer -->
-      
-        <!-- End of Footer -->
-
-    </div>
-    <!-- End of Content Wrapper -->
+  </div>
+  <!-- End of Content Wrapper -->
 
 </div>
 <!-- End of Page Wrapper -->
 
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
+  <i class="fas fa-angle-up"></i>
 </a>
 
 
